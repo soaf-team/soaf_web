@@ -76,6 +76,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
       };
     },
   ],
+  // @ts-expect-error
   activities: routes
     .map((route) => route.Element)
     .reduce(
