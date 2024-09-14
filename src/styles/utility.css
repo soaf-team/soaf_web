@@ -1,0 +1,128 @@
+/* typography */
+
+.body5 {
+  @apply text-[10px] font-normal leading-[12px];
+}
+
+.body4 {
+  @apply text-[12px] font-normal leading-[16px];
+}
+
+.body3 {
+  @apply text-[14px] font-normal leading-[20px];
+}
+
+.body2 {
+  @apply text-[16px] font-normal leading-[24px];
+}
+
+.body1 {
+  @apply text-[18px] font-normal leading-[28px];
+}
+
+.heade6bb {
+  @apply text-[16px] font-black leading-[20px];
+}
+
+.head6b {
+  @apply text-[16px] font-bold leading-[20px];
+}
+
+.head6sb {
+  @apply text-[16px] font-semibold leading-[20px];
+}
+
+.head5b {
+  @apply text-[18px] font-bold leading-[24px];
+}
+
+.head5 {
+  @apply text-[18px] font-normal leading-[26px];
+}
+
+.head4b {
+  @apply text-[20px] font-bold leading-[28px];
+}
+
+.head4 {
+  @apply text-[20px] font-semibold leading-[28px];
+}
+
+.head3 {
+  @apply text-[22px] font-bold leading-[32px];
+}
+
+.head2 {
+  @apply text-[24px] font-bold leading-[36px];
+}
+
+.head1 {
+  @apply text-[36px] font-bold leading-[48px];
+}
+
+.display3 {
+  @apply text-[36px] font-bold leading-[48px];
+}
+
+.display2 {
+  @apply text-[48px] font-bold leading-[60px];
+}
+
+.display1 {
+  @apply text-[60px] font-bold leading-[72px];
+}
+
+.label5 {
+  @apply text-[10px] font-semibold leading-[12px];
+}
+
+.label4eb {
+  @apply text-[12px] font-extrabold leading-[16px];
+}
+
+.label4 {
+  @apply text-[12px] font-medium leading-[16px];
+}
+
+.label3 {
+  @apply text-[14px] font-medium leading-[20px];
+}
+
+.label2 {
+  @apply text-[16px] font-medium leading-[20px];
+}
+
+.label1sb {
+  @apply text-[18px] font-semibold leading-[24px];
+}
+
+.label1 {
+  @apply text-[18px] font-semibold leading-[24px];
+}
+
+/* button */
+.fixed_bottom_button {
+  @apply bg-white h-[110px] pt-[8px] px-[18px] fixed left-0 right-0 bottom-0 z-50;
+}
+
+/* position */
+.fixed_bottom {
+  @apply fixed left-0 right-0 bottom-10 px-[18px];
+}
+
+.absolute_center {
+  @apply absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2;
+}
+
+.flex_center {
+  @apply flex items-center justify-center;
+}
+
+/* image */
+.full_img_cover {
+  @apply object-cover w-full h-full;
+}
+
+.full_img_contain {
+  @apply object-contain w-full h-full;
+}
