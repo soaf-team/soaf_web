@@ -26,8 +26,6 @@ export const BottomTab = ({ stack }: { stack: Stack }) => {
       return;
     }
 
-    console.log(activity);
-
     push(activity, {}, { animate: false });
   };
 

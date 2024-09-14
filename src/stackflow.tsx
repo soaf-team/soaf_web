@@ -42,8 +42,6 @@ for (const path of Object.keys(modules)) {
   });
 }
 
-console.log(routes);
-
 export const { Stack, useFlow, useStepFlow } = stackflow({
   transitionDuration: 300,
   plugins: [
@@ -60,7 +58,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         },
         {} as Record<string, string>
       ),
-      fallbackActivity: () => "DiaryCalendar",
+      fallbackActivity: () => "DiaryCalendarPage",
     }),
     () => {
       return {

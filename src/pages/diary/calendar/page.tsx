@@ -27,4 +27,4 @@ const DiaryCalendarPage: ActivityComponentType = () => {
 
 export default DiaryCalendarPage;
 
-DiaryCalendarPage.displayName = "DiaryCalendar";
+DiaryCalendarPage.displayName = "DiaryCalendarPage";

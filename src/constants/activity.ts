@@ -1,7 +1,7 @@
 export const ACTIVITY = {
-  DIARY_CALENDAR: "DiaryCalendar",
+  DIARY_CALENDAR: "DiaryCalendarPage",
   DIARY_STATS: "DiaryStatsPage",
-  SOAF_EXPLORE: "SoafExplore",
+  SOAF_EXPLORE: "SoafExplorePage",
   CHAT: "Chat",
   MY_HOME: "MyHome",
 };

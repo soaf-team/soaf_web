@@ -16,13 +16,13 @@ const CheckBox = ({
   return (
     <div className="flex items-center gap-[8px]">
       <div
-        className={`${className} w-6 h-6 rounded-lg div items-center justify-center
-                    ${isChecked ? "bg-main_gradient" : "bg-gray-100"}
+        className={`${className} w-6 h-6 rounded-lg flex items-center justify-center
+                    ${isChecked ? "bg-main_gradient" : "bg-gray100"}
         `}
       >
         <button
           type="button"
-          className="div items-center"
+          className="flex items-center"
           style={style}
           onClick={onClick}
           {...props}
