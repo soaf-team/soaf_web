@@ -2,6 +2,6 @@ export const ACTIVITY = {
   DIARY_CALENDAR: "DiaryCalendarPage",
   DIARY_STATS: "DiaryStatsPage",
   SOAF_EXPLORE: "SoafExplorePage",
-  CHAT: "Chat",
+  CHAT: "ChatMainPage",
   MY_HOME: "MyHome",
 };
