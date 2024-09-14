@@ -8,8 +8,8 @@ export const useActiveActivity = (stack: Stack) => {
     "DiaryCalendarPage",
     "DiaryStatsPage",
     "SoafExplorePage",
-    "Chat",
-    "MyHome",
+    "ChatMainPage",
+    "MyHomeMainPage",
   ].includes(activeActivity.name);
 
   return { activeActivity, isBottomTabActivity };

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "books",
+    "src": "../assets/icons/my-home/interior/books.svg",
+    "type": "hobby",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 2,
+    "name": "movie",
+    "src": "../assets/icons/my-home/interior/movie.svg",
+    "type": "hobby",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 3,
+    "name": "music",
+    "src": "../assets/icons/my-home/interior/music.svg",
+    "type": "hobby",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 4,
+    "name": "picture",
+    "src": "../assets/icons/my-home/interior/picture.svg",
+    "type": "interior",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 5,
+    "name": "plant",
+    "src": "../assets/icons/my-home/interior/plant.svg",
+    "type": "interior",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 6,
+    "name": "sofa",
+    "src": "../assets/icons/my-home/interior/sofa.svg",
+    "type": "interior",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 7,
+    "name": "windowDay",
+    "src": "../assets/icons/my-home/interior/window-day.svg",
+    "type": "interior",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 8,
+    "name": "windowNight",
+    "src": "../assets/icons/my-home/interior/window-night.svg",
+    "type": "interior",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  },
+  {
+    "id": 9,
+    "name": "youtube",
+    "src": "../assets/icons/my-home/interior/youtube.svg",
+    "type": "hobby",
+    "position": { "x": 0, "y": 0 },
+    "isVisible": true
+  }
+]

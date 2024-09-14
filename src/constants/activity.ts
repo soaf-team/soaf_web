@@ -3,5 +3,5 @@ export const ACTIVITY = {
   DIARY_STATS: "DiaryStatsPage",
   SOAF_EXPLORE: "SoafExplorePage",
   CHAT: "ChatMainPage",
-  MY_HOME: "MyHome",
+  MY_HOME: "MyHomeMainPage",
 };
