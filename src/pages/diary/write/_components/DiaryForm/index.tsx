@@ -1,9 +1,9 @@
 import { EmotionSticker } from "@/components";
 import { DiaryFormType } from "@/store";
 import { EmotionKey } from "@/types";
-import deletePhoto from "@assets/icons/shared/deletePhoto.svg";
 import { ForwardedRef, forwardRef, useEffect, useRef } from "react";
 import { AboveKeyboardBar } from "./AboveKeyboardBar";
+import { DeletePhoto } from "@/assets";
 
 const CONTENT_PLACEHOLDER = "오늘 하루는 어땠나요?";
 
@@ -89,7 +89,7 @@ export const DiaryForm = (props: DiaryFormProps) => {
                   onClick={() => handleDeletePhoto(index)}
                   className="absolute top-[8px] right-[8px] rounded-full w-[20px] h-[20px]"
                 >
-                  <img src={deletePhoto} alt="delete_photo" />
+                  <img src={DeletePhoto} alt="delete_photo" />
                 </div>
                 <img
                   src={photo}

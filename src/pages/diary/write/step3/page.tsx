@@ -13,7 +13,7 @@ import {
 import { DiaryForm } from "../_components/DiaryForm";
 import { DiaryCancelConfirmDialog } from "../_components/DiaryCancelConfirmDialog";
 
-const NewDiaryPage: ActivityComponentType = () => {
+const NewDiaryStep3: ActivityComponentType = () => {
   const { replace } = useFlow();
   const {
     diary,
@@ -64,4 +64,6 @@ const NewDiaryPage: ActivityComponentType = () => {
   );
 };
 
-export default NewDiaryPage;
+export default NewDiaryStep3;
+
+NewDiaryStep3.displayName = "NewDiaryStep3";

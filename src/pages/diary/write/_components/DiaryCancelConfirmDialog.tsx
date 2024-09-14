@@ -37,7 +37,7 @@ export const DiaryCancelConfirmDialog = ({
         <DialogDescription>{TYPE_DESCRIPTION[type]}</DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <div className="w-full gap-[8px]">
+        <div className="flex w-full gap-[8px]">
           <DialogClose className="flex-1">
             <Button size="sm" variant="secondary">
               아니요

@@ -36,7 +36,7 @@ const NewDiaryStep2: ActivityComponentType = () => {
     if (diary.emotions.length === 0) {
       return;
     }
-    push("NewDiaryPage", {});
+    push("NewDiaryStep3", {});
   };
 
   useEffect(() => {
@@ -88,3 +88,5 @@ const NewDiaryStep2: ActivityComponentType = () => {
 };
 
 export default NewDiaryStep2;
+
+NewDiaryStep2.displayName = "NewDiaryStep2";
