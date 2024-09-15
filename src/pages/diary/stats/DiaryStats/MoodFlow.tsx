@@ -55,7 +55,7 @@ export const MoodFlow = ({ data }: MoodFlowProps) => {
 
   return (
     <DiaryStatsCard title="감정 흐름">
-      <div className="h-[138px] flex">
+      <div className="relative h-[138px] flex">
         <div className="absolute flex flex-col-reverse justify-around py-3">
           {MOOD_RATINGS.map((rating, index) => (
             <img
