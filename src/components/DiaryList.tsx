@@ -1,5 +1,5 @@
 import { Diary } from "@/types";
-import { DiaryCard } from "../_components/DiaryCard";
+import { DiaryCard } from "../pages/diary/_components/DiaryCard";
 
 type DiaryListProps = {
   diariesByMonth: Diary[];

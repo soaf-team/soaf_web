@@ -2,7 +2,7 @@ import { Button, NonDataFallback } from "@/components";
 import { useDiaryQueryByMonth } from "@/hooks";
 import { useFlow } from "@/stackflow";
 import dayjs from "dayjs";
-import { DiaryList } from "./DiaryList";
+import { DiaryList } from "../../../components/DiaryList";
 
 type MyDiaryListProps = {
   currentDate: Date;

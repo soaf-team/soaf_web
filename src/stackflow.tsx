@@ -47,7 +47,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
   plugins: [
     basicRendererPlugin(),
     basicUIPlugin({
-      theme: "cupertino",
+      theme: "android",
       rootClassName: "screen",
     }),
     historySyncPlugin({

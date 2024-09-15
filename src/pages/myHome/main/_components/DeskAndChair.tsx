@@ -24,7 +24,7 @@ export const DeskAndChair = (props: Props) => {
         src={DiaryIcon}
         alt="diary"
         className="absolute_center ml-[13px] mt-[3px] w-1/4"
-        onClick={() => push("MyDiary", {})}
+        onClick={() => push("MyDiaryPage", {})}
       />
     </div>
   );

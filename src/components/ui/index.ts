@@ -2,3 +2,8 @@ export * from "./CheckBox";
 export * from "./Image";
 export * from "./Card";
 export * from "./Button";
+export * from "./Input";
+export * from "./TextArea";
+export * from "./Divider";
+export * from "./StarRating";
+export * from "./TabButton";

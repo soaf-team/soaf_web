@@ -5,8 +5,8 @@ import { Diary } from "@/types";
 import dayjs from "dayjs";
 
 import { useState } from "react";
-import { YearMonthSelect } from "../diary/_components";
 import { DiaryCard } from "../diary/_components/DiaryCard";
+import { YearMonthSelect } from "@/components/YearMonthSelect";
 
 const SoafExplorePage = () => {
   const { replace, push } = useFlow();

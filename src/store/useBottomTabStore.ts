@@ -9,7 +9,7 @@ type BottomTabStore = {
 };
 
 const useBottomTab = create<BottomTabStore>((set) => ({
-  isOpen: !window.location.pathname.includes("myHome/main"),
+  isOpen: !window.location.pathname.includes("myHome"),
   handleOpen: () => set({ isOpen: true }),
   handleClose: () => set({ isOpen: false }),
 }));
@@ -18,7 +18,7 @@ export const useBottomTabStore = () => {
   const { isOpen, handleOpen, handleClose } = useBottomTab();
 
   useEffect(() => {
-    if (window.location.pathname.includes("myHome/main")) {
+    if (window.location.pathname.includes("myHome")) {
       handleClose();
     } else {
       handleOpen();

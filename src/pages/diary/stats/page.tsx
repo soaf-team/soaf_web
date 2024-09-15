@@ -1,8 +1,8 @@
 import { PageLayout } from "@/components";
 import { ActivityComponentType } from "@stackflow/react";
 import { useState } from "react";
-import { YearMonthSelect } from "../_components";
 import { DiaryStats } from "./DiaryStats";
+import { YearMonthSelect } from "@/components/YearMonthSelect";
 
 const DiaryStatsPage: ActivityComponentType = () => {
   const [currentDate, setCurrentDate] = useState(new Date());

@@ -57,16 +57,16 @@ export const InteriorItems = ({
   const handleHobbyItemClick = (name: string) => {
     switch (name) {
       case "books":
-        push("MyBooks", {});
+        push("MyBookPage", {});
         break;
       case "movie":
-        push("MyMovie", {});
+        push("MyMoviePage", {});
         break;
       case "music":
-        push("MyMusic", {});
+        push("MyMusicPage", {});
         break;
       case "youtube":
-        push("MyYoutube", {});
+        push("MyYoutubePage", {});
         break;
       default:
         break;
