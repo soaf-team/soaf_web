@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
-  name: string;
-  percent: number;
+	id: number;
+	name: string;
+	percent: number;
 }

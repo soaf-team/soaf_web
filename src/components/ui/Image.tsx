@@ -1,19 +1,19 @@
-import { useFlow } from "@/stackflow";
+import { useFlow } from '@/stackflow';
 
 type ImageProps = {
-  src: string;
-  alt: string;
-} & Omit<React.HTMLAttributes<HTMLImageElement>, "src" | "alt">;
+	src: string;
+	alt: string;
+} & Omit<React.HTMLAttributes<HTMLImageElement>, 'src' | 'alt'>;
 
 export const Image = ({ src, ...props }: ImageProps) => {
-  const { push } = useFlow();
+	const { push } = useFlow();
 
-  const handleClickImage = () => {
-    const imageId = src.split("/").pop()?.split(".")[0] || "";
-    const encodedImageId = encodeURIComponent(imageId);
+	const handleClickImage = () => {
+		const imageId = src.split('/').pop()?.split('.')[0] || '';
+		const encodedImageId = encodeURIComponent(imageId);
 
-    push("ImageDetailPage", { src: encodedImageId, alt: "image" });
-  };
+		push('ImageDetailPage', { src: encodedImageId, alt: 'image' });
+	};
 
-  return <img onClick={handleClickImage} {...props} src={src} />;
+	return <img onClick={handleClickImage} {...props} src={src} />;
 };

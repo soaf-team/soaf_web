@@ -1,42 +1,42 @@
-import { MOOD_RATING_COLORS, MOOD_RATINGS } from "@/constants";
-import { DiaryStatsCard } from "../_components/DiaryStatsCard";
-import { BarChart } from "@/components";
+import { MOOD_RATING_COLORS, MOOD_RATINGS } from '@/constants';
+import { DiaryStatsCard } from '../_components/DiaryStatsCard';
+import { BarChart } from '@/components';
 
 type MoodDistributionProps = {
-  data: {
-    [key: string]: number;
-  };
+	data: {
+		[key: string]: number;
+	};
 };
 
 export const MoodDistribution = ({ data }: MoodDistributionProps) => {
-  const barChartData = Object.entries(data).map(([level, ratio], index) => ({
-    level,
-    ratio,
-    color: MOOD_RATING_COLORS[index],
-  }));
+	const barChartData = Object.entries(data).map(([level, ratio], index) => ({
+		level,
+		ratio,
+		color: MOOD_RATING_COLORS[index],
+	}));
 
-  return (
-    <DiaryStatsCard title="기분 분포">
-      <div className="flex flex-col gap-[15px] items-center">
-        <div className="flex gap-[12px]">
-          {MOOD_RATINGS.map((level, index) => {
-            return (
-              <div key={index} className="flex flex-col gap-[8px] w-[42px]">
-                <img
-                  key={index}
-                  src={level}
-                  alt={`level${index + 1}`}
-                  className="w-[36px] h-[36px]"
-                />
-                <span className="label4eb text-gray300">
-                  {data[index + 1]}%
-                </span>
-              </div>
-            );
-          })}
-        </div>
-        <BarChart data={barChartData} />
-      </div>
-    </DiaryStatsCard>
-  );
+	return (
+		<DiaryStatsCard title="기분 분포">
+			<div className="flex flex-col gap-[15px] items-center">
+				<div className="flex gap-[12px]">
+					{MOOD_RATINGS.map((level, index) => {
+						return (
+							<div key={index} className="flex flex-col gap-[8px] w-[42px]">
+								<img
+									key={index}
+									src={level}
+									alt={`level${index + 1}`}
+									className="w-[36px] h-[36px]"
+								/>
+								<span className="label4eb text-gray300">
+									{data[index + 1]}%
+								</span>
+							</div>
+						);
+					})}
+				</div>
+				<BarChart data={barChartData} />
+			</div>
+		</DiaryStatsCard>
+	);
 };

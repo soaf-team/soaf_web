@@ -1,151 +1,151 @@
-import { isDifferentArray } from "@/utils";
+import { isDifferentArray } from '@/utils';
 import {
-  Component,
-  ComponentProps,
-  ComponentPropsWithoutRef,
-  ComponentType,
-  ErrorInfo,
-  forwardRef,
-  JSXElementConstructor,
-  PropsWithChildren,
-  PropsWithRef,
-  ReactNode,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+	Component,
+	ComponentProps,
+	ComponentPropsWithoutRef,
+	ComponentType,
+	ErrorInfo,
+	forwardRef,
+	JSXElementConstructor,
+	PropsWithChildren,
+	PropsWithRef,
+	ReactNode,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from 'react';
 
 type ComponentPropsWithoutChildren<
-  Component extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
-> = Omit<ComponentProps<Component>, "children">;
+	Component extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
+> = Omit<ComponentProps<Component>, 'children'>;
 
 export type RenderFallbackProps<ErrorType extends Error = Error> = {
-  error: ErrorType;
-  reset: () => void;
+	error: ErrorType;
+	reset: () => void;
 };
 
 type RenderFallbackType = <ErrorType extends Error>(
-  props: RenderFallbackProps<ErrorType>
+	props: RenderFallbackProps<ErrorType>,
 ) => ReactNode;
 type IgnoreErrorType = <ErrorType extends Error = Error>(
-  error: ErrorType
+	error: ErrorType,
 ) => boolean;
 
 type Props<ErrorType extends Error = Error> = {
-  /*
-   * @description 발생할 수 있는 error에 대한 기준값으로 이 값이 변경되면 error를 초기화합니다.
-   */
-  resetKeys?: unknown[];
-  onReset?(): void;
-  renderFallback: RenderFallbackType;
-  onError?(error: ErrorType, info: ErrorInfo): void;
-  /*
-   * @description 이 ErrorBoundary Context에서 처리하지 않고 throw해줄 error의 조건을 명시할 callback
-   */
-  ignoreError?: IgnoreErrorType;
+	/*
+	 * @description 발생할 수 있는 error에 대한 기준값으로 이 값이 변경되면 error를 초기화합니다.
+	 */
+	resetKeys?: unknown[];
+	onReset?(): void;
+	renderFallback: RenderFallbackType;
+	onError?(error: ErrorType, info: ErrorInfo): void;
+	/*
+	 * @description 이 ErrorBoundary Context에서 처리하지 않고 throw해줄 error의 조건을 명시할 callback
+	 */
+	ignoreError?: IgnoreErrorType;
 };
 
 interface State<ErrorType extends Error = Error> {
-  error: ErrorType | null;
+	error: ErrorType | null;
 }
 
 const initialState: State = {
-  error: null,
+	error: null,
 };
 
 class BaseErrorBoundary extends Component<
-  PropsWithRef<PropsWithChildren<Props>>,
-  State
+	PropsWithRef<PropsWithChildren<Props>>,
+	State
 > {
-  state = initialState;
+	state = initialState;
 
-  static getDerivedStateFromError(error: Error) {
-    return { error };
-  }
+	static getDerivedStateFromError(error: Error) {
+		return { error };
+	}
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    const { onError, ignoreError } = this.props;
+	componentDidCatch(error: Error, info: ErrorInfo) {
+		const { onError, ignoreError } = this.props;
 
-    if (ignoreError?.(error)) {
-      throw error;
-    }
+		if (ignoreError?.(error)) {
+			throw error;
+		}
 
-    onError?.(error, info);
-  }
+		onError?.(error, info);
+	}
 
-  resetErrorBoundary = () => {
-    this.props.onReset?.();
-    this.setState(initialState);
-  };
+	resetErrorBoundary = () => {
+		this.props.onReset?.();
+		this.setState(initialState);
+	};
 
-  componentDidUpdate(prevProps: Props) {
-    if (this.state.error == null) {
-      return;
-    }
+	componentDidUpdate(prevProps: Props) {
+		if (this.state.error == null) {
+			return;
+		}
 
-    if (isDifferentArray(prevProps.resetKeys, this.props.resetKeys)) {
-      this.resetErrorBoundary();
-    }
-  }
+		if (isDifferentArray(prevProps.resetKeys, this.props.resetKeys)) {
+			this.resetErrorBoundary();
+		}
+	}
 
-  render() {
-    const { children, renderFallback } = this.props;
-    const { error } = this.state;
+	render() {
+		const { children, renderFallback } = this.props;
+		const { error } = this.state;
 
-    if (error != null) {
-      return renderFallback({
-        error,
-        reset: this.resetErrorBoundary,
-      });
-    }
+		if (error != null) {
+			return renderFallback({
+				error,
+				reset: this.resetErrorBoundary,
+			});
+		}
 
-    return children;
-  }
+		return children;
+	}
 }
 
 export const ErrorBoundary = forwardRef<
-  { reset(): void },
-  ComponentPropsWithoutRef<typeof BaseErrorBoundary>
+	{ reset(): void },
+	ComponentPropsWithoutRef<typeof BaseErrorBoundary>
 >((props, resetRef) => {
-  const resetKeys = [...(props.resetKeys || [])];
+	const resetKeys = [...(props.resetKeys || [])];
 
-  const ref = useRef<BaseErrorBoundary>(null);
-  useImperativeHandle(resetRef, () => ({
-    reset: () => ref.current?.resetErrorBoundary(),
-  }));
+	const ref = useRef<BaseErrorBoundary>(null);
+	useImperativeHandle(resetRef, () => ({
+		reset: () => ref.current?.resetErrorBoundary(),
+	}));
 
-  return <BaseErrorBoundary {...props} resetKeys={resetKeys} ref={ref} />;
+	return <BaseErrorBoundary {...props} resetKeys={resetKeys} ref={ref} />;
 });
-if (process.env.NODE_ENV !== "production") {
-  ErrorBoundary.displayName = "ErrorBoundary";
+if (process.env.NODE_ENV !== 'production') {
+	ErrorBoundary.displayName = 'ErrorBoundary';
 }
 
 export const useErrorBoundary = <ErrorType extends Error>() => {
-  const [error, setError] = useState<ErrorType | null>(null);
+	const [error, setError] = useState<ErrorType | null>(null);
 
-  if (error != null) {
-    throw error;
-  }
+	if (error != null) {
+		throw error;
+	}
 
-  return setError;
+	return setError;
 };
 
 export const withErrorBoundary = <
-  Props extends Record<string, unknown> = Record<string, never>,
+	Props extends Record<string, unknown> = Record<string, never>,
 >(
-  Component: ComponentType<Props>,
-  errorBoundaryProps: ComponentPropsWithoutChildren<typeof ErrorBoundary>
+	Component: ComponentType<Props>,
+	errorBoundaryProps: ComponentPropsWithoutChildren<typeof ErrorBoundary>,
 ) => {
-  const Wrapped = (props: Props) => (
-    <ErrorBoundary {...errorBoundaryProps}>
-      <Component {...props} />
-    </ErrorBoundary>
-  );
+	const Wrapped = (props: Props) => (
+		<ErrorBoundary {...errorBoundaryProps}>
+			<Component {...props} />
+		</ErrorBoundary>
+	);
 
-  if (process.env.NODE_ENV !== "production") {
-    const name = Component.displayName || Component.name || "Component";
-    Wrapped.displayName = `withErrorBoundary(${name})`;
-  }
+	if (process.env.NODE_ENV !== 'production') {
+		const name = Component.displayName || Component.name || 'Component';
+		Wrapped.displayName = `withErrorBoundary(${name})`;
+	}
 
-  return Wrapped;
+	return Wrapped;
 };

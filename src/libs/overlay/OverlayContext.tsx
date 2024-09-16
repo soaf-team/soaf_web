@@ -3,12 +3,12 @@ import { useCreateOverlayContainer } from './useCreateOverlayContainer';
 import { OverlayRenderer } from './OverlayRenderer';
 
 export const OverlayContext = ({ children }: { children: ReactNode }) => {
-  useCreateOverlayContainer();
+	useCreateOverlayContainer();
 
-  return (
-    <>
-      {children}
-      <OverlayRenderer />
-    </>
-  );
+	return (
+		<>
+			{children}
+			<OverlayRenderer />
+		</>
+	);
 };

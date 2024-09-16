@@ -1,15 +1,15 @@
-import { ReactNode } from "react";
-import { QueryProvider } from "./QueryProvider";
-import { OverlayContext } from "@/libs";
+import { ReactNode } from 'react';
+import { QueryProvider } from './QueryProvider';
+import { OverlayContext } from '@/libs';
 
 type Props = {
-  children: ReactNode;
+	children: ReactNode;
 };
 
 export const ProviderGroup = ({ children }: Props) => {
-  return (
-    <QueryProvider>
-      <OverlayContext>{children}</OverlayContext>
-    </QueryProvider>
-  );
+	return (
+		<QueryProvider>
+			<OverlayContext>{children}</OverlayContext>
+		</QueryProvider>
+	);
 };
