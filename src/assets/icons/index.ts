@@ -8,6 +8,7 @@ import ResetIcon from "./resetIcon.svg";
 import FullStarIcon from "./fillStar.svg";
 import HalfStarIcon from "./halfStar.svg";
 import EmptyStarIcon from "./emptyStar.svg";
+import DeleteInput from "./x-with-bg.svg"
 
 export {
   Plus,
@@ -20,6 +21,7 @@ export {
   FullStarIcon,
   HalfStarIcon,
   EmptyStarIcon,
+  DeleteInput
 };
 
 export * from './header';
@@ -28,4 +30,3 @@ export * from './bottom-tab';
 export * from './shared';
 export * from './emoji';
 export * from './my-home';
-export * from './input';
