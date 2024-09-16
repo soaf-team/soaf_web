@@ -20,11 +20,11 @@ export const PageLayout = ({
 	header,
 	className,
 }: PageLayoutProps) => {
-  const isMyHome = window.location.pathname.includes("myHome");
-  const stack = useStack();
-  const { isBottomTabActivity } = useActiveActivity(stack);
-  const paddingBottom = isBottomTabActivity && !isMyHome ? "pb-[83px]" : "pb-0";
-  const paddingTop = header && !isMyHome ? "pt-[56px]" : "pt-0";
+	const isMyHome = window.location.pathname.includes('myHome');
+	const stack = useStack();
+	const { isBottomTabActivity } = useActiveActivity(stack);
+	const paddingBottom = isBottomTabActivity && !isMyHome ? 'pb-[83px]' : 'pb-0';
+	const paddingTop = header && !isMyHome ? 'pt-[56px]' : 'pt-0';
 
 	return (
 		<AppScreen>

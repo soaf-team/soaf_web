@@ -43,46 +43,46 @@ for (const path of Object.keys(modules)) {
 }
 
 export const { Stack, useFlow, useStepFlow } = stackflow({
-  transitionDuration: 300,
-  plugins: [
-    basicRendererPlugin(),
-    basicUIPlugin({
-      theme: "android",
-      rootClassName: "screen",
-    }),
-    historySyncPlugin({
-      routes: routes.reduce(
-        (acc, cur) => {
-          acc[cur.Element.displayName as string] = cur.path;
-          return acc;
-        },
-        {} as Record<string, string>
-      ),
-      fallbackActivity: () => "DiaryCalendarPage",
-    }),
-    () => {
-      return {
-        key: "my-plugin",
-        render({ stack }) {
-          return (
-            <div className="layout">
-              <BottomTab stack={stack} />
-              <Toaster stack={stack} />
-            </div>
-          );
-        },
-      };
-    },
-  ],
-  // @ts-expect-error
-  activities: routes
-    .map((route) => route.Element)
-    .reduce(
-      (acc, cur) => {
-        if (!cur.displayName) throw new Error("displayName is required");
-        acc[cur.displayName as string] = cur;
-        return acc;
-      },
-      {} as Record<string, React.ComponentType>
-    ),
+	transitionDuration: 300,
+	plugins: [
+		basicRendererPlugin(),
+		basicUIPlugin({
+			theme: 'android',
+			rootClassName: 'screen',
+		}),
+		historySyncPlugin({
+			routes: routes.reduce(
+				(acc, cur) => {
+					acc[cur.Element.displayName as string] = cur.path;
+					return acc;
+				},
+				{} as Record<string, string>,
+			),
+			fallbackActivity: () => 'DiaryCalendarPage',
+		}),
+		() => {
+			return {
+				key: 'my-plugin',
+				render({ stack }) {
+					return (
+						<div className="layout">
+							<BottomTab stack={stack} />
+							<Toaster stack={stack} />
+						</div>
+					);
+				},
+			};
+		},
+	],
+	// @ts-expect-error
+	activities: routes
+		.map((route) => route.Element)
+		.reduce(
+			(acc, cur) => {
+				if (!cur.displayName) throw new Error('displayName is required');
+				acc[cur.displayName as string] = cur;
+				return acc;
+			},
+			{} as Record<string, React.ComponentType>,
+		),
 });

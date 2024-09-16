@@ -20,12 +20,12 @@ export const DeskAndChair = (props: Props) => {
 				className="full_img_cover"
 			/>
 
-      <img
-        src={DiaryIcon}
-        alt="diary"
-        className="absolute_center ml-[13px] mt-[3px] w-1/4"
-        onClick={() => push("MyDiaryPage", {})}
-      />
-    </div>
-  );
+			<img
+				src={DiaryIcon}
+				alt="diary"
+				className="absolute_center ml-[13px] mt-[3px] w-1/4"
+				onClick={() => push('MyDiaryPage', {})}
+			/>
+		</div>
+	);
 };

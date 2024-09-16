@@ -54,24 +54,24 @@ export const InteriorItems = ({
 		}));
 	};
 
-  const handleHobbyItemClick = (name: string) => {
-    switch (name) {
-      case "books":
-        push("MyBookPage", {});
-        break;
-      case "movie":
-        push("MyMoviePage", {});
-        break;
-      case "music":
-        push("MyMusicPage", {});
-        break;
-      case "youtube":
-        push("MyYoutubePage", {});
-        break;
-      default:
-        break;
-    }
-  };
+	const handleHobbyItemClick = (name: string) => {
+		switch (name) {
+			case 'books':
+				push('MyBookPage', {});
+				break;
+			case 'movie':
+				push('MyMoviePage', {});
+				break;
+			case 'music':
+				push('MyMusicPage', {});
+				break;
+			case 'youtube':
+				push('MyYoutubePage', {});
+				break;
+			default:
+				break;
+		}
+	};
 
 	const handleItemClick = (name: string, isEdit: boolean) => {
 		if (isEdit === true) {
