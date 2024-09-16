@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components';
-import { OverlayProps } from '@/libs';
+import { OverlayProps as Props } from '@/libs';
 import { cn } from '@/utils';
 
-export const Overlay: React.FC<OverlayProps> = ({ resolve, reject, children }) => {
+interface OverlayProps extends Props {
+  disabled?: boolean;
+}
+
+export const Overlay = ({ resolve, reject, disabled, children }: OverlayProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -22,7 +26,7 @@ export const Overlay: React.FC<OverlayProps> = ({ resolve, reject, children }) =
 
   const handleClose = (value: any) => {
     setIsVisible(false);
-    setTimeout(() => resolve?.(value), 300); 
+    setTimeout(() =>  resolve?.(value), 300); 
   };
 
   const handleReject = () => {
@@ -55,8 +59,8 @@ export const Overlay: React.FC<OverlayProps> = ({ resolve, reject, children }) =
             {children}
             <Button
                 size="sm"
-                onClick={() => handleClose('confirm')}
-                className="w-full"
+                onClick={() =>disabled ? {} : handleClose('confirm')}
+                className={cn('w-full', disabled && 'cursor-not-allowed bg-gray100')}
               >
                 확인
               </Button>
