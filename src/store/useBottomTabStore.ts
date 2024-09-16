@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { create } from "zustand";
+import { create } from 'zustand';
 
 type BottomTabStore = {
-  isOpen: boolean;
-  handleOpen: () => void;
-  handleClose: () => void;
+	isOpen: boolean;
+	handleOpen: () => void;
+	handleClose: () => void;
 };
 
 const useBottomTab = create<BottomTabStore>((set) => ({
@@ -15,7 +15,7 @@ const useBottomTab = create<BottomTabStore>((set) => ({
 }));
 
 export const useBottomTabStore = () => {
-  const { isOpen, handleOpen, handleClose } = useBottomTab();
+	const { isOpen, handleOpen, handleClose } = useBottomTab();
 
   useEffect(() => {
     if (window.location.pathname.includes("myHome")) {
@@ -25,5 +25,5 @@ export const useBottomTabStore = () => {
     }
   }, [handleOpen, handleClose, window.location.pathname]);
 
-  return { isOpen, handleOpen, handleClose };
+	return { isOpen, handleOpen, handleClose };
 };
