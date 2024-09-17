@@ -1,15 +1,24 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { PageLayout } from '@/components';
-import { MenuBar, SoafList } from './_components';
+import { ChatList, MenuBar, SoafList } from './_components';
 
 const ChatMainPage = () => {
+	const [selectedMenu, setSelectedMenu] = useState<'소프 목록' | '친구 목록'>(
+		'소프 목록',
+	);
+
 	return (
 		<PageLayout className="px-0">
 			<article className="px-[18px]">
-				<MenuBar selectedMenu="소프 목록" onChangeMenu={() => {}} />
+				<MenuBar
+					selectedMenu={selectedMenu}
+					onChangeMenu={(menu) => {
+						setSelectedMenu(menu as '소프 목록' | '친구 목록');
+					}}
+				/>
 			</article>
-			<SoafList />
+			{selectedMenu === '소프 목록' ? <SoafList /> : <ChatList />}
 		</PageLayout>
 	);
 };

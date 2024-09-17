@@ -4,7 +4,7 @@ import { Overlay } from '@/components';
 import { Input } from '@/components/ui';
 import { OverlayProps } from '@/libs';
 
-export const StatusMessageOverlay = ({ resolve }: OverlayProps) => {
+export const StatusMessageOverlay = ({ resolve, reject }: OverlayProps) => {
 	const [statusMessage, setStatusMessage] = useState('');
 
 	const handleChange = (value: string) => {
@@ -15,7 +15,8 @@ export const StatusMessageOverlay = ({ resolve }: OverlayProps) => {
 		<Overlay
 			overlayKey="status-message-overlay"
 			disabled={statusMessage.length === 0}
-			confirm={() => resolve?.(statusMessage)}
+			reject={() => reject?.('close')}
+			resolve={() => resolve?.(statusMessage)}
 		>
 			<h2 className="py-3 font-semibold text-center">상태메시지 올리기</h2>
 			<Input

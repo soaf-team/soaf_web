@@ -18,7 +18,6 @@ export const SoafList = () => {
 
 	return (
 		<div className="flex flex-col">
-			<Spacing size={4} />
 			<MyProfile
 				statusMessage={statusMessage}
 				handleStatusMessageChange={handleStatusMessageChange}
