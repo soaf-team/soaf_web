@@ -6,13 +6,13 @@ import { cn } from '@/utils';
 
 interface OverlayProps extends Props {
 	disabled?: boolean;
-	confirm?: () => void;
+	reject: () => void;
+	resolve: () => void;
 }
 
 export const Overlay = ({
 	resolve,
 	reject,
-	confirm,
 	disabled,
 	children,
 }: OverlayProps) => {
@@ -33,18 +33,12 @@ export const Overlay = ({
 
 	const handleClose = () => {
 		setIsVisible(false);
-		setTimeout(() => {
-			if (confirm) {
-				confirm();
-			} else {
-				resolve?.('confirm');
-			}
-		}, 300);
+		setTimeout(() => resolve(), 300);
 	};
 
 	const handleReject = () => {
 		setIsVisible(false);
-		setTimeout(() => reject?.('close'), 300);
+		setTimeout(() => reject(), 300);
 	};
 
 	return (
@@ -62,7 +56,7 @@ export const Overlay = ({
 						className={cn(
 							'fixed bottom-0 left-0 right-0 z-[9999]',
 							'pt-6 px-[18px] pb-2 max-w-window',
-							'rounded-t-[28px] bg-white shadow-overlay',
+							'rounded-t-[28px] bg-white shadow-shadow1',
 						)}
 						initial={{ y: '100%' }}
 						animate={{ y: 0 }}
