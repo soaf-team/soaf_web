@@ -1,29 +1,32 @@
 import { useState } from 'react';
 
-import { Overlay, Spacing } from '@/components';
-import { InputField } from '@/components/ui';
+import { Overlay } from '@/components';
+import { Input } from '@/components/ui';
+import { OverlayProps } from '@/libs';
 
-export const StatusMessageOverlay = () => {
+export const StatusMessageOverlay = ({ resolve }: OverlayProps) => {
 	const [statusMessage, setStatusMessage] = useState('');
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setStatusMessage(e.target.value);
+	const handleChange = (value: string) => {
+		setStatusMessage(value);
 	};
 
 	return (
 		<Overlay
 			overlayKey="status-message-overlay"
 			disabled={statusMessage.length === 0}
+			confirm={() => resolve?.(statusMessage)}
 		>
 			<h2 className="py-3 font-semibold text-center">상태메시지 올리기</h2>
-			<InputField
-				bottomText={
-					<p className="font-medium text-gray300">
-						{statusMessage.length} / <span className="text-black">60</span>
-					</p>
-				}
+			<Input
+				className="h-[28px] py-1"
+				isResetButton
+				value={statusMessage}
 				onChange={handleChange}
 			/>
+			<p className="pt-1 pb-2 font-medium text-gray300 text-end">
+				{statusMessage.length} / <span className="text-black">60</span>
+			</p>
 		</Overlay>
 	);
 };

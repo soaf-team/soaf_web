@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
 import { cn } from '@/utils';
-import { ResetIcon } from '@/assets';
+import { DeleteInput } from '@/assets';
 
 const inputVariants = cva(
 	`flex items-center bg-transparent gap-[4px] w-full text-gray600`,
@@ -76,5 +76,5 @@ type ResetButtonProps = {
 
 const ResetButton = ({ visible, onClick }: ResetButtonProps) => {
 	if (!visible) return null;
-	return <img src={ResetIcon} alt="reset_icon" onClick={onClick} />;
+	return <img src={DeleteInput} alt="reset_icon" onClick={onClick} />;
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components';
 import { OverlayProps as Props } from '@/libs';
@@ -6,11 +6,13 @@ import { cn } from '@/utils';
 
 interface OverlayProps extends Props {
 	disabled?: boolean;
+	confirm?: () => void;
 }
 
 export const Overlay = ({
 	resolve,
 	reject,
+	confirm,
 	disabled,
 	children,
 }: OverlayProps) => {
@@ -19,7 +21,7 @@ export const Overlay = ({
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
 			if (event.key === 'Enter') {
-				handleClose('confirm');
+				handleClose();
 			}
 		};
 
@@ -29,9 +31,15 @@ export const Overlay = ({
 		};
 	}, []);
 
-	const handleClose = (value: any) => {
+	const handleClose = () => {
 		setIsVisible(false);
-		setTimeout(() => resolve?.(value), 300);
+		setTimeout(() => {
+			if (confirm) {
+				confirm();
+			} else {
+				resolve?.('confirm');
+			}
+		}, 300);
 	};
 
 	const handleReject = () => {
@@ -64,7 +72,7 @@ export const Overlay = ({
 						{children}
 						<Button
 							size="sm"
-							onClick={() => (disabled ? {} : handleClose('confirm'))}
+							onClick={() => (disabled ? {} : handleClose())}
 							className={cn(
 								'w-full',
 								disabled && 'cursor-not-allowed bg-gray100',
