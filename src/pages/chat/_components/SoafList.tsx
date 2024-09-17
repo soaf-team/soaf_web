@@ -7,10 +7,13 @@ import { FriendList } from './FriendList';
 import { StatusMessageOverlay } from './StatusMessageOverlay';
 
 export const SoafList = () => {
-	const [statusMessage, setStatusMessage] = useState<string>('');
+	// TODO: 이후 상태가 아닌 데이터 값으로 변경 필요
+	const [statusMessage, _] = useState<string>('');
 
 	const handleStatusMessageChange = async () => {
-		await overlay.open(<StatusMessageOverlay />);
+		const status = await overlay.open(
+			<StatusMessageOverlay overlayKey="status" />,
+		);
 	};
 
 	return (
