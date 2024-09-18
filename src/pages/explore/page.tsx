@@ -82,11 +82,7 @@ const SoafExplorePage = () => {
 
 				<div className="bg-white fixed left-0 right-0 bottom-0 z-50 h-[150px] px-[16px]">
 					<Button
-						variant={
-							diariesByMonth.length > 0 && isSelected.length === 0
-								? 'primary_disabled'
-								: 'primary'
-						}
+						variant="primary"
 						disabled={diariesByMonth.length > 0 && isSelected.length === 0}
 						onClick={handleButtonClick}
 					>

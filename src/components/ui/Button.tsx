@@ -2,15 +2,15 @@ import * as React from 'react';
 
 import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/utils';
+import { usePressEffect, useRippleEffect } from '@/hooks';
 
 const buttonVariants = cva(
 	`inline-flex items-center justify-center whitespace-nowrap rounded-[16px] 
-   w-full ring-offset-background transition-colors`,
+   w-full ring-offset-background transition-colors overflow-hidden relative`,
 	{
 		variants: {
 			variant: {
 				primary: 'bg-main_gradient text-white',
-				primary_disabled: 'bg-gray100 text-white',
 				secondary: 'bg-gray50 text-black',
 				warn: 'bg-warn text-white',
 				ghost: 'bg-transparent tex-black',
@@ -35,13 +35,44 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	({ className, variant, size, ...props }, ref) => {
+	({ className, variant, size, children, disabled, ...props }, ref) => {
+		const buttonRef = React.useRef<HTMLButtonElement>(null);
+		const { rippleProps, startRipple, stopRipple } = useRippleEffect();
+		const { handlePressStart, handlePressEnd, pressStyle } = usePressEffect();
+
+		const onPressStart = (
+			e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>,
+		) => {
+			if (disabled) return;
+			startRipple(e, buttonRef);
+			handlePressStart();
+		};
+
+		const onPressEnd = () => {
+			if (disabled) return;
+			stopRipple();
+			handlePressEnd();
+		};
+
+		React.useImperativeHandle(ref, () => buttonRef.current!, []);
+
 		return (
 			<button
-				className={cn(buttonVariants({ variant, size, className }))}
-				ref={ref}
+				className={cn(
+					buttonVariants({ variant, size, className }),
+					disabled && 'bg-gray100 text-white',
+				)}
+				style={pressStyle}
+				ref={buttonRef}
+				onMouseDown={onPressStart}
+				onMouseUp={onPressEnd}
+				onTouchStart={onPressStart}
+				onTouchEnd={onPressEnd}
 				{...props}
-			/>
+			>
+				{children}
+				<span {...rippleProps} />
+			</button>
 		);
 	},
 );
