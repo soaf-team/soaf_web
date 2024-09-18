@@ -54,7 +54,6 @@ const MatchedUserPage = () => {
 			</div>
 			<div className="fixed_bottom_button">
 				<Button
-					variant={selectedUser === null ? 'primary_disabled' : 'primary'}
 					disabled={selectedUser === null}
 					onClick={() => replace('UserHome', { userId: selectedUser })}
 				>
