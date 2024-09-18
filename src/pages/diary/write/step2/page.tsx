@@ -76,7 +76,7 @@ const NewDiaryStep2: ActivityComponentType = () => {
 				<div className="fixed_bottom_button">
 					<Button
 						onClick={handleActionButtonClick}
-						variant={diary.emotions.length > 0 ? 'primary' : 'primary_disabled'}
+						disabled={diary.emotions.length === 0}
 					>
 						감정선택 완료
 					</Button>
