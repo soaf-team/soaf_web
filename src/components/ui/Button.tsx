@@ -37,7 +37,7 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	({ className, variant, size, children, disabled, ...props }, ref) => {
 		const buttonRef = React.useRef<HTMLButtonElement>(null);
-		const { rippleProps, startRipple, stopRipple } = useRippleEffect();
+		const { rippleProps, startRipple, stopRipple } = useRippleEffect({});
 		const { handlePressStart, handlePressEnd, pressStyle } = usePressEffect();
 
 		const onPressStart = (
@@ -45,7 +45,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 		) => {
 			if (disabled) return;
 			startRipple(e, buttonRef);
-			handlePressStart();
+			handlePressStart(e);
 		};
 
 		const onPressEnd = () => {
