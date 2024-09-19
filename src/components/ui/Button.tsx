@@ -38,7 +38,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	({ className, variant, size, children, disabled, ...props }, ref) => {
 		const buttonRef = React.useRef<HTMLButtonElement>(null);
 		const { rippleProps, startRipple, stopRipple } = useRippleEffect({});
-		const { handlePressStart, handlePressEnd, pressStyle } = usePressEffect();
+		const { handlePressStart, handlePressEnd, getPressStyle } = usePressEffect(
+			{},
+		);
 
 		const onPressStart = (
 			e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>,
@@ -58,11 +60,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 		return (
 			<button
+				id="button"
 				className={cn(
 					buttonVariants({ variant, size, className }),
 					disabled && 'bg-gray100 text-white',
 				)}
-				style={pressStyle}
+				style={getPressStyle('button')}
 				ref={buttonRef}
 				onMouseDown={onPressStart}
 				onMouseUp={onPressEnd}
