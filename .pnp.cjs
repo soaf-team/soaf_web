@@ -37,6 +37,7 @@ const RAW_RUNTIME_STATE =
           ["@stackflow/plugin-renderer-basic", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:1.1.13"],\
           ["@stackflow/react", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:1.3.2"],\
           ["@tanstack/react-query", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:5.56.2"],\
+          ["@tanstack/react-query-devtools", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:5.56.2"],\
           ["@types/node", "npm:20.16.5"],\
           ["@types/react", "npm:18.3.5"],\
           ["@types/react-dom", "npm:18.3.0"],\
@@ -1654,6 +1655,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@tanstack/query-devtools", [\
+      ["npm:5.56.1", {\
+        "packageLocation": "../.yarn/berry/cache/@tanstack-query-devtools-npm-5.56.1-46be28e173-10c0.zip/node_modules/@tanstack/query-devtools/",\
+        "packageDependencies": [\
+          ["@tanstack/query-devtools", "npm:5.56.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@tanstack/react-query", [\
       ["npm:5.56.2", {\
         "packageLocation": "../.yarn/berry/cache/@tanstack-react-query-npm-5.56.2-fc27f4cc61-10c0.zip/node_modules/@tanstack/react-query/",\
@@ -1672,6 +1682,33 @@ const RAW_RUNTIME_STATE =
         ],\
         "packagePeers": [\
           "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@tanstack/react-query-devtools", [\
+      ["npm:5.56.2", {\
+        "packageLocation": "../.yarn/berry/cache/@tanstack-react-query-devtools-npm-5.56.2-d220b131e9-10c0.zip/node_modules/@tanstack/react-query-devtools/",\
+        "packageDependencies": [\
+          ["@tanstack/react-query-devtools", "npm:5.56.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:5.56.2", {\
+        "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-devtools-virtual-a68950be0c/2/.yarn/berry/cache/@tanstack-react-query-devtools-npm-5.56.2-d220b131e9-10c0.zip/node_modules/@tanstack/react-query-devtools/",\
+        "packageDependencies": [\
+          ["@tanstack/react-query-devtools", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:5.56.2"],\
+          ["@tanstack/query-devtools", "npm:5.56.1"],\
+          ["@tanstack/react-query", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:5.56.2"],\
+          ["@types/react", "npm:18.3.5"],\
+          ["@types/tanstack__react-query", null],\
+          ["react", "npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@tanstack/react-query",\
+          "@types/react",\
+          "@types/tanstack__react-query",\
           "react"\
         ],\
         "linkType": "HARD"\
@@ -5084,6 +5121,7 @@ const RAW_RUNTIME_STATE =
           ["@stackflow/plugin-renderer-basic", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:1.1.13"],\
           ["@stackflow/react", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:1.3.2"],\
           ["@tanstack/react-query", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:5.56.2"],\
+          ["@tanstack/react-query-devtools", "virtual:75eeeda6a5c71e174072025444760a79cd8e4d67580264ea4f306a3564ad4418fa9e4e248334f593adfe6c99c1e3fcde5dda9600d1afce0c93cf5de934a898c4#npm:5.56.2"],\
           ["@types/node", "npm:20.16.5"],\
           ["@types/react", "npm:18.3.5"],\
           ["@types/react-dom", "npm:18.3.0"],\
