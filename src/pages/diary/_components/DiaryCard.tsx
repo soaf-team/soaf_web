@@ -33,7 +33,7 @@ export const DiaryCard = ({
 					? onClick?.()
 					: push('DiaryDetailPage', { diaryId: diary.id });
 			}}
-			className={cn(['relative w-full gap-[12px]', className])}
+			className={cn(['relative w-full gap-[12px] cursor-pointer ', className])}
 		>
 			<div className="flex flex-col justify-center items-center w-[40px] min-w-[40px] h-[40px] bg-gray50 px-[10px] py-[6px] rounded-lg">
 				<p className="text-[16px] text-gray400 font-black leading-[20px]">
