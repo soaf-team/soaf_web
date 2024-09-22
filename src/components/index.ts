@@ -8,4 +8,3 @@ export * from './async';
 export * from './form';
 
 export { Overlay } from './Overlay';
-export { DebugLog } from './DebugLog';
