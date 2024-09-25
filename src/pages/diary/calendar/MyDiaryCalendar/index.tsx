@@ -3,7 +3,7 @@ import { useFlow } from '@/stackflow';
 
 import { cn, getDateStatus } from '@/utils';
 import { Diary } from '@/types';
-import { useDiaryListQuery } from '@/hooks';
+import { useMyDiaryListQuery } from '@/hooks';
 import { Plus } from '@/assets';
 
 import { Drawer, DrawerTrigger, EmotionSticker } from '@/components';
@@ -13,7 +13,7 @@ import { YearMonthSelect } from '@/components/YearMonthSelect';
 
 export const MyDiaryCalendar = () => {
 	const { push } = useFlow();
-	const { myDiaries } = useDiaryListQuery();
+	const { currentUserDiaryList } = useMyDiaryListQuery();
 	const [selectedDiary, setSelectedDiary] = useState<Diary | null>(null);
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const [activeSnapPoint, setActiveSnapPoint] = useState<
@@ -53,7 +53,7 @@ export const MyDiaryCalendar = () => {
 					currentDate={currentDate}
 					render={(day, index, isToday) => {
 						const isFuture = day && getDateStatus(day, new Date()) === 'future';
-						const diaryAtDate = myDiaries.find(
+						const diaryAtDate = currentUserDiaryList.find(
 							(diary: Diary) =>
 								day && getDateStatus(new Date(diary.date), day) === 'today',
 						);
