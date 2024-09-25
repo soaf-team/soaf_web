@@ -8,8 +8,6 @@ type DiaryStatsProps = {
 };
 
 export const DiaryStats = ({ currentDate }: DiaryStatsProps) => {
-	console.log(currentDate);
-
 	return (
 		<>
 			<MoodFlow data={MOOD_FLOW_DATA} />

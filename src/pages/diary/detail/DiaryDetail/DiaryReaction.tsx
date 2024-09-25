@@ -81,7 +81,6 @@ const ReactionCloud = ({
 	const visibleStyle = isVisible ? 'animate-fadeIn' : 'animate-fadeOut';
 
 	const handleEmojiClick = (emoji: string) => {
-		console.log(emoji);
 		onCloudClose();
 	};
 
