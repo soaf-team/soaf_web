@@ -61,24 +61,9 @@ const MyHomeMainPage = () => {
 		setIsDraggable({});
 	};
 
-	// 서버에서 받아온 인테리어 아이템 데이터의 위치를 초기 위치로 설정
 	useEffect(() => {
 		if (interiorItems.length > 0) {
-			const initialPositions = interiorItems.reduce(
-				(acc, item) => {
-					acc[item.name] = item.position;
-					return acc;
-				},
-				{} as { [key: string]: { x: number; y: number } },
-			);
-
-			setInitialPositions(initialPositions);
-		}
-	}, [interiorItems]);
-
-	// 각 아이템들의 초기 draggable 상태 설정
-	useEffect(() => {
-		if (interiorItems.length > 0) {
+			// 각 아이템들의 초기 draggable 상태 설정
 			setIsDraggable(
 				interiorItems.reduce(
 					(acc, item) => {
@@ -88,6 +73,17 @@ const MyHomeMainPage = () => {
 					{} as { [key: string]: boolean },
 				),
 			);
+
+			// 서버에서 받아온 인테리어 아이템 데이터의 위치를 초기 위치로 설정
+			const initialPositions = interiorItems.reduce(
+				(acc, item) => {
+					acc[item.name] = item.position;
+					return acc;
+				},
+				{} as { [key: string]: { x: number; y: number } },
+			);
+
+			setInitialPositions(initialPositions);
 		}
 	}, [interiorItems]);
 
