@@ -4,3 +4,5 @@ export * from './calDate';
 export * from './isDifferentArray';
 export * from './getDateStatus';
 export * from './log';
+export * from './extractTokensFromCookies';
+export * from './sendMessageToApp';
