@@ -7,7 +7,18 @@ type Props = {
 };
 
 export const QueryProvider = ({ children }: Props) => {
-	const [queryClient] = useState(() => new QueryClient());
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: {
+						retry: false,
+						gcTime: 1000 * 60 * 60,
+						staleTime: 1000 * 60 * 60,
+					},
+				},
+			}),
+	);
 
 	return (
 		<QueryClientProvider client={queryClient}>
