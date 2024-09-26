@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { Interior } from '@/types';
-import { BooksIcon, MovieIcon, MusicIcon, YoutubeIcon } from '@/assets';
+import {
+	MusicMyHomeIcon,
+	BooksMyHomeIcon,
+	MovieMyHomeIcon,
+	YoutubeMyHomeIcon,
+} from '@/assets';
 
 interface Props {
 	interiorItems: Interior[];
 }
 
 const icons: { [key: string]: string } = {
-	MusicIcon,
-	YoutubeIcon,
-	MovieIcon,
-	BooksIcon,
+	MusicMyHomeIcon,
+	BooksMyHomeIcon,
+	MovieMyHomeIcon,
+	YoutubeMyHomeIcon,
 };
 
 export const BottomActionButtons = ({ interiorItems }: Props) => {
@@ -28,7 +33,7 @@ export const BottomActionButtons = ({ interiorItems }: Props) => {
 	const [visibility, setVisibility] = useState(visibilityMap);
 
 	return (
-		<div className="flex gap-[32px] justify-around items-center bg-white w-3/4 h-[56px] px-[32px] py-[16px] opacity-90 rounded-[28px] absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 bottom-10">
+		<div className="flex justify-around items-center bg-white w-3/4 h-[56px] px-[32px] py-[16px] opacity-90 rounded-[28px] absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 bottom-10 shadow-bottomActionButtons">
 			{Object.keys(icons).map((key) => (
 				<div
 					key={key}
