@@ -28,7 +28,7 @@ interface Props
 	isGap?: boolean;
 }
 
-const SpeechBubble = ({
+export const SpeechBubble = ({
 	nickname,
 	message,
 	sentAt,
@@ -72,5 +72,3 @@ const SpeechBubble = ({
 		</article>
 	);
 };
-
-export default SpeechBubble;

@@ -1,3 +1,4 @@
+import { useFlow } from '@/stackflow';
 import { cn } from '@/utils';
 
 const MOCK_CHAT_LIST = [
@@ -39,6 +40,8 @@ const MOCK_CHAT_LIST = [
 ];
 
 export const ChatList = () => {
+	const { push } = useFlow();
+
 	return (
 		<div className="flex flex-col">
 			<ul className="flex flex-col gap-2 pt-[14px] px-[18px]">
@@ -50,6 +53,11 @@ export const ChatList = () => {
 							'p-4 w-full',
 							'rounded-[16px] shadow-chat',
 						)}
+						onClick={() => {
+							push('ChatRoomPage', {
+								userId: chat.id,
+							});
+						}}
 					>
 						<div className={LIST_CON_STYLE}>
 							<p>{chat.name}</p>

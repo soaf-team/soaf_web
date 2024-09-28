@@ -1,25 +1,31 @@
 import { cn } from '@/utils';
 import { MyHomeIcon, AnnotationPlus } from '@/assets';
 import { Spacing } from '@/components';
+import { MyHomeButton } from './MyHomeButton';
 
 const MOCK_DATA = [
 	{
+		id: 1,
 		name: '소울프렌드 1',
 		status_message: '안녕하세요',
 	},
 	{
+		id: 2,
 		name: '소울프렌드 2',
 		status_message: '안녕하세요',
 	},
 	{
+		id: 3,
 		name: '소울프렌드 3',
 		status_message: '안녕하세요',
 	},
 	{
+		id: 4,
 		name: '소울프렌드 4',
 		status_message: '안녕하세요',
 	},
 	{
+		id: 5,
 		name: '소울프렌드 5',
 		status_message: '안녕하세요',
 	},
@@ -46,7 +52,7 @@ export const FriendList = () => {
 							<p className="text-xs text-gray300">{item.status_message}</p>
 						</div>
 						<div className="flex items-center gap-4">
-							<img src={MyHomeIcon} alt="my-home" width={24} height={24} />
+							<MyHomeButton userId={item.id} />
 							<img
 								src={AnnotationPlus}
 								alt="start-chat"
