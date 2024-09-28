@@ -9,3 +9,4 @@ export * from './useRippleEffect';
 export * from './usePressEffect';
 export * from './queries';
 export * from './useAppBridge';
+export * from './useSocket';
