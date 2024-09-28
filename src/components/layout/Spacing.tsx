@@ -1,4 +1,4 @@
-import { cn } from '@/utils';
+import { CSSProperties } from 'react';
 
 type SpacingProps = {
 	size?: number;
@@ -9,8 +9,11 @@ export const Spacing = ({
 	size = 10,
 	direction = 'vertical',
 }: SpacingProps) => {
-	const className =
-		direction === 'vertical' ? `h-[${size}px] w-0` : `w-[${size}px] h-0`;
+	const baseClassName = direction === 'vertical' ? 'w-0' : 'h-0';
 
-	return <div className={cn(className)} />;
+	const style: CSSProperties = {
+		[direction === 'vertical' ? 'height' : 'width']: `${size}px`,
+	};
+
+	return <div className={baseClassName} style={style} />;
 };
