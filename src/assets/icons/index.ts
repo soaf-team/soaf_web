@@ -30,3 +30,4 @@ export * from './bottom-tab';
 export * from './shared';
 export * from './emoji';
 export * from './my-home';
+export * from './chat';
