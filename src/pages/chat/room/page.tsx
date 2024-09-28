@@ -1,5 +1,9 @@
-import { PageLayout } from '@/components';
-import SpeechBubble from './SpeechBubble';
+import { useEffect } from 'react';
+
+import { BackButton, PageLayout } from '@/components';
+import { MessageInput, SpeechBubble } from './_components';
+import { MyHomeButton } from '../_components';
+import { useSocket } from '@/hooks';
 
 const DUMMY_CHAT = [
 	{ message: '안녕', sentAt: new Date().toISOString(), userId: 1 },
@@ -24,17 +28,38 @@ const DUMMY_CHAT = [
 		sentAt: new Date().toISOString(),
 		userId: 1,
 	},
+	{
+		message:
+			'까불지 마세요 까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요',
+		sentAt: new Date().toISOString(),
+		userId: 1,
+	},
 ];
 
 const CUSTOMER_ID = 1;
 
 const ChatRoomPage = () => {
+	const { on, off } = useSocket('');
+
+	useEffect(() => {
+		const handleNewMessage = (message: any) => {
+			// 메시지 처리 로직
+		};
+
+		on('newMessage', handleNewMessage);
+
+		return () => {
+			off('newMessage', handleNewMessage);
+		};
+	}, [on, off]);
+
 	return (
 		<PageLayout
+			className="relative"
 			header={{
-				title: '',
-				leftSlot: null,
-				rightSlot: '아이콘',
+				leftSlot: <BackButton />,
+				title: '정훈',
+				rightSlot: <MyHomeButton userId={1} />,
 			}}
 		>
 			{DUMMY_CHAT.map((data, index, arr) => {
@@ -67,6 +92,7 @@ const ChatRoomPage = () => {
 					/>
 				);
 			})}
+			<MessageInput />
 		</PageLayout>
 	);
 };
