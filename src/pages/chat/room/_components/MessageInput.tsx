@@ -5,14 +5,15 @@ import { cn } from '@/utils';
 import { AlbumIcon, CameraIcon, sendIcon } from '@/assets';
 import { Spacing } from '@/components';
 
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+
 export const MessageInput = () => {
 	const [message, setMessage] = useState('');
-	const { emit } = useSocket('');
+	const { emit } = useSocket(SOCKET_URL);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		emit('sendMessage', message);
-		setMessage('');
 	};
 
 	return (
@@ -25,11 +26,11 @@ export const MessageInput = () => {
 			)}
 			onSubmit={handleSubmit}
 		>
-			<button>
+			<button type="button">
 				<img src={CameraIcon} alt="camera" />
 			</button>
 			<Spacing direction="horizontal" size={14} />
-			<button>
+			<button type="button">
 				<img src={AlbumIcon} alt="album" />
 			</button>
 			<Spacing direction="horizontal" size={10} />
