@@ -4,7 +4,7 @@ import { useObserver } from '@/hooks';
 import { SearchInput } from '../../_components';
 import { Document } from '@/types';
 import { BookItem } from './BookItem';
-import { NonDataFallback } from '@/components';
+import { NonDataFallback, LoadingDots } from '@/components';
 
 interface Props {
 	onNextStep: () => void;
@@ -48,7 +48,9 @@ export const SearchBookList = ({ onNextStep, setBookId }: Props) => {
 				))
 			)}
 			{isFetching ? (
-				<div>로딩 중...</div>
+				<div className="absolute_center">
+					<LoadingDots />
+				</div>
 			) : (
 				<div ref={pageRef} className="h-px" />
 			)}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { SearchInput } from '../../_components/SearchInput';
 import { MusicItem } from './MusicItem';
 import { useObserver } from '@/hooks';
-import { NonDataFallback } from '@/components';
+import { LoadingDots, NonDataFallback } from '@/components';
 
 interface Props {
 	onNextStep: () => void;
@@ -55,7 +55,9 @@ export const SearchMusicList = ({ onNextStep, setMusic }: Props) => {
 			)}
 
 			{isFetching ? (
-				<div>로딩 중...</div>
+				<div className="absolute_center">
+					<LoadingDots />
+				</div>
 			) : (
 				<div ref={pageRef} className="h-px" />
 			)}

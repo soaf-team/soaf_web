@@ -4,7 +4,7 @@ import { useObserver } from '@/hooks';
 import { SearchInput } from '../../_components/SearchInput';
 import { Movie } from '@/types';
 import { MovieItem } from './MovieItem';
-import { NonDataFallback } from '@/components';
+import { NonDataFallback, LoadingDots } from '@/components';
 
 interface Props {
 	onNextStep: () => void;
@@ -50,7 +50,9 @@ export const SearchMovieList = ({ onNextStep, setMovieId }: Props) => {
 				))
 			)}
 			{isFetching ? (
-				<div>로딩 중...</div>
+				<div className="absolute_center">
+					<LoadingDots />
+				</div>
 			) : (
 				<div ref={pageRef} className="h-px" />
 			)}
