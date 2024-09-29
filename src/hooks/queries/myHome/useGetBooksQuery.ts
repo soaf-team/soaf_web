@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Books } from '@/types';
 
 interface Props {
@@ -7,13 +7,20 @@ interface Props {
 }
 
 export const useGetBooksQuery = ({ value }: Props) => {
-	const fetchBooks = async (value: string) => {
+	const fetchBooks = async ({
+		value,
+		pageParam = 1,
+	}: {
+		value: string;
+		pageParam: number;
+	}) => {
 		try {
 			const response = await axios.get(
 				'https://dapi.kakao.com/v3/search/book',
 				{
 					params: {
 						query: value,
+						page: pageParam,
 					},
 					headers: {
 						Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_API_KEY}`,
@@ -28,15 +35,32 @@ export const useGetBooksQuery = ({ value }: Props) => {
 		}
 	};
 
-	const { data } = useQuery({
-		queryKey: ['books', value],
-		queryFn: () => fetchBooks(value),
-		staleTime: Infinity,
-		enabled: value.length > 0,
-		select: (data) => data.documents,
-	});
+	const { data, hasNextPage, fetchNextPage, isFetching } =
+		useInfiniteQuery<Books>({
+			queryKey: ['books', value],
+			queryFn: ({ pageParam = 1 }) =>
+				fetchBooks({ value, pageParam: pageParam as number }),
+			initialPageParam: 1,
+			getNextPageParam: (lastPage, allPages) => {
+				if (lastPage.meta.is_end) {
+					return undefined;
+				}
+
+				return allPages.length + 1;
+			},
+			staleTime: Infinity,
+			enabled: !!value,
+		});
+
+	const handleFetchNextPage = () => {
+		if (hasNextPage) {
+			fetchNextPage();
+		}
+	};
 
 	return {
-		books: data as Books['documents'],
+		books: data?.pages.flatMap((page) => page.documents),
+		handleFetchNextPage,
+		isFetching,
 	};
 };
