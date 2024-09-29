@@ -2,6 +2,7 @@ import { StarRating } from '@/components';
 import { Movie, MovieDetail } from '@/types';
 import { cn } from '@/utils';
 import { useMemo } from 'react';
+import defaultPoster from '@/assets/icons/my-home/movie-default.svg';
 
 interface Props {
 	type?: 'search' | 'set' | 'detail';
@@ -51,7 +52,11 @@ export const MovieItem = ({ type = 'search', onClick, movie }: Props) => {
 			<div className="flex gap-[16px]" onClick={onClick}>
 				<div className={posterClass}>
 					<img
-						src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
+						src={
+							movie.poster_path !== null
+								? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
+								: defaultPoster
+						}
 						alt="cover"
 						className={posterClass}
 					/>
