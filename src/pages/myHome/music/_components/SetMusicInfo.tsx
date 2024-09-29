@@ -19,6 +19,7 @@ export const SetMusicInfo = ({ onPrevStep, music }: Props) => {
 	return (
 		<>
 			<Header
+				className="rounded-t-[28px] mt-[24px]"
 				leftSlot={<BackButton onClick={onPrevStep} />}
 				rightSlot={
 					<button type="submit" className="label2">
@@ -26,7 +27,7 @@ export const SetMusicInfo = ({ onPrevStep, music }: Props) => {
 					</button>
 				}
 			>
-				<h1 className="head6b">나의 음악</h1>
+				<h1 className="head6sb">나의 음악</h1>
 			</Header>
 
 			<div className="flex flex-col gap-[32px] pt-[58px]">
