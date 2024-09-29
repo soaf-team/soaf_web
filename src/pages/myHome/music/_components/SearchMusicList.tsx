@@ -26,13 +26,11 @@ export const SearchMusicList = ({ onNextStep, setMusic }: Props) => {
 		onNextStep();
 	};
 
-	if (!musics) return null;
-
 	return (
 		<div className="flex flex-col">
 			<SearchInput type="music" setSearchQuery={setSearchQuery} />
 
-			{musics.length === 0 ? (
+			{musics?.length === 0 ? (
 				<div className="w-full absolute_center">
 					<NonDataFallback>
 						<p className="font-medium body2 text-gray300">
@@ -44,7 +42,7 @@ export const SearchMusicList = ({ onNextStep, setMusic }: Props) => {
 					</NonDataFallback>
 				</div>
 			) : (
-				musics.map((music: Album) => (
+				musics?.map((music: Album) => (
 					<MusicItem
 						type="search"
 						key={music.url}
