@@ -3,6 +3,7 @@ import { Album } from '@/types';
 import { useState } from 'react';
 import { SearchInput } from '../../_components/SearchInput';
 import { MusicItem } from './MusicItem';
+import { useObserver } from '@/hooks';
 
 interface Props {
 	onNextStep: () => void;
@@ -11,7 +12,10 @@ interface Props {
 
 export const SearchMusicList = ({ onNextStep, setMusic }: Props) => {
 	const [searchQuery, setSearchQuery] = useState('');
-	const { musics } = useGetMusicsQuery({ value: searchQuery });
+	const { musics, handleFetchNextPage, isFetching } = useGetMusicsQuery({
+		value: searchQuery,
+	});
+	const pageRef = useObserver(() => handleFetchNextPage());
 
 	const handleItemClick = (music: Album) => {
 		setMusic({
@@ -35,6 +39,12 @@ export const SearchMusicList = ({ onNextStep, setMusic }: Props) => {
 					onClick={() => handleItemClick(music)}
 				/>
 			))}
+
+			{isFetching ? (
+				<div>로딩 중...</div>
+			) : (
+				<div ref={pageRef} className="h-px" />
+			)}
 		</div>
 	);
 };
