@@ -22,6 +22,7 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 
 	const handleInputChange = (value: string) => {
 		setInputValue(value);
+		setSearchQuery('');
 		setIsSearch(value.length > 0);
 	};
 
