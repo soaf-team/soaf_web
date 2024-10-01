@@ -18,7 +18,16 @@ import { DiaryCancelConfirmDialog } from '../_components/DiaryCancelConfirmDialo
 const NICK_NAME = '뽀송하루';
 const MAIN_MESSAGE = `${NICK_NAME}님,\n오늘 하루는 어떠셨나요?`;
 
-const NewDiaryStep1: ActivityComponentType = () => {
+type NewDiaryStep1Props = {
+	date: string;
+};
+
+const NewDiaryStep1: ActivityComponentType<NewDiaryStep1Props> = ({
+	params,
+}: {
+	params: { date: string };
+}) => {
+	const { date } = params;
 	const { diary, onChangeRating, resetAllDiaryState, onChangeDate } =
 		useDiaryStore();
 	const { push, pop } = useFlow();
@@ -36,7 +45,7 @@ const NewDiaryStep1: ActivityComponentType = () => {
 	};
 
 	useEffect(() => {
-		onChangeDate(new Date());
+		onChangeDate(date);
 	}, []);
 
 	const headerRightButton = canBackWithoutDialog ? (
