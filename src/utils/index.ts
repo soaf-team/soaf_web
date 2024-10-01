@@ -6,3 +6,4 @@ export * from './getDateStatus';
 export * from './log';
 export * from './extractTokensFromCookies';
 export * from './sendMessageToApp';
+export * from './convertToBase64';

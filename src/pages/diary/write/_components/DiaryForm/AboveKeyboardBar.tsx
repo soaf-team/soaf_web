@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { DiaryFormType, useDiaryStore } from '@/store';
 import { useKeyboardHeight } from '@/hooks';
 import { Lock, Photo, UnLock } from '@/assets';
+import { convertToBase64 } from '@/utils';
 
 type AboveKeyboardBarProps = {
 	diary: DiaryFormType;
@@ -25,12 +26,16 @@ export const AboveKeyboardBar = ({
 		photoInputRef.current?.click();
 	};
 
-	const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const onImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files[0]) {
 			const img = event.target.files[0];
-			const newImage = URL.createObjectURL(img);
 
-			onChangePhotos([...diary.photos, newImage]);
+			try {
+				const base64Image = await convertToBase64(img);
+				onChangePhotos([...diary.photos, base64Image]);
+			} catch (error) {
+				console.error('Error converting image to Base64:', error);
+			}
 		}
 	};
 
