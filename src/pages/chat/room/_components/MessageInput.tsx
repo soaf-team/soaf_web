@@ -1,19 +1,33 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, useRef } from 'react';
 
-import { useSocket } from '@/hooks';
 import { cn } from '@/utils';
 import { AlbumIcon, CameraIcon, sendIcon } from '@/assets';
 import { Spacing } from '@/components';
-
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+import { chatSocketManager } from '@/libs';
 
 export const MessageInput = () => {
 	const [message, setMessage] = useState('');
-	const { emit } = useSocket(SOCKET_URL);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		emit('sendMessage', message);
+		chatSocketManager.emit('sendMessage', {
+			roomId: '1',
+			type: 'text',
+			content: [message],
+		});
+	};
+
+	const openAlbum = () => {
+		fileInputRef.current?.click();
+	};
+
+	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const files = event.target.files;
+		if (files) {
+			// TODO: emit send message 로직 추가
+			console.log('선택된 파일:', files);
+		}
 	};
 
 	return (
@@ -30,9 +44,17 @@ export const MessageInput = () => {
 				<img src={CameraIcon} alt="camera" />
 			</button>
 			<Spacing direction="horizontal" size={14} />
-			<button type="button">
+			<button type="button" onClick={openAlbum}>
 				<img src={AlbumIcon} alt="album" />
 			</button>
+			<input
+				type="file"
+				ref={fileInputRef}
+				onChange={handleFileChange}
+				accept="image/*"
+				multiple
+				style={{ display: 'none' }}
+			/>
 			<Spacing direction="horizontal" size={10} />
 			<div
 				className={cn(
