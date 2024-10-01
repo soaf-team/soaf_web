@@ -15,4 +15,5 @@ export const QUERY_KEY = {
 
 	META_DIARY: 'metaDiary',
 	SIMILAR_USER: 'similarUser',
+	MY_MUSIC_LIST: 'myMusicList',
 };

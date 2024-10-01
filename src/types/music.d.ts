@@ -57,3 +57,11 @@ interface Tag {
 	name: string;
 	url: string;
 }
+
+export interface MyMusic {
+	id: number;
+	title: string;
+	artist: string;
+	thumbnailUrl: string;
+	review?: string;
+}
