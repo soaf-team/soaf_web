@@ -70,7 +70,7 @@ export const MusicItem = ({ type, onClick, music }: Props) => {
 					<p className={cn('line-clamp-1', artistClass)}>{getArtist()}</p>
 				</div>
 
-				<p className="text-black body4">{review}</p>
+				{type === 'list' && <p className="text-black body4">{review}</p>}
 			</div>
 		</div>
 	);
