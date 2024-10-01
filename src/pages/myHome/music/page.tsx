@@ -5,8 +5,10 @@ import { overlay } from '@/libs';
 import { useUserProfileQuery, useMyMusicListQuery } from '@/hooks';
 import { MusicItem } from './_components/MusicItem';
 import { MusicItemSkeleton } from './_components/MusicItemSkeleton';
+import { useFlow } from '@/stackflow';
 
 const MyMusicPage = () => {
+	const { push } = useFlow();
 	const { userProfile } = useUserProfileQuery();
 	const { myMusicList, isFetching, MOCK_MY_MUSIC_LIST } = useMyMusicListQuery(
 		userProfile?.id,
@@ -16,6 +18,11 @@ const MyMusicPage = () => {
 		await overlay.open(<MyHomeDrawer component={<RegisterMusicForm />} />);
 	};
 
+	const handleClickMusicItem = (musicId: number) => {
+		push('MyMusicDetailPage', {
+			musicId,
+		});
+	};
 	// myMusicList?.data.length === 0 ? (
 	// 	<div className="flex flex-col gap-[8px] justify-center items-center h-full body2m text-gray200">
 	// 		<p>좋아하는 음악을 추가해</p>
@@ -40,7 +47,12 @@ const MyMusicPage = () => {
 					</>
 				) : (
 					MOCK_MY_MUSIC_LIST.map((music) => (
-						<MusicItem key={music.id} type="list" music={music} />
+						<MusicItem
+							key={music.id}
+							type="list"
+							music={music}
+							onClick={() => handleClickMusicItem(music.id)}
+						/>
 					))
 				)}
 			</div>
