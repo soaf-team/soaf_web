@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { YoutubeItemProps } from './YoutubeItems';
+import { YoutubeItemProps } from './YoutubeItem';
 import { useFunnel } from '@/hooks';
 import { GenericForm } from '@/components';
 import { SearchYoutubeList } from './SearchYoutubeList';

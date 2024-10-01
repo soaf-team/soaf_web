@@ -23,13 +23,11 @@ export const SearchMovieList = ({ onNextStep, setMovieId }: Props) => {
 		onNextStep();
 	};
 
-	if (!movies) return null;
-
 	return (
 		<>
 			<SearchInput type="movie" setSearchQuery={setSearchQuery} />
 
-			{movies.length === 0 ? (
+			{movies?.length === 0 ? (
 				<div className="w-full absolute_center">
 					<NonDataFallback>
 						<p className="font-medium body2 text-gray300">
@@ -41,7 +39,7 @@ export const SearchMovieList = ({ onNextStep, setMovieId }: Props) => {
 					</NonDataFallback>
 				</div>
 			) : (
-				movies.map((movie: Movie) => (
+				movies?.map((movie: Movie) => (
 					<MovieItem
 						key={movie.id}
 						movie={movie}

@@ -1,14 +1,19 @@
-import { BackButton, PageLayout } from '@/components';
+import { BackButton, PageLayout, PlusButton } from '@/components';
 import { MyHomeDrawer } from '../_components';
 import { RegisterMovieForm } from './_components/RegisterMovieForm';
+import { overlay } from '@/libs';
 
 const MyMoviePage = () => {
+	const handleOpenOverlay = async () => {
+		await overlay.open(<MyHomeDrawer component={<RegisterMovieForm />} />);
+	};
+
 	return (
 		<PageLayout
 			header={{
 				leftSlot: <BackButton />,
 				title: <h1 className="head6b">나의 영화</h1>,
-				rightSlot: <MyHomeDrawer component={<RegisterMovieForm />} />,
+				rightSlot: <PlusButton onClick={handleOpenOverlay} />,
 			}}
 		>
 			<div className="flex flex-col gap-[8px] justify-center items-center h-full body2m text-gray200">

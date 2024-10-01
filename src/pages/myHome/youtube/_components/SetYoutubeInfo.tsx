@@ -1,5 +1,5 @@
 import { BackButton, Header } from '@/components';
-import { YoutubeItem, YoutubeItemProps } from './YoutubeItems';
+import { YoutubeItem, YoutubeItemProps } from './YoutubeItem';
 import { ReviewSection } from '../../_components';
 
 interface Props {
@@ -11,6 +11,7 @@ export const SetYoutubeInfo = ({ onPrevStep, youtubeInfo }: Props) => {
 	return (
 		<>
 			<Header
+				className="rounded-t-[28px] mt-[24px]"
 				leftSlot={<BackButton onClick={onPrevStep} />}
 				rightSlot={
 					<button type="submit" className="label2">

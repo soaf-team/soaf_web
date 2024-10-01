@@ -1,7 +1,7 @@
 import { useGetYoutubeQuery } from '@/hooks';
 import { Youtube } from '@/types';
 import React, { useState } from 'react';
-import { YoutubeItem, YoutubeItemProps } from './YoutubeItems';
+import { YoutubeItem, YoutubeItemProps } from './YoutubeItem';
 import { SearchInput } from '../../_components';
 import { NonDataFallback } from '@/components';
 

@@ -22,6 +22,7 @@ export const SetMovieInfo = ({ onPrevStep, movieId }: Props) => {
 	return (
 		<>
 			<Header
+				className="rounded-t-[28px] mt-[24px]"
 				leftSlot={<BackButton onClick={onPrevStep} />}
 				rightSlot={
 					<button type="submit" className="label2">

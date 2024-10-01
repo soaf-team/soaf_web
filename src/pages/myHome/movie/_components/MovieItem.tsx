@@ -64,7 +64,7 @@ export const MovieItem = ({ type = 'search', onClick, movie }: Props) => {
 
 				<div
 					className={cn(
-						'flex flex-col gap-[8px]py-[8px]',
+						'flex flex-col gap-[8px] py-[8px]',
 						type === 'search' ? 'justify-between' : '',
 					)}
 				>

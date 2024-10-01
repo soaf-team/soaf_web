@@ -39,11 +39,10 @@ export const YoutubeItem = ({ type = 'search', onClick, youtube }: Props) => {
 					<img src={youtube.thumbnail} alt="cover" className={posterClass} />
 				</div>
 
-				<div className="flex flex-col justify-between gap-[8px] py-[8px]">
+				<div className="flex flex-col justify-between gap-[8px] py-[8px] items-start">
 					<p className={cn('line-clamp-2', titleClass)}>{youtube.title}</p>
 					<div className="flex gap-[4px] justify-center label4 text-gray200">
-						<p>{detailDate(youtube.publishedAt)}</p>
-
+						<p>{detailDate(youtube.publishedAt)}</p>|
 						<p>{youtube.channelTitle}</p>
 					</div>
 				</div>
