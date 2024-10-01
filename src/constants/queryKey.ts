@@ -2,6 +2,7 @@ export const QUERY_KEY = {
 	userProfile: 'userProfile',
 
 	currentUserDiaryList: 'currentUserDiaryList',
+	diaryDetail: 'diaryDetail',
 
 	CURRENT_USER: 'currentUser',
 
