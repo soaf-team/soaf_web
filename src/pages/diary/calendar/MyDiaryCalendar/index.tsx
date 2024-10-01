@@ -23,15 +23,19 @@ export const MyDiaryCalendar = () => {
 		string | number | null
 	>(0.5);
 
-	console.log(currentUserDiaryList);
-
-	const handleDateClick = (diaryAtDate: Diary, isFuture: boolean) => {
+	const handleDateClick = (
+		diaryAtDate: Diary | undefined,
+		isFuture: boolean,
+		date: string,
+	) => {
 		setActiveSnapPoint(0.5);
 		if (diaryAtDate) {
 			setSelectedDiary(diaryAtDate);
 		}
 		if (isFuture || diaryAtDate) return;
-		push('NewDiaryStep1', {});
+		push('NewDiaryStep1', {
+			date,
+		});
 	};
 
 	const resetSelectedDiary = () => {
@@ -87,7 +91,9 @@ export const MyDiaryCalendar = () => {
 								</span>
 								<div
 									key={index}
-									onClick={() => handleDateClick(diaryAtDate, isFuture)}
+									onClick={() =>
+										handleDateClick(diaryAtDate, isFuture, day.toISOString())
+									}
 									className={cn([
 										'flex items-center justify-center relative h-[40px] w-[40px] rounded-full',
 										dayCircleClass,
