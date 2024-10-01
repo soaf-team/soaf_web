@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import { cn } from '@/utils';
 import {
@@ -59,13 +58,10 @@ export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
 					일기에 대한 따뜻한 마음을 남겨보세요.
 				</div>
 			)}
-			{createPortal(
-				<ReactionCloud
-					isVisible={isOpened}
-					onCloudClose={() => setIsOpened(false)}
-				/>,
-				document.getElementById('modal') as HTMLElement,
-			)}
+			<ReactionCloud
+				isVisible={isOpened}
+				onCloudClose={() => setIsOpened(false)}
+			/>
 		</div>
 	);
 };
@@ -102,7 +98,7 @@ const ReactionCloud = ({
 	return (
 		<div
 			className={cn([
-				'absolute inset-0 max-w-window m-auto transition-all duration-300 z-[9999]',
+				'fixed inset-0 max-w-window m-auto transition-all duration-300 z-[9999]',
 				visibleStyle,
 			])}
 		>
