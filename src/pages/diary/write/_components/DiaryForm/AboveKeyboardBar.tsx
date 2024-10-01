@@ -70,7 +70,7 @@ export const AboveKeyboardBar = ({
 				height: isOnKeyboard ? '39px' : '73px',
 			}}
 		>
-			<div className="flex justify-between h-[39px] w-full pb-[100px]">
+			<div className="flex justify-between h-[39px] w-full">
 				<div className="flex items-center gap-[16px]">
 					<div>
 						<input
