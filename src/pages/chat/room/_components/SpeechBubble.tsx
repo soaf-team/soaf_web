@@ -1,6 +1,12 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+
 import { VariantProps, cva } from 'class-variance-authority';
+
+import { ImageGrid } from './ImageGrid';
 import { cn } from '@/utils';
+
+dayjs.locale('ko');
 
 const bubbleVariants = cva(
 	`inline-flex items-center justify-center rounded-[16px] py-[8px] px-[12px]`,
@@ -22,7 +28,8 @@ interface Props
 	extends React.HTMLAttributes<HTMLDivElement>,
 		VariantProps<typeof bubbleVariants> {
 	nickname?: string;
-	message: string;
+	type: 'text' | 'image';
+	message: string[];
 	sentAt: string;
 	isLast?: boolean;
 	isGap?: boolean;
@@ -31,6 +38,7 @@ interface Props
 export const SpeechBubble = ({
 	nickname,
 	message,
+	type,
 	sentAt,
 	isLast,
 	isGap,
@@ -45,7 +53,7 @@ export const SpeechBubble = ({
 		<article
 			className={`flex gap-[4px] ${isMine ? 'flex-row-reverse' : 'flex-col'} ${isGap ? 'mb-[16px]' : 'mb-[8px]'}`}
 		>
-			{!isMine && (
+			{!isMine && order === 'isOpponentFirst' && (
 				<div className="leading-[16px] text-[12px] text-gray400">
 					{nickname}
 				</div>
@@ -54,18 +62,22 @@ export const SpeechBubble = ({
 			<div className="flex items-end gap-[4px] max-w-[90%]">
 				{isMine && isLast && (
 					<div className="text-[10px] whitespace-nowrap text-gray400">
-						{dayjs(sentAt).format('a HH:mm')}
+						{dayjs(sentAt).format('A hh:mm')}
 					</div>
 				)}
-				<div
-					{...props}
-					className={cn(bubbleVariants({ variant, order, className }))}
-				>
-					<div className="text-[16px]">{message}</div>
-				</div>
+				{type === 'text' ? (
+					<div
+						{...props}
+						className={cn(bubbleVariants({ variant, order, className }))}
+					>
+						<div className="text-[16px]">{message[0]}</div>
+					</div>
+				) : (
+					<ImageGrid images={message} />
+				)}
 				{!isMine && isLast && (
 					<div className="text-[10px] whitespace-nowrap text-gray400">
-						{dayjs(sentAt).format('a HH:mm')}
+						{dayjs(sentAt).format('A hh:mm')}
 					</div>
 				)}
 			</div>
