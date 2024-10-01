@@ -29,7 +29,7 @@ const NewDiaryStep3: ActivityComponentType = () => {
 
 	useEffect(() => {
 		if (isUnusualApproach) {
-			replace('DiaryCalendar', {});
+			replace('DiaryCalendarPage', {});
 			resetAllDiaryState();
 		}
 	}, []);
