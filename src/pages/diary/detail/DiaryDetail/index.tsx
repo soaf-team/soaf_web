@@ -1,4 +1,4 @@
-import { useDiaryQuery } from '@/hooks';
+import { useDiaryDetailQuery } from '@/hooks';
 import { DiaryContent } from '../../_components';
 import { DiaryReaction } from './DiaryReaction';
 
@@ -7,7 +7,7 @@ type DiaryDetailProps = {
 };
 
 export const DiaryDetail = ({ diaryId }: DiaryDetailProps) => {
-	const { diary } = useDiaryQuery({ diaryId });
+	const { diary } = useDiaryDetailQuery(diaryId);
 
 	const reactions = diary!.reactions;
 
