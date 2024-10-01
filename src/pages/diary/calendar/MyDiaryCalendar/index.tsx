@@ -13,12 +13,17 @@ import { YearMonthSelect } from '@/components/YearMonthSelect';
 
 export const MyDiaryCalendar = () => {
 	const { push } = useFlow();
-	const { currentUserDiaryList } = useMyDiaryListQuery();
 	const [selectedDiary, setSelectedDiary] = useState<Diary | null>(null);
 	const [currentDate, setCurrentDate] = useState(new Date());
+	const { currentUserDiaryList } = useMyDiaryListQuery(
+		currentDate.getFullYear(),
+		currentDate.getMonth() + 1,
+	);
 	const [activeSnapPoint, setActiveSnapPoint] = useState<
 		string | number | null
 	>(0.5);
+
+	console.log(currentUserDiaryList);
 
 	const handleDateClick = (diaryAtDate: Diary, isFuture: boolean) => {
 		setActiveSnapPoint(0.5);
