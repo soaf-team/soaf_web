@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+
+import { chatSocketManager, socketManager } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { cn } from '@/utils';
 
@@ -39,8 +42,43 @@ const MOCK_CHAT_LIST = [
 	},
 ];
 
+const TOKEN = import.meta.env.VITE_TOKEN;
+
 export const ChatList = () => {
 	const { push } = useFlow();
+
+	useEffect(() => {
+		socketManager.setToken(TOKEN);
+		socketManager.connect();
+		chatSocketManager.connectForPage('ChatList');
+
+		const handleStatus = (status: string) => {
+			console.log('Status:', status);
+		};
+
+		const handleChatList = (receivedChatList: any[]) => {
+			console.log(receivedChatList);
+		};
+
+		const handleNewMessage = (message: any) => {
+			console.log('New message:', message);
+		};
+
+		chatSocketManager.on('status', handleStatus);
+		chatSocketManager.on('chatList', handleChatList);
+		chatSocketManager.on('newMessage', handleNewMessage);
+
+		// 초기 채팅 목록 요청
+		chatSocketManager.emit('requestChatList', {});
+
+		return () => {
+			socketManager.disconnect();
+			chatSocketManager.off('status', handleStatus);
+			chatSocketManager.off('chatList', handleChatList);
+			chatSocketManager.off('newMessage', handleNewMessage);
+			chatSocketManager.disconnectForPage('ChatList');
+		};
+	}, []);
 
 	return (
 		<div className="flex flex-col">
