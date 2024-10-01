@@ -1,8 +1,12 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+
 import { VariantProps, cva } from 'class-variance-authority';
 
 import { ImageGrid } from './ImageGrid';
 import { cn } from '@/utils';
+
+dayjs.locale('ko');
 
 const bubbleVariants = cva(
 	`inline-flex items-center justify-center rounded-[16px] py-[8px] px-[12px]`,
@@ -58,7 +62,7 @@ export const SpeechBubble = ({
 			<div className="flex items-end gap-[4px] max-w-[90%]">
 				{isMine && isLast && (
 					<div className="text-[10px] whitespace-nowrap text-gray400">
-						{dayjs(sentAt).format('a HH:mm')}
+						{dayjs(sentAt).format('A hh:mm')}
 					</div>
 				)}
 				{type === 'text' ? (
@@ -73,7 +77,7 @@ export const SpeechBubble = ({
 				)}
 				{!isMine && isLast && (
 					<div className="text-[10px] whitespace-nowrap text-gray400">
-						{dayjs(sentAt).format('a HH:mm')}
+						{dayjs(sentAt).format('A hh:mm')}
 					</div>
 				)}
 			</div>
