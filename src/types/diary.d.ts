@@ -23,6 +23,7 @@ export type Diary = {
 	title: string;
 	content: string;
 	photos: string[];
+	rating: MoodRating;
 	emotions: EmotionKey[];
 	date: string;
 	reactions: {
@@ -30,6 +31,7 @@ export type Diary = {
 	};
 	createdAt: string;
 	updatedAt: string;
+	isPublic: boolean;
 };
 
 export type MoodRating = 1 | 2 | 3 | 4 | 5;

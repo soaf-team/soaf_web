@@ -21,7 +21,7 @@ const NewDiaryStep3: ActivityComponentType = () => {
 		onChangeTitle,
 		onChangeContent,
 		onChangePhotos,
-		togglePrivate,
+		togglePublic,
 		resetAllDiaryState,
 	} = useDiaryStore();
 	const isUnusualApproach =
@@ -56,7 +56,7 @@ const NewDiaryStep3: ActivityComponentType = () => {
 					handleTitleChange={onChangeTitle}
 					handleContentChange={onChangeContent}
 					handlePhotosChange={onChangePhotos}
-					handleTogglePrivate={togglePrivate}
+					handleTogglePublic={togglePublic}
 				/>
 				<DiaryCancelConfirmDialog popCount={3} />
 			</PageLayout>

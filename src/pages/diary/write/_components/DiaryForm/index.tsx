@@ -4,6 +4,7 @@ import { EmotionKey } from '@/types';
 import { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
 import { AboveKeyboardBar } from './AboveKeyboardBar';
 import { DeletePhoto } from '@/assets';
+import { diaryMutations } from '@/hooks/mutations';
 
 const CONTENT_PLACEHOLDER = '오늘 하루는 어땠나요?';
 
@@ -13,7 +14,7 @@ type DiaryFormProps = {
 	handleTitleChange: (title: string) => void;
 	handleContentChange: (content: string) => void;
 	handlePhotosChange: (photos: string[]) => void;
-	handleTogglePrivate: () => void;
+	handleTogglePublic: () => void;
 };
 
 export const DiaryForm = (props: DiaryFormProps) => {
@@ -23,8 +24,9 @@ export const DiaryForm = (props: DiaryFormProps) => {
 		handleTitleChange,
 		handleContentChange,
 		handlePhotosChange,
-		handleTogglePrivate,
+		handleTogglePublic,
 	} = props;
+	const { createUserMutation } = diaryMutations();
 	const titleRef = useRef<HTMLTextAreaElement>(null);
 	const contentRef = useRef<HTMLTextAreaElement>(null);
 
@@ -43,6 +45,18 @@ export const DiaryForm = (props: DiaryFormProps) => {
 
 	const handleKeepKeyboard = () => {
 		contentRef.current?.focus();
+	};
+
+	const handleSaveDiaryButtonClick = async () => {
+		createUserMutation.mutate({
+			title: diary.title,
+			date: diary.date,
+			content: diary.content,
+			coreEmotion: diary.rating!,
+			detailedEmotions: diary.emotions,
+			isPublic: diary.isPublic,
+			imageBox: diary.photos,
+		});
 	};
 
 	useEffect(() => {
@@ -111,8 +125,8 @@ export const DiaryForm = (props: DiaryFormProps) => {
 			<AboveKeyboardBar
 				diary={diary}
 				handleAddPhoto={handlePhotosChange}
-				handleSaveDiary={() => {}}
-				handleTogglePrivate={handleTogglePrivate}
+				handleSaveDiary={handleSaveDiaryButtonClick}
+				handleTogglePublic={handleTogglePublic}
 				handleKeepKeyboard={handleKeepKeyboard}
 			/>
 		</>

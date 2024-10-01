@@ -8,14 +8,14 @@ type AboveKeyboardBarProps = {
 	diary: DiaryFormType;
 	handleAddPhoto: (photos: string[]) => void;
 	handleSaveDiary: () => void;
-	handleTogglePrivate: () => void;
+	handleTogglePublic: () => void;
 	handleKeepKeyboard: () => void;
 };
 
 export const AboveKeyboardBar = ({
 	diary,
 	handleSaveDiary,
-	handleTogglePrivate,
+	handleTogglePublic,
 	handleKeepKeyboard,
 }: AboveKeyboardBarProps) => {
 	const photoInputRef = useRef<HTMLInputElement>(null);
@@ -43,7 +43,7 @@ export const AboveKeyboardBar = ({
 		if (isOnKeyboard) {
 			handleKeepKeyboard();
 		}
-		handleTogglePrivate();
+		handleTogglePublic();
 	};
 
 	useEffect(() => {
@@ -70,7 +70,7 @@ export const AboveKeyboardBar = ({
 				height: isOnKeyboard ? '39px' : '73px',
 			}}
 		>
-			<div className="flex justify-between h-[39px] w-full">
+			<div className="flex justify-between h-[39px] w-full pb-[100px]">
 				<div className="flex items-center gap-[16px]">
 					<div>
 						<input
@@ -83,7 +83,7 @@ export const AboveKeyboardBar = ({
 						<img src={Photo} alt="photo" onClick={handleAddPhotoButtonClick} />
 					</div>
 					<img
-						src={diary.private ? Lock : UnLock}
+						src={diary.isPublic ? UnLock : Lock}
 						alt="emoji"
 						onClick={handleTogglePrivateButtonClick}
 					/>
