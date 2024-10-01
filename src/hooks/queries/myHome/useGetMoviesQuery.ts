@@ -21,9 +21,12 @@ export const useGetMoviesQuery = ({ value }: { value: string }) => {
 						include_adult: false,
 						language: 'ko-KR',
 					},
+					headers: {
+						Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
+						Accept: 'application/json',
+					},
 				},
 			);
-
 			return response.data;
 		} catch (error) {
 			console.error(error);
