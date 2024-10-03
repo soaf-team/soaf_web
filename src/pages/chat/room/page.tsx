@@ -107,8 +107,8 @@ const DUMMY_CHAT: ChatMessage[] = [
 
 const CUSTOMER_ID = 1;
 
-const ChatRoomPage = ({ params }: { params: { userId: string } }) => {
-	const { userId } = params;
+const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
+	const { roomId } = params;
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -123,7 +123,7 @@ const ChatRoomPage = ({ params }: { params: { userId: string } }) => {
 				console.log(message);
 			});
 		};
-	}, [userId]);
+	}, [roomId]);
 
 	useLayoutEffect(() => {
 		if (chatContainerRef.current) {
@@ -177,7 +177,7 @@ const ChatRoomPage = ({ params }: { params: { userId: string } }) => {
 					})}
 				</div>
 			</div>
-			<MessageInput />
+			<MessageInput roomId={roomId} />
 		</PageLayout>
 	);
 };

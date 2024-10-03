@@ -5,14 +5,15 @@ import { AlbumIcon, CameraIcon, sendIcon } from '@/assets';
 import { Spacing } from '@/components';
 import { chatSocketManager } from '@/libs';
 
-export const MessageInput = () => {
+export const MessageInput = ({ roomId }: { roomId: string }) => {
+	console.log(roomId);
 	const [message, setMessage] = useState('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		chatSocketManager.emit('sendMessage', {
-			roomId: '1',
+			roomId,
 			type: 'text',
 			content: [message],
 		});
