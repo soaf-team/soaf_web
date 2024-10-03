@@ -35,3 +35,19 @@ export const detailDate = (date: string) => {
 
 	return `방금 전`;
 };
+
+export const formatToLocalTime = (utcTimeString: string): string => {
+	if (!utcTimeString) {
+		return '오전 12:00';
+	}
+
+	const date = new Date(utcTimeString);
+
+	const formatter = new Intl.DateTimeFormat(undefined, {
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: true,
+	});
+
+	return formatter.format(date);
+};
