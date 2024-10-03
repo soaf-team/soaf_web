@@ -6,3 +6,4 @@ export type * from './music';
 export type * from './movie';
 export type * from './book';
 export type * from './youtube';
+export type * from './chat';

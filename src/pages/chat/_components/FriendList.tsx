@@ -1,7 +1,7 @@
-import { cn } from '@/utils';
-import { MyHomeIcon, AnnotationPlus } from '@/assets';
-import { Spacing } from '@/components';
 import { MyHomeButton } from './MyHomeButton';
+import { chatSocketManager } from '@/libs';
+import { cn } from '@/utils';
+import { AnnotationPlus } from '@/assets';
 
 const MOCK_DATA = [
 	{
@@ -58,6 +58,12 @@ export const FriendList = () => {
 								alt="start-chat"
 								width={24}
 								height={24}
+								onClick={() => {
+									// TODO: 이후 해당 user와 관련된 room이 있으면 initializeChat이 아니라 enterChat로 분기 필요
+									chatSocketManager.emit('initializeChat', {
+										participants: [item.name],
+									});
+								}}
 							/>
 						</div>
 					</li>

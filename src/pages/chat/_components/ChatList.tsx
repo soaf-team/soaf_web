@@ -1,91 +1,19 @@
-import { useEffect } from 'react';
-
-import { chatSocketManager, socketManager } from '@/libs';
 import { useFlow } from '@/stackflow';
-import { cn } from '@/utils';
-
-const MOCK_CHAT_LIST = [
-	{
-		id: 1,
-		name: '뽀송하루',
-		message: '안녕하세요',
-		unreadLength: 3,
-		time: '2024-09-05 12:00',
-	},
-	{
-		id: 2,
-		name: '뽀송하루2',
-		message: '안녕하세요',
-		unreadLength: 1,
-		time: '2024-09-04 12:00',
-	},
-	{
-		id: 3,
-		name: '뽀송하루',
-		message: '안녕하세요2',
-		unreadLength: 5,
-		time: '2024-09-03 12:00',
-	},
-	{
-		id: 4,
-		name: '뽀송하루4',
-		message: '안녕하세요4',
-		unreadLength: 3,
-		time: '2024-09-02 12:00',
-	},
-	{
-		id: 5,
-		name: '뽀송하루5',
-		message: '안녕하세요5',
-		unreadLength: 8,
-		time: '2024-09-01 12:00',
-	},
-];
-
-const TOKEN = import.meta.env.VITE_TOKEN;
+import { useChatListStore } from '@/store';
+import { cn, formatToLocalTime } from '@/utils';
 
 export const ChatList = () => {
+	const { chatList } = useChatListStore();
 	const { push } = useFlow();
 
-	useEffect(() => {
-		socketManager.setToken(TOKEN);
-		socketManager.connect();
-		chatSocketManager.connectForPage('ChatList');
-
-		const handleStatus = (status: string) => {
-			console.log('Status:', status);
-		};
-
-		const handleChatList = (receivedChatList: any[]) => {
-			console.log(receivedChatList);
-		};
-
-		const handleNewMessage = (message: any) => {
-			console.log('New message:', message);
-		};
-
-		chatSocketManager.on('status', handleStatus);
-		chatSocketManager.on('chatList', handleChatList);
-		chatSocketManager.on('newMessage', handleNewMessage);
-
-		// 초기 채팅 목록 요청
-		chatSocketManager.emit('requestChatList', {});
-
-		return () => {
-			socketManager.disconnect();
-			chatSocketManager.off('status', handleStatus);
-			chatSocketManager.off('chatList', handleChatList);
-			chatSocketManager.off('newMessage', handleNewMessage);
-			chatSocketManager.disconnectForPage('ChatList');
-		};
-	}, []);
+	console.log(chatList);
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col pb-2 overflow-y-auto">
 			<ul className="flex flex-col gap-2 pt-[14px] px-[18px]">
-				{MOCK_CHAT_LIST.map((chat) => (
+				{chatList.map((chat) => (
 					<li
-						key={chat.id}
+						key={chat.roomId}
 						className={cn(
 							'flex justify-between',
 							'p-4 w-full',
@@ -93,25 +21,31 @@ export const ChatList = () => {
 						)}
 						onClick={() => {
 							push('ChatRoomPage', {
-								userId: chat.id,
+								roomId: chat.roomId,
 							});
 						}}
 					>
 						<div className={LIST_CON_STYLE}>
-							<p>{chat.name}</p>
-							<p className="text-sm text-gray300 font-medium">{chat.message}</p>
+							<p>{chat.friendId}</p>
+							<p className="text-sm text-gray300 font-medium">
+								{chat.lastMessage?.content[0]}
+							</p>
 						</div>
 						<div className={cn(LIST_CON_STYLE, 'items-end')}>
-							<p className="text-gray600">{chat.time.split(' ')[1]}</p>
-							<div
-								className={cn(
-									'flex justify-center items-center',
-									'w-[18px] h-[18px]',
-									'bg-warn text-white text-[10px] rounded-full',
-								)}
-							>
-								{chat.unreadLength}
-							</div>
+							<p className="text-gray600">
+								{formatToLocalTime(chat.lastMessage?.timestamp ?? '')}
+							</p>
+							{chat.unreadCnt > 0 && (
+								<div
+									className={cn(
+										'flex justify-center items-center',
+										'w-[18px] h-[18px]',
+										'bg-warn text-white text-[10px] rounded-full',
+									)}
+								>
+									{chat.unreadCnt}
+								</div>
+							)}
 						</div>
 					</li>
 				))}
