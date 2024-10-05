@@ -43,14 +43,22 @@ const MyMusicPage = () => {
 						<p>나만의 취향 목록을 만들어보세요</p>
 					</div>
 				) : (
-					myMusicList?.data.map((music) => (
-						<MusicItem
-							key={music._id}
-							type="list"
-							music={music}
-							onClick={() => handleClickMusicItem(music._id)}
-						/>
-					))
+					<div className="flex flex-col gap-[14px] items-center justify-center">
+						<p className="text-gray-300 label3">
+							총 {myMusicList?.data.length}곡의 음악
+						</p>
+
+						<div className="w-full">
+							{myMusicList?.data.map((music) => (
+								<MusicItem
+									key={music._id}
+									type="list"
+									music={music}
+									onClick={() => handleClickMusicItem(music._id)}
+								/>
+							))}
+						</div>
+					</div>
 				)}
 			</div>
 		</PageLayout>
