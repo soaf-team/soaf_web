@@ -58,7 +58,7 @@ export const MusicItem = ({ type, onClick, music }: Props) => {
 	return (
 		<div
 			className={cn(
-				'flex gap-[16px] py-[8px] border-solid border-b border-border',
+				'flex gap-[16px] py-[8px] border-solid border-b border-border w-full',
 				type === 'search' ? 'items-center' : 'items-start',
 			)}
 			onClick={onClick}

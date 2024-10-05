@@ -48,16 +48,14 @@ const MyMusicPage = () => {
 							총 {myMusicList?.data.length}곡의 음악
 						</p>
 
-						<div className="w-full">
-							{myMusicList?.data.map((music) => (
-								<MusicItem
-									key={music._id}
-									type="list"
-									music={music}
-									onClick={() => handleClickMusicItem(music._id)}
-								/>
-							))}
-						</div>
+						{myMusicList?.data.map((music) => (
+							<MusicItem
+								key={music._id}
+								type="list"
+								music={music}
+								onClick={() => handleClickMusicItem(music._id)}
+							/>
+						))}
 					</div>
 				)}
 			</div>
