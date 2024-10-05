@@ -22,6 +22,7 @@ export const SearchMusicList = ({ onNextStep, setMusic }: Props) => {
 		setMusic({
 			name: music.name,
 			artist: music.artist,
+			imageUrl: music.image[3]['#text'],
 		});
 		onNextStep();
 	};

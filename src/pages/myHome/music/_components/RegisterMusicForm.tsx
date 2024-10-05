@@ -10,6 +10,7 @@ export const RegisterMusicForm = () => {
 	const [music, setMusic] = useState<Record<string, string>>({
 		name: '',
 		artist: '',
+		imageUrl: '',
 	});
 
 	const { Funnel, Step, setStep } = useFunnel(STEP[0]);
@@ -22,12 +23,8 @@ export const RegisterMusicForm = () => {
 		setStep(STEP[0]);
 	};
 
-	const handleSubmit = () => {
-		// TODO: Submit 로직
-	};
-
 	return (
-		<GenericForm formOptions={{ mode: 'onSubmit' }} onSubmit={handleSubmit}>
+		<GenericForm formOptions={{ mode: 'onSubmit' }}>
 			<Funnel>
 				<Step name={STEP[0]}>
 					<SearchMusicList onNextStep={handleNextStep} setMusic={setMusic} />
