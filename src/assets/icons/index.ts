@@ -9,6 +9,9 @@ import FullStarIcon from './fillStar.svg';
 import HalfStarIcon from './halfStar.svg';
 import EmptyStarIcon from './emptyStar.svg';
 import DeleteInput from './x-with-bg.svg';
+import PencilIcon from './pencil.svg';
+import TrashIcon from './trash.svg';
+import WarningIcon from './warning.svg';
 
 export {
 	Plus,
@@ -22,6 +25,9 @@ export {
 	HalfStarIcon,
 	EmptyStarIcon,
 	DeleteInput,
+	PencilIcon,
+	TrashIcon,
+	WarningIcon,
 };
 
 export * from './header';
