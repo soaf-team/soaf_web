@@ -13,8 +13,6 @@ const ImageDetailPage: ActivityComponentType<ImageDetailPageParams> = ({
 }) => {
 	const { src, alt } = params;
 
-	console.log(src);
-
 	return (
 		<PageLayout
 			header={{
