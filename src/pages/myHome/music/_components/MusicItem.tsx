@@ -33,20 +33,23 @@ export const MusicItem = ({ type, onClick, music }: Props) => {
 	);
 
 	const getImageUrl = () => {
-		if ('thumbnailUrl' in music) {
-			return music.thumbnailUrl || MusicDefaultIcon;
+		if ('content' in music) {
+			return music.content.imageUrl || MusicDefaultIcon;
 		}
 		return music.image[3]['#text'] || MusicDefaultIcon;
 	};
 
 	const getTitle = () => {
-		if ('title' in music) {
-			return music.title;
+		if ('content' in music) {
+			return music.content.title;
 		}
 		return music.name === '(null)' ? '제목 불명' : music.name;
 	};
 
 	const getArtist = () => {
+		if ('content' in music) {
+			return music.content.artist;
+		}
 		return music.artist;
 	};
 
