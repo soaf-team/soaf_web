@@ -1,23 +1,24 @@
 import { Divider, Textarea } from '@/components';
 import { cn } from '@/utils';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface Props {
 	placeholder?: string;
 	title: string;
 	className?: string;
-	data?: string;
+	value: string;
 	maxLength?: number;
+	onChange: (value: string) => void;
 }
 
 export const ReviewSection = ({
 	placeholder,
 	title,
 	className,
-	data,
+	value,
 	maxLength = 1000,
+	onChange,
 }: Props) => {
-	const [value, setValue] = useState(data);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const autoResizeTextarea = () => {
@@ -41,7 +42,7 @@ export const ReviewSection = ({
 				ref={textareaRef}
 				placeholder={placeholder}
 				value={value}
-				onChange={(e) => setValue(e.target.value)}
+				onChange={(e) => onChange(e.target.value)}
 				maxLength={maxLength}
 				className={cn(
 					'min-h-0 p-0 border-none rounded-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 body2',
