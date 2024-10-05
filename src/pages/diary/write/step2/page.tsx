@@ -41,7 +41,7 @@ const NewDiaryStep2: ActivityComponentType = () => {
 
 	useEffect(() => {
 		if (isUnusualApproach) {
-			replace('DiaryCalendar', {});
+			replace('DiaryCalendarPage', {});
 			resetAllDiaryState();
 		}
 	}, []);
