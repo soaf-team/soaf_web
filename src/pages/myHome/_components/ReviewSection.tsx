@@ -9,6 +9,7 @@ interface Props {
 	value: string;
 	maxLength?: number;
 	onChange: (value: string) => void;
+	readOnly?: boolean;
 }
 
 export const ReviewSection = ({
@@ -18,6 +19,7 @@ export const ReviewSection = ({
 	value,
 	maxLength = 1000,
 	onChange,
+	readOnly,
 }: Props) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -49,6 +51,7 @@ export const ReviewSection = ({
 					className,
 				)}
 				onInput={autoResizeTextarea}
+				readOnly={readOnly}
 			/>
 
 			<div className="w-full h-px bg-border" />
