@@ -44,7 +44,7 @@ const MyMusicPage = () => {
 					</div>
 				) : (
 					<div className="flex flex-col gap-[14px] items-center justify-center">
-						<p className="text-gray-300 label3">
+						<p className="text-gray300 label3">
 							총 {myMusicList?.data.length}곡의 음악
 						</p>
 
