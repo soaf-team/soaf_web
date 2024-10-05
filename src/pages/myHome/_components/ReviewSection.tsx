@@ -1,4 +1,4 @@
-import { Divider, Textarea } from '@/components';
+import { Textarea } from '@/components';
 import { cn } from '@/utils';
 import { useEffect, useRef } from 'react';
 
@@ -51,7 +51,7 @@ export const ReviewSection = ({
 				onInput={autoResizeTextarea}
 			/>
 
-			<Divider />
+			<div className="w-full h-px bg-border" />
 		</div>
 	);
 };
