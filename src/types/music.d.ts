@@ -59,9 +59,18 @@ interface Tag {
 }
 
 export interface MyMusic {
-	id: number;
+	_id: string;
+	category: string;
+	review?: string;
+	content: MusicContent;
+	userId: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+// 백엔드에 전달할 데이터 타입
+export interface MusicContent {
+	imageUrl: string;
 	title: string;
 	artist: string;
-	thumbnailUrl: string;
-	review?: string;
 }
