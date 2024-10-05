@@ -10,5 +10,4 @@ export * from './useRippleEffect';
 export * from './usePressEffect';
 
 export * from './useAppBridge';
-export * from './useSocket';
 export * from './useObserver';
