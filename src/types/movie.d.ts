@@ -1,3 +1,5 @@
+import { RatingType } from './rating';
+
 export interface MovieList {
 	page: number;
 	results: Movie[];
@@ -107,4 +109,15 @@ export interface MovieDetail {
 	vote_average: number;
 	vote_count: number;
 	credits: Credits;
+}
+
+export interface MovieContent {
+	imageUrl: string;
+	title: string;
+	director: string;
+	releaseDate: string;
+	actors: string[];
+	story: string;
+	genre: string;
+	rating: RatingType;
 }

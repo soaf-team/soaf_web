@@ -1,3 +1,5 @@
+import { RatingType } from './rating';
+
 export interface Books {
 	meta: Meta;
 	documents: Document[];
@@ -22,4 +24,14 @@ export interface Document {
 	sale_price: number; // 판매가
 	thumbnail: string; // 표지 미리보기 url
 	status: string;
+}
+
+export interface BookContent {
+	imageUrl: string;
+	title: string;
+	author: string;
+	publisher: string;
+	releaseDate: string;
+	story: string;
+	rating: RatingType;
 }

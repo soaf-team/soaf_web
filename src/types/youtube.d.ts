@@ -48,3 +48,11 @@ export interface PageInfo {
 	totalResults: number;
 	resultsPerPage: number;
 }
+
+export interface YoutubeContent {
+	title: string;
+	channelName: string;
+	url: string;
+	publishedAt: string;
+	thumbnailUrl: string;
+}

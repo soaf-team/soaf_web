@@ -1,14 +1,19 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useGenericMutation } from './useGenericMutation';
 import { QUERY_KEY } from '@/constants';
-import { MusicContent } from '@/types';
+import {
+	MusicContent,
+	MovieContent,
+	BookContent,
+	YoutubeContent,
+} from '@/types';
 
 type MyHomePayloadCategory = 'music' | 'movie' | 'book' | 'youtube';
 
 type MyHomePayloadType = {
 	category: MyHomePayloadCategory;
 	review: string;
-	content: MusicContent;
+	content: MusicContent | MovieContent | BookContent | YoutubeContent;
 	userId: string;
 };
 
