@@ -10,4 +10,6 @@ export const QUERY_KEY = {
 	DIARY_DETAIL: 'diaryDetail',
 	MY_DIARY: 'myDiary',
 	MY_DIARY_BY_MONTH: 'myDiaryByMonth',
+
+	FRIEND_LIST: 'friendList',
 };
