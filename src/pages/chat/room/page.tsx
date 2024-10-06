@@ -52,8 +52,12 @@ const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
 			<div ref={chatContainerRef} className="flex-grow overflow-y-auto">
 				<div className="min-h-full flex flex-col">
 					{chatHistoryList.map((data, index, arr) => {
-						const { isMine, isTimeChange, isFirst, isLast, isGap } =
-							getMessageProps(data, index, arr, userProfile);
+						const { isMine, isFirst, isLast, isGap } = getMessageProps(
+							data,
+							index,
+							arr,
+							userProfile,
+						);
 
 						return (
 							<SpeechBubble
@@ -94,6 +98,9 @@ const getMessageProps = (
 	const nextMessage = arr[index + 1];
 	const prevMessage = arr[index - 1];
 
+	const prevTime = prevMessage
+		? dayjs(prevMessage.timestamp).format('YYYY-MM-DD HH:mm')
+		: '';
 	const currentTime = dayjs(currentMessage.timestamp).format(
 		'YYYY-MM-DD HH:mm',
 	);
@@ -104,7 +111,10 @@ const getMessageProps = (
 	return {
 		isMine,
 		isTimeChange: Boolean(nextTime && currentTime !== nextTime),
-		isFirst: index === 0 || prevMessage.senderId !== data.senderId,
+		isFirst:
+			index === 0 ||
+			prevMessage.senderId !== data.senderId ||
+			prevTime !== currentTime,
 		isLast:
 			!nextMessage ||
 			nextMessage.senderId !== data.senderId ||
