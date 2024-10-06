@@ -11,3 +11,4 @@ export * from './usePressEffect';
 
 export * from './useAppBridge';
 export * from './useObserver';
+export * from './useWindowDimensions';
