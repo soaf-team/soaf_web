@@ -1,6 +1,8 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
+
 import { axiosBase } from '@/apis';
 import { QUERY_KEY } from '@/constants';
-import { useQuery } from '@tanstack/react-query';
+import { User } from '@/types';
 
 const getUserProfile = async () => {
 	const response = await axiosBase.get('user/profile');
@@ -8,7 +10,7 @@ const getUserProfile = async () => {
 };
 
 export const useUserProfileQuery = () => {
-	const { data: userProfile } = useQuery({
+	const { data: userProfile } = useSuspenseQuery<User>({
 		queryKey: [QUERY_KEY.userProfile],
 		queryFn: getUserProfile,
 	});
