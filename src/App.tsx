@@ -13,7 +13,7 @@ function App() {
 	return (
 		<AsyncBoundary>
 			<ProviderGroup>
-				<div className="relative w-full max-w-window mx-auto shadow-shadow1">
+				<div className="relative w-full mx-auto max-w-window shadow-shadow1">
 					<Stack />
 				</div>
 			</ProviderGroup>
