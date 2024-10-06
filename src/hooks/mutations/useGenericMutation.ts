@@ -14,44 +14,62 @@ interface ApiResponse<TData> {
 	message: string;
 }
 
-interface MutationOptions<TData, TParams, TPayload, TContext = unknown> {
+type UrlFunction<TParams> = (params?: TParams) => string;
+
+interface MutationOptions<
+	TData,
+	TVariables,
+	TParams = void,
+	TContext = unknown,
+> {
 	onMutate?: (
+		variables: TVariables,
 		params?: TParams,
-		payload?: TPayload,
 	) => Promise<TContext> | TContext;
 	onSuccess?: (
 		data: ApiResponse<TData>,
+		variables: TVariables,
+		context: TContext | undefined,
 		params?: TParams,
-		payload?: TPayload,
 	) => void;
-	onError?: (error: AxiosError, params?: TParams, payload?: TPayload) => void;
+	onError?: (
+		error: AxiosError,
+		variables: TVariables,
+		context: TContext | undefined,
+		params?: TParams,
+	) => void;
 	onSettled?: (
 		data: ApiResponse<TData> | undefined,
 		error: AxiosError | null,
+		variables: TVariables,
 		context: TContext | undefined,
 		params?: TParams,
-		payload?: TPayload,
 	) => void | Promise<unknown>;
 	minLoadingTime?: number;
 }
 
-type UrlFunction<TParams> = (params?: TParams) => string;
-
 /**
- * 제네릭 뮤테이션 훅
+ * 향상된 제네릭 뮤테이션 훅
+ * URL string 또는 URL 생성 함수를 모두 지원합니다.
  * @param urlOrFunction API 엔드포인트 URL 또는 URL을 생성하는 함수
  * @param method HTTP 메서드
  * @param options 뮤테이션 옵션
  * @returns UseMutationResult와 isLoading
  */
-export function useGenericMutation<TData, TParams, TPayload>(
+export function useGenericMutation<
+	TData,
+	TVariables,
+	TParams = void,
+	TContext = unknown,
+>(
 	urlOrFunction: string | UrlFunction<TParams>,
 	method: 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'POST',
-	options?: MutationOptions<TData, TParams, TPayload>,
+	options?: MutationOptions<TData, TVariables, TParams, TContext>,
 ): UseMutationResult<
 	ApiResponse<TData>,
 	AxiosError,
-	{ params?: TParams; payload?: TPayload }
+	{ variables: TVariables; params?: TParams },
+	TContext
 > & {
 	isLoading: boolean;
 } {
@@ -60,48 +78,45 @@ export function useGenericMutation<TData, TParams, TPayload>(
 
 	const mutationFn: MutationFunction<
 		ApiResponse<TData>,
-		{ params?: TParams; payload?: TPayload }
-	> = async ({ params, payload }) => {
+		{ variables: TVariables; params?: TParams }
+	> = async ({ variables, params }) => {
 		const startTime = Date.now();
 		const url =
 			typeof urlOrFunction === 'function'
 				? urlOrFunction(params)
 				: urlOrFunction;
+
 		const response = await axiosBase({
 			method,
 			url,
-			data: payload,
+			data: variables,
 		});
+
 		const elapsedTime = Date.now() - startTime;
 		if (elapsedTime < minLoadingTime) {
 			await new Promise((resolve) =>
 				setTimeout(resolve, minLoadingTime - elapsedTime),
 			);
 		}
+
 		return response.data;
 	};
 
 	const mutation = useMutation<
 		ApiResponse<TData>,
 		AxiosError,
-		{ params?: TParams; payload?: TPayload }
+		{ variables: TVariables; params?: TParams },
+		TContext
 	>({
 		mutationFn,
-		onMutate: options?.onMutate
-			? ({ params, payload }) => options.onMutate?.(params, payload)
-			: undefined,
-		onSuccess: options?.onSuccess
-			? (data, { params, payload }) =>
-					options.onSuccess?.(data, params, payload)
-			: undefined,
-		onError: options?.onError
-			? (error, { params, payload }) =>
-					options.onError?.(error, params, payload)
-			: undefined,
-		onSettled: options?.onSettled
-			? (data, error, { params, payload }, context) =>
-					options.onSettled?.(data, error, context, params, payload)
-			: undefined,
+		onMutate: async ({ variables, params }) =>
+			options?.onMutate ? options.onMutate(variables, params) : undefined,
+		onSuccess: (data, { variables, params }, context) =>
+			options?.onSuccess?.(data, variables, context, params),
+		onError: (error, { variables, params }, context) =>
+			options?.onError?.(error, variables, context, params),
+		onSettled: (data, error, { variables, params }, context) =>
+			options?.onSettled?.(data, error, variables, context, params),
 	});
 
 	useEffect(() => {
