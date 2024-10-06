@@ -6,7 +6,6 @@ import { Spacing } from '@/components';
 import { chatSocketManager } from '@/libs';
 
 export const MessageInput = ({ roomId }: { roomId: string }) => {
-	console.log(roomId);
 	const [message, setMessage] = useState('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -17,6 +16,7 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 			type: 'text',
 			content: [message],
 		});
+		setMessage('');
 	};
 
 	const openAlbum = () => {
@@ -69,6 +69,11 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 					type="text"
 					placeholder="메시지를 입력주세요"
 					value={message}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							e.preventDefault();
+						}
+					}}
 					onChange={(e) => setMessage(e.target.value)}
 				/>
 				<button className={cn(!message && 'hidden')} type="submit">

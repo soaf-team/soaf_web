@@ -1,12 +1,11 @@
 import { useFlow } from '@/stackflow';
+import { chatSocketManager } from '@/libs';
 import { useChatListStore } from '@/store';
 import { cn, formatToLocalTime } from '@/utils';
 
 export const ChatList = () => {
 	const { chatList } = useChatListStore();
 	const { push } = useFlow();
-
-	console.log(chatList);
 
 	return (
 		<div className="flex flex-col pb-2 overflow-y-auto">
@@ -23,6 +22,7 @@ export const ChatList = () => {
 							push('ChatRoomPage', {
 								roomId: chat.roomId,
 							});
+							chatSocketManager.emit('enterChat', { roomId: chat.roomId });
 						}}
 					>
 						<div className={LIST_CON_STYLE}>

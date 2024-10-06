@@ -1,5 +1,6 @@
 import { MyHomeButton } from './MyHomeButton';
 import { chatSocketManager } from '@/libs';
+import { useFriendListQuery } from '@/hooks/queries/chat';
 import { cn } from '@/utils';
 import { AnnotationPlus } from '@/assets';
 
@@ -32,6 +33,8 @@ const MOCK_DATA = [
 ];
 
 export const FriendList = () => {
+	const { friendList } = useFriendListQuery();
+
 	return (
 		<article className="flex flex-col px-[18px] py-2">
 			<div className="px-1 py-2">
