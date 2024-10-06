@@ -11,9 +11,9 @@ const MatchedUserPage = () => {
 	const { replace } = useFlow();
 	const { matchedUsers } = useMatchedUserQuery();
 
-	const [selectedUser, setSelectedUser] = useState<number | null>(null);
+	const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
-	const handleSelect = (id: number) => {
+	const handleSelect = (id: string) => {
 		setSelectedUser((prev) => (prev === id ? null : id));
 	};
 

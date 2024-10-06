@@ -30,13 +30,11 @@ export const AuthProvider = ({ children }: Props) => {
 	useEffect(() => {
 		// @ts-expect-error
 		document.addEventListener('message', handleMessage);
-		// @ts-expect-error
 		window.addEventListener('message', handleMessage);
 
 		return () => {
 			// @ts-expect-error
 			document.removeEventListener('message', handleMessage);
-			// @ts-expect-error
 			window.removeEventListener('message', handleMessage);
 		};
 	}, []);

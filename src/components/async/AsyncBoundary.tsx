@@ -30,6 +30,7 @@ export const AsyncBoundary = forwardRef<
 	) => (
 		<ErrorBoundary
 			ref={resetRef}
+			// @ts-expect-error
 			renderFallback={rejectedFallback}
 			{...errorBoundaryProps}
 		>
