@@ -1,11 +1,13 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
+import dayjs from 'dayjs';
 
 import { BackButton, PageLayout } from '@/components';
 import { MessageInput, SpeechBubble } from './_components';
 import { MyHomeButton } from '../_components';
 import { chatSocketManager } from '@/libs';
-
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+import { useCurrentChatStore } from '@/store';
+import { useUserProfileQuery } from '@/hooks';
+import { User, MessageType } from '@/types';
 
 type ChatMessage = {
 	id: string;
@@ -16,112 +18,18 @@ type ChatMessage = {
 	readBy: string[];
 };
 
-const DUMMY_CHAT: ChatMessage[] = [
-	{
-		id: '1',
-		senderId: '1',
-		type: 'text',
-		content: ['안녕'],
-		timestamp: '2024-03-15T09:00:00.000Z',
-		readBy: ['1'],
-	},
-	{
-		id: '2',
-		senderId: '1',
-		type: 'text',
-		content: ['안녕하세요'],
-		timestamp: '2024-03-15T09:01:00.000Z',
-		readBy: ['1'],
-	},
-	{
-		id: '3',
-		senderId: '1',
-		type: 'text',
-		content: ['테스트'],
-		timestamp: '2024-03-15T09:02:00.000Z',
-		readBy: ['1'],
-	},
-	{
-		id: '4',
-		senderId: '2',
-		type: 'text',
-		content: [
-			'네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요네 안녕하세요',
-		],
-		timestamp: '2024-03-15T09:03:00.000Z',
-		readBy: ['1', '2'],
-	},
-	{
-		id: '5',
-		senderId: '2',
-		type: 'image',
-		content: ['/nong1.png'],
-		timestamp: '2024-03-15T09:03:00.000Z',
-		readBy: ['1', '2'],
-	},
-	{
-		id: '6',
-		senderId: '1',
-		type: 'text',
-		content: [
-			'까불지 마세요 까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요',
-		],
-		timestamp: '2024-03-15T09:05:00.000Z',
-		readBy: ['1'],
-	},
-	{
-		id: '7',
-		senderId: '1',
-		type: 'text',
-		content: [
-			'까불지 마세요 까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요까불지 마세요',
-		],
-		timestamp: '2024-03-15T09:06:00.000Z',
-		readBy: ['1'],
-	},
-	{
-		id: '8',
-		senderId: '2',
-		type: 'text',
-		content: ['반갑네요'],
-		timestamp: '2024-03-15T09:07:00.000Z',
-		readBy: ['1', '2'],
-	},
-	{
-		id: '9',
-		senderId: '2',
-		type: 'text',
-		content: ['반갑네요'],
-		timestamp: '2024-03-15T09:08:00.000Z',
-		readBy: ['1', '2'],
-	},
-	{
-		id: '10',
-		senderId: '2',
-		type: 'image',
-		content: ['/nong1.png', '/nong2.png', '/nong3.png', '/nong4.jpeg'],
-		timestamp: '2024-03-15T09:03:00.000Z',
-		readBy: ['1', '2'],
-	},
-];
-
-const CUSTOMER_ID = 1;
-
 const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
 	const { roomId } = params;
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 
+	const { userProfile } = useUserProfileQuery();
+	const { chatHistoryList } = useCurrentChatStore();
+
 	useEffect(() => {
 		chatSocketManager.connectForPage('ChatRoom');
-		chatSocketManager.on('chatList', (messages: any[]) => {
-			console.log(messages);
-		});
 
 		return () => {
 			chatSocketManager.disconnectForPage('ChatRoom');
-			chatSocketManager.off('chatList', (message) => {
-				console.log(message);
-			});
 		};
 	}, [roomId]);
 
@@ -130,7 +38,7 @@ const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
 			chatContainerRef.current.scrollTop =
 				chatContainerRef.current.scrollHeight;
 		}
-	}, [DUMMY_CHAT]);
+	}, [chatHistoryList]);
 
 	return (
 		<PageLayout
@@ -143,20 +51,9 @@ const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
 		>
 			<div ref={chatContainerRef} className="flex-grow overflow-y-auto">
 				<div className="min-h-full flex flex-col">
-					{DUMMY_CHAT.map((data, index, arr) => {
-						const isMine = Number(data.senderId) === CUSTOMER_ID;
-						const isFirst =
-							index === 0 || arr[index - 1].senderId !== data.senderId;
-						const currentMessage = arr[index];
-						const nextMessage = arr[index + 1];
-						const isGap =
-							isFirst ||
-							index === arr.length - 1 ||
-							nextMessage.senderId === currentMessage.senderId
-								? false
-								: true;
-						const isLast =
-							!nextMessage || nextMessage.senderId !== data.senderId;
+					{chatHistoryList.map((data, index, arr) => {
+						const { isMine, isTimeChange, isFirst, isLast, isGap } =
+							getMessageProps(data, index, arr, userProfile);
 
 						return (
 							<SpeechBubble
@@ -185,3 +82,35 @@ const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
 export default ChatRoomPage;
 
 ChatRoomPage.displayName = 'ChatRoomPage';
+
+const getMessageProps = (
+	data: MessageType,
+	index: number,
+	arr: MessageType[],
+	userProfile: User,
+) => {
+	const isMine = data.senderId === userProfile.id;
+	const currentMessage = arr[index];
+	const nextMessage = arr[index + 1];
+	const prevMessage = arr[index - 1];
+
+	const currentTime = dayjs(currentMessage.timestamp).format(
+		'YYYY-MM-DD HH:mm',
+	);
+	const nextTime = nextMessage
+		? dayjs(nextMessage.timestamp).format('YYYY-MM-DD HH:mm')
+		: null;
+
+	return {
+		isMine,
+		isTimeChange: Boolean(nextTime && currentTime !== nextTime),
+		isFirst: index === 0 || prevMessage.senderId !== data.senderId,
+		isLast:
+			!nextMessage ||
+			nextMessage.senderId !== data.senderId ||
+			Boolean(nextTime && currentTime !== nextTime),
+		isGap:
+			index !== arr.length - 1 &&
+			nextMessage.senderId !== currentMessage.senderId,
+	};
+};
