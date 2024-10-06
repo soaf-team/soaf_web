@@ -112,13 +112,13 @@ export const InteriorItems = ({
 };
 
 const CLASS_NAMES: Record<InteriorName, string> = {
-	books: 'absolute w-1/3 top-10 left-[10%]',
-	movie: 'absolute w-1/4 top-1/3',
-	music: 'absolute w-1/5 top-[18%] left-[20%]',
-	picture: 'absolute w-1/5 left-[45%] top-[10%]',
-	plant: 'absolute top-[35%] right-1/4 w-1/6',
-	sofa: 'absolute right-[5%] top-1/3',
-	windowNight: 'absolute w-1/4 top-14 right-4',
-	windowDay: 'absolute w-1/4 top-14 right-4',
-	youtube: 'absolute w-[15%] left-1/2 top-1/4',
+	books: 'absolute w-1/3',
+	movie: 'absolute w-1/4',
+	music: 'absolute w-1/5',
+	picture: 'absolute w-1/5',
+	plant: 'absolute w-1/6',
+	sofa: 'absolute w-1/4',
+	windowNight: 'absolute w-1/4',
+	windowDay: 'absolute w-1/4',
+	youtube: 'absolute w-[15%]',
 } as const;
