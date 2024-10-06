@@ -5,7 +5,7 @@ import { ChatList, MenuBar, SoafList } from './_components';
 import { chatSocketManager, socketManager } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { MessageType, ChatType } from '@/types';
-import { useChatListStore } from '@/store';
+import { useChatListStore, useCurrentChatStore } from '@/store';
 
 const TOKEN = import.meta.env.VITE_TOKEN;
 
@@ -15,6 +15,7 @@ const ChatMainPage = () => {
 	);
 
 	const { setChatList } = useChatListStore();
+	const { setChatHistoryList } = useCurrentChatStore();
 	const { push } = useFlow();
 
 	useEffect(() => {
@@ -23,8 +24,10 @@ const ChatMainPage = () => {
 		chatSocketManager.connectForPage('ChatList');
 
 		const handleStatus = (status: string) => {
+			console.log('status', status);
 			if (status.includes('initialized')) {
 				const roomId = status.split(' ')[0];
+				chatSocketManager.emit('enterChat', { roomId });
 				push('ChatRoomPage', {
 					roomId,
 				});
@@ -32,7 +35,7 @@ const ChatMainPage = () => {
 		};
 
 		const handleChatList = (receivedChatList: ChatType[]) => {
-			console.log(receivedChatList);
+			console.log('chatList', receivedChatList);
 			setChatList(receivedChatList);
 		};
 
@@ -40,21 +43,22 @@ const ChatMainPage = () => {
 			console.log('New message:', message);
 		};
 
+		const handleChatHistory = (messageHistory: MessageType[]) => {
+			console.log('chatHistory', messageHistory);
+			setChatHistoryList(messageHistory);
+		};
+
 		chatSocketManager.on('status', handleStatus);
 		chatSocketManager.on('chatList', handleChatList);
 		chatSocketManager.on('newMessage', handleNewMessage);
-		chatSocketManager.on('chatHistory', (message) => {
-			console.log(message);
-		});
+		chatSocketManager.on('chatHistory', handleChatHistory);
 
 		return () => {
 			socketManager.disconnect();
 			chatSocketManager.off('status', handleStatus);
 			chatSocketManager.off('chatList', handleChatList);
 			chatSocketManager.off('newMessage', handleNewMessage);
-			chatSocketManager.off('chatHistory', (message) => {
-				message;
-			});
+			chatSocketManager.off('chatHistory', handleChatHistory);
 			chatSocketManager.disconnectForPage('ChatList');
 		};
 	}, []);
