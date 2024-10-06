@@ -28,7 +28,9 @@ export const ChatList = () => {
 						<div className={LIST_CON_STYLE}>
 							<p>{chat.friendId}</p>
 							<p className="text-sm text-gray300 font-medium">
-								{chat.lastMessage?.content[0]}
+								{chat.lastMessage?.content[0].includes('base64')
+									? '사진'
+									: chat.lastMessage?.content[0]}
 							</p>
 						</div>
 						<div className={cn(LIST_CON_STYLE, 'items-end')}>

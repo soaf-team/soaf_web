@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent, useRef } from 'react';
+import { useState, useEffect, FormEvent, useRef, useCallback } from 'react';
 
 import { cn } from '@/utils';
 import { AlbumIcon, CameraIcon, sendIcon } from '@/assets';
@@ -23,13 +23,37 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 		fileInputRef.current?.click();
 	};
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const files = event.target.files;
-		if (files) {
-			// TODO: emit send message 로직 추가
-			console.log('선택된 파일:', files);
-		}
+	const encodeMultipleFiles = (files: File[]): Promise<string[]> => {
+		const promises = files.map((file) => encodeImageFileAsURL(file));
+		return Promise.all(promises);
 	};
+
+	const encodeImageFileAsURL = (file: File): Promise<string> => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = function () {
+				resolve(reader.result as string);
+			};
+			reader.onerror = reject;
+			reader.readAsDataURL(file);
+		});
+	};
+
+	const handleFileChange = useCallback(
+		async (event: React.ChangeEvent<HTMLInputElement>) => {
+			const files = event.target.files;
+			if (files) {
+				const base64Array = await encodeMultipleFiles(Array.from(files));
+
+				chatSocketManager.emit('sendMessage', {
+					roomId,
+					type: 'image',
+					content: base64Array,
+				});
+			}
+		},
+		[roomId],
+	);
 
 	return (
 		<form
