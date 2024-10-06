@@ -1,7 +1,7 @@
 import { MyHomeIcon } from '@/assets';
 import { useFlow } from '@/stackflow';
 
-export const MyHomeButton = ({ userId }: { userId: number }) => {
+export const MyHomeButton = ({ userId }: { userId: string }) => {
 	const { push } = useFlow();
 
 	return (

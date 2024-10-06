@@ -46,7 +46,7 @@ const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
 			header={{
 				leftSlot: <BackButton />,
 				title: '정훈',
-				rightSlot: <MyHomeButton userId={1} />,
+				rightSlot: <MyHomeButton userId="1" />,
 			}}
 		>
 			<div ref={chatContainerRef} className="flex-grow overflow-y-auto">
