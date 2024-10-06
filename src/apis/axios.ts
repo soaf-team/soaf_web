@@ -36,6 +36,7 @@ axiosBase.interceptors.response.use(
 
 		if (
 			error.status === 410 &&
+			// @ts-expect-error
 			error.response?.data?.message === 'Token has expired'
 		) {
 			try {
