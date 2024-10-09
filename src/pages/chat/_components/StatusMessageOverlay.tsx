@@ -8,6 +8,10 @@ export const StatusMessageOverlay = ({ resolve, reject }: OverlayProps) => {
 	const [statusMessage, setStatusMessage] = useState('');
 
 	const handleChange = (value: string) => {
+		if (value.length > 20) {
+			return;
+		}
+
 		setStatusMessage(value);
 	};
 
@@ -26,7 +30,7 @@ export const StatusMessageOverlay = ({ resolve, reject }: OverlayProps) => {
 				onChange={handleChange}
 			/>
 			<p className="pt-1 pb-2 font-medium text-gray300 text-end">
-				{statusMessage.length} / <span className="text-black">60</span>
+				{statusMessage.length} / <span className="text-black">20</span>
 			</p>
 		</Overlay>
 	);

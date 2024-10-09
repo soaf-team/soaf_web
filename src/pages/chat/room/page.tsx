@@ -6,24 +6,22 @@ import { MessageInput, SpeechBubble } from './_components';
 import { MyHomeButton } from '../_components';
 import { chatSocketManager } from '@/libs';
 import { useCurrentChatStore } from '@/store';
-import { useUserProfileQuery } from '@/hooks';
+import { useFriendListQuery, useUserProfileQuery } from '@/hooks';
 import { User, MessageType } from '@/types';
 
-type ChatMessage = {
-	id: string;
-	senderId: string;
-	type: 'text' | 'image';
-	content: string[];
-	timestamp: string;
-	readBy: string[];
-};
-
-const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
-	const { roomId } = params;
+const ChatRoomPage = ({
+	params,
+}: {
+	params: { roomId: string; friendId: string };
+}) => {
+	const { roomId, friendId } = params;
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 
 	const { userProfile } = useUserProfileQuery();
+	const { friendList } = useFriendListQuery();
 	const { chatHistoryList } = useCurrentChatStore();
+
+	const nickname = friendList.find((friend) => friend.friend._id)?.friend.name;
 
 	useEffect(() => {
 		chatSocketManager.connectForPage('ChatRoom');
@@ -45,7 +43,7 @@ const ChatRoomPage = ({ params }: { params: { roomId: string } }) => {
 			className="relative"
 			header={{
 				leftSlot: <BackButton />,
-				title: '정훈',
+				title: nickname,
 				rightSlot: <MyHomeButton userId="1" />,
 			}}
 		>
