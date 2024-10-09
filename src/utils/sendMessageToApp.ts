@@ -1,5 +1,5 @@
 export type MessageType = {
-	type: 'LOGOUT' | 'REFRESH_TOKEN';
+	type: 'LOG' | 'LOGOUT' | 'REFRESH_TOKEN' | 'OPEN_CAMERA' | 'OPEN_ALBUM';
 	data?: any;
 };
 
