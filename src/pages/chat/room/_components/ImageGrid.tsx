@@ -53,7 +53,7 @@ export const ImageGrid = ({ images }: { images: string[] }) => {
 	return (
 		<div
 			className={cn(
-				'grid rounded-[16px] overflow-hidden',
+				'grid max-w-[260px] rounded-[16px] overflow-hidden',
 				gridClass(images.length),
 			)}
 		>
