@@ -1,13 +1,12 @@
-import { useState, FormEvent, useRef, useCallback } from 'react';
+import { useState, FormEvent } from 'react';
 
-import { cn, convertToBase64, getCompressedImgFile } from '@/utils';
+import { cn, sendMessageToApp } from '@/utils';
 import { AlbumIcon, CameraIcon, sendIcon } from '@/assets';
 import { Spacing } from '@/components';
 import { chatSocketManager } from '@/libs';
 
 export const MessageInput = ({ roomId }: { roomId: string }) => {
 	const [message, setMessage] = useState('');
-	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -19,31 +18,13 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 		setMessage('');
 	};
 
-	const openAlbum = () => {
-		fileInputRef.current?.click();
+	const openCamera = () => {
+		sendMessageToApp({ type: 'OPEN_CAMERA' });
 	};
 
-	const encodeMultipleFiles = async (files: File[]): Promise<string[]> => {
-		const compressedFiles = await Promise.all(files.map(getCompressedImgFile));
-
-		return Promise.all(compressedFiles.map(convertToBase64));
+	const openAlbum = (roomId: string) => {
+		sendMessageToApp({ type: 'OPEN_ALBUM', data: roomId });
 	};
-
-	const handleFileChange = useCallback(
-		async (event: React.ChangeEvent<HTMLInputElement>) => {
-			const files = event.target.files;
-			if (files) {
-				const base64Array = await encodeMultipleFiles(Array.from(files));
-
-				chatSocketManager.emit('sendMessage', {
-					roomId,
-					type: 'image',
-					content: base64Array,
-				});
-			}
-		},
-		[roomId],
-	);
 
 	return (
 		<form
@@ -55,21 +36,13 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 			)}
 			onSubmit={handleSubmit}
 		>
-			<button type="button">
+			<button type="button" onClick={openCamera}>
 				<img src={CameraIcon} alt="camera" />
 			</button>
 			<Spacing direction="horizontal" size={14} />
-			<button type="button" onClick={openAlbum}>
+			<button type="button" onClick={() => openAlbum(roomId)}>
 				<img src={AlbumIcon} alt="album" />
 			</button>
-			<input
-				type="file"
-				ref={fileInputRef}
-				onChange={handleFileChange}
-				accept="image/*,.png,.jpg,.jpeg"
-				multiple
-				style={{ display: 'none' }}
-			/>
 			<Spacing direction="horizontal" size={10} />
 			<div
 				className={cn(
