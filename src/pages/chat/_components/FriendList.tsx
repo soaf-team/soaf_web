@@ -21,7 +21,7 @@ export const FriendList = () => {
 							key={friend._id}
 							className={cn(
 								'flex justify-between items-center',
-								'py-2',
+								'py-2 min-h-[60px]',
 								'border-b border-solid border-border',
 							)}
 						>
