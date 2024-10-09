@@ -1,6 +1,6 @@
 import { MyHomeButton } from './MyHomeButton';
 import { chatSocketManager } from '@/libs';
-import { useFriendListQuery } from '@/hooks/queries/chat';
+import { useFriendListQuery } from '@/hooks';
 import { cn } from '@/utils';
 import { AnnotationPlus } from '@/assets';
 
