@@ -1,6 +1,6 @@
-import { useState, useEffect, FormEvent, useRef, useCallback } from 'react';
+import { useState, FormEvent, useRef, useCallback } from 'react';
 
-import { cn } from '@/utils';
+import { cn, convertToBase64, getCompressedImgFile } from '@/utils';
 import { AlbumIcon, CameraIcon, sendIcon } from '@/assets';
 import { Spacing } from '@/components';
 import { chatSocketManager } from '@/libs';
@@ -23,20 +23,10 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 		fileInputRef.current?.click();
 	};
 
-	const encodeMultipleFiles = (files: File[]): Promise<string[]> => {
-		const promises = files.map((file) => encodeImageFileAsURL(file));
-		return Promise.all(promises);
-	};
+	const encodeMultipleFiles = async (files: File[]): Promise<string[]> => {
+		const compressedFiles = await Promise.all(files.map(getCompressedImgFile));
 
-	const encodeImageFileAsURL = (file: File): Promise<string> => {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onloadend = function () {
-				resolve(reader.result as string);
-			};
-			reader.onerror = reject;
-			reader.readAsDataURL(file);
-		});
+		return Promise.all(compressedFiles.map(convertToBase64));
 	};
 
 	const handleFileChange = useCallback(
@@ -76,7 +66,7 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 				type="file"
 				ref={fileInputRef}
 				onChange={handleFileChange}
-				accept="image/*"
+				accept="image/*,.png,.jpg,.jpeg"
 				multiple
 				style={{ display: 'none' }}
 			/>
