@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Overlay } from '@/components';
+import { Overlay } from '@/components/overlay';
 import { Input } from '@/components/ui';
 import { OverlayProps } from '@/libs';
 
@@ -8,10 +8,6 @@ export const StatusMessageOverlay = ({ resolve, reject }: OverlayProps) => {
 	const [statusMessage, setStatusMessage] = useState('');
 
 	const handleChange = (value: string) => {
-		if (value.length > 20) {
-			return;
-		}
-
 		setStatusMessage(value);
 	};
 
@@ -26,6 +22,7 @@ export const StatusMessageOverlay = ({ resolve, reject }: OverlayProps) => {
 			<Input
 				className="h-[28px] py-1"
 				isResetButton
+				maxLength={20}
 				value={statusMessage}
 				onChange={handleChange}
 			/>

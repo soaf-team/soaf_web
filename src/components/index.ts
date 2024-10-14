@@ -6,5 +6,3 @@ export * from './chart';
 export * from './fallback';
 export * from './async';
 export * from './form';
-
-export { Overlay } from './Overlay';

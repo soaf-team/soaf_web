@@ -12,6 +12,7 @@ import DeleteInput from './x-with-bg.svg';
 import PencilIcon from './pencil.svg';
 import TrashIcon from './trash.svg';
 import WarningIcon from './warning.svg';
+import BanIcon from './ban.svg';
 
 export {
 	Plus,
@@ -28,6 +29,7 @@ export {
 	PencilIcon,
 	TrashIcon,
 	WarningIcon,
+	BanIcon,
 };
 
 export * from './header';
