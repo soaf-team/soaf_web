@@ -1,13 +1,14 @@
 import { cn } from '@/utils';
+import { User } from '@/types';
 import { Plus } from '@/assets';
 
 interface MyProfileProps {
-	statusMessage: string;
+	userProfile: User;
 	handleStatusMessageChange: () => void;
 }
 
 export const MyProfile = ({
-	statusMessage,
+	userProfile,
 	handleStatusMessageChange,
 }: MyProfileProps) => {
 	return (
@@ -15,7 +16,9 @@ export const MyProfile = ({
 			<div className="flex justify-between items-center px-2">
 				<div className="flex flex-col gap-1">
 					<p>뽀송하루</p>
-					<p className="text-xs text-gray300 font-medium">{statusMessage}</p>
+					<p className="text-xs text-gray300 font-medium">
+						{userProfile?.status}
+					</p>
 				</div>
 				<div
 					className={cn(
