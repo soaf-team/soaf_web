@@ -55,7 +55,7 @@ export const FriendList = () => {
 								{!isDragging ? (
 									<div className="flex flex-col gap-1">
 										<p>{friend.name}</p>
-										{/* <p className="text-xs text-gray300">{friend.status_message}</p> */}
+										<p className="text-xs text-gray300">{friend?.status}</p>
 									</div>
 								) : (
 									<div />

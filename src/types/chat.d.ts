@@ -19,6 +19,7 @@ export type ChatType = {
 export type Friend = {
 	email: string;
 	name: string;
+	status: string | null;
 	_id: string;
 };
 
