@@ -96,8 +96,6 @@ export const InteriorItems = ({
 					windowDimensions,
 				);
 
-				console.log(positionPercent);
-
 				return (
 					<Interior
 						key={item.id}
