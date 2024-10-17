@@ -23,6 +23,11 @@
 		sans-serif;
 }
 
+* {
+	-webkit-tap-highlight-color: transparent;
+	outline: none !important;
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;
