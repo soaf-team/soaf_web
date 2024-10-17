@@ -3,6 +3,12 @@ import { useFlow } from '@/stackflow';
 import { DraggableData } from 'react-draggable';
 import { Interior as InteriorData, InteriorName } from '@/types';
 import { Interior } from './Interior';
+import {
+	getPercentageToPosition,
+	getPositionToPercentage,
+} from '@/pages/myHome/utils/position';
+import { useWindowDimensions } from '@/hooks';
+import { cn } from '@/utils';
 
 interface Props {
 	interiorItems: InteriorData[];
@@ -36,7 +42,7 @@ export const InteriorItems = ({
 	setPositions,
 }: Props) => {
 	const { push } = useFlow();
-
+	const windowDimensions = useWindowDimensions();
 	const { debounced: handleOnDrag } = useDebounce(
 		(name: string, data: DraggableData) => {
 			setPositions((prevPositions) => ({
@@ -85,6 +91,13 @@ export const InteriorItems = ({
 	return (
 		<>
 			{interiorItems.map((item) => {
+				const positionPercent = getPositionToPercentage(
+					positions[item.name],
+					windowDimensions,
+				);
+
+				console.log(positionPercent);
+
 				return (
 					<Interior
 						key={item.id}
@@ -101,7 +114,7 @@ export const InteriorItems = ({
 						isDraggable={isDraggable}
 						position={positions[item.name]}
 						initialPosition={initialPositions[item.name]}
-						className={CLASS_NAMES[item.name]}
+						className={cn(CLASS_NAMES[item.name], positionPercent)}
 						handleDrag={(data) => handleOnDrag(item.name, data)}
 						onItemClick={() => handleItemClick(item.name, isEdit)}
 					/>

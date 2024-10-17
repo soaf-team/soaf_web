@@ -25,7 +25,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'books',
 		src: '../assets/icons/my-home/interior/books.svg',
 		type: 'hobby',
-		position: { x: 0, y: 0 },
+		position: { x: 5.5, y: 40 },
 		isVisible: true,
 	},
 	{
@@ -33,7 +33,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'movie',
 		src: '../assets/icons/my-home/interior/movie.svg',
 		type: 'hobby',
-		position: { x: 0, y: 0 },
+		position: { x: 10, y: 215 },
 		isVisible: true,
 	},
 	{
@@ -41,7 +41,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'music',
 		src: '../assets/icons/my-home/interior/music.svg',
 		type: 'hobby',
-		position: { x: 0, y: 0 },
+		position: { x: 40, y: 120 },
 		isVisible: true,
 	},
 	{
@@ -49,7 +49,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'picture',
 		src: '../assets/icons/my-home/interior/picture.svg',
 		type: 'interior',
-		position: { x: 0, y: 0 },
+		position: { x: 150, y: 66 },
 		isVisible: true,
 	},
 	{
@@ -57,7 +57,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'plant',
 		src: '../assets/icons/my-home/interior/plant.svg',
 		type: 'interior',
-		position: { x: 0, y: 0 },
+		position: { x: 190, y: 233 },
 		isVisible: true,
 	},
 	{
@@ -65,7 +65,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'sofa',
 		src: '../assets/icons/my-home/interior/sofa.svg',
 		type: 'interior',
-		position: { x: 0, y: 0 },
+		position: { x: 250, y: 200 },
 		isVisible: true,
 	},
 	{
@@ -73,7 +73,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'windowDay',
 		src: '../assets/icons/my-home/interior/window-day.svg',
 		type: 'interior',
-		position: { x: 0, y: 0 },
+		position: { x: 250, y: 48 },
 		isVisible: true,
 	},
 	{
@@ -81,7 +81,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'windowNight',
 		src: '../assets/icons/my-home/interior/window-night.svg',
 		type: 'interior',
-		position: { x: 0, y: 0 },
+		position: { x: 250, y: 48 },
 		isVisible: true,
 	},
 	{
@@ -89,7 +89,7 @@ const MOCK_INTERIOR_ITEMS: Interior[] = [
 		name: 'youtube',
 		src: '../assets/icons/my-home/interior/youtube.svg',
 		type: 'hobby',
-		position: { x: 0, y: 0 },
+		position: { x: 150, y: 166 },
 		isVisible: true,
 	},
 ];

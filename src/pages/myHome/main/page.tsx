@@ -34,16 +34,7 @@ const MyHomeMainPage = () => {
 	// 인테리어 요소들의 위치 (가변)
 	const [positions, setPositions] = useState<{
 		[key: string]: { x: number; y: number };
-	}>({
-		books: { x: 0, y: 0 },
-		movie: { x: 0, y: 0 },
-		music: { x: 0, y: 0 },
-		picture: { x: 0, y: 0 },
-		plant: { x: 0, y: 0 },
-		sofa: { x: 0, y: 0 },
-		window: { x: 0, y: 0 },
-		youtube: { x: 0, y: 0 },
-	});
+	}>({});
 
 	const handleCancelEdit = () => {
 		setIsEdit(false);
@@ -84,6 +75,7 @@ const MyHomeMainPage = () => {
 			);
 
 			setInitialPositions(initialPositions);
+			setPositions(initialPositions);
 		}
 	}, [interiorItems]);
 
