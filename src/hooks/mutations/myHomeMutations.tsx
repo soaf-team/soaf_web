@@ -7,6 +7,8 @@ import {
 	BookContent,
 	YoutubeContent,
 } from '@/types';
+import { overlay } from '@/libs';
+import { LoadingDotScreen } from '@/components';
 
 type MyHomePayloadCategory = 'music' | 'movie' | 'book' | 'youtube';
 
@@ -43,8 +45,6 @@ const getQueryKeyByCategory = (
 	}
 };
 
-// TODO: omMutate로 로딩 페이지 넣기 (일기 참고)
-
 export const myHomeMutations = (
 	id?: number,
 	category?: MyHomePayloadCategory,
@@ -55,6 +55,14 @@ export const myHomeMutations = (
 		'/my-home',
 		'POST',
 		{
+			onMutate: () => {
+				overlay.open(
+					<LoadingDotScreen
+						overlayKey="loading-music"
+						message="음악을 저장중이에요"
+					/>,
+				);
+			},
 			onSuccess: (_, variables) => {
 				queryClient.invalidateQueries({
 					queryKey: [getQueryKeyByCategory(variables.category, 'list')],
@@ -63,6 +71,11 @@ export const myHomeMutations = (
 			onError: (error) => {
 				console.error(error);
 			},
+			onSettled: () => {
+				setTimeout(() => {
+					overlay.close();
+				}, 500);
+			},
 		},
 	);
 
@@ -70,6 +83,14 @@ export const myHomeMutations = (
 		`/my-home/${id}`,
 		'PATCH',
 		{
+			onMutate: () => {
+				overlay.open(
+					<LoadingDotScreen
+						overlayKey="loading-music"
+						message="음악 정보를 수정중이에요"
+					/>,
+				);
+			},
 			onSuccess: (_, variables) => {
 				queryClient.invalidateQueries({
 					queryKey: [getQueryKeyByCategory(variables.category, 'detail')],
@@ -78,10 +99,23 @@ export const myHomeMutations = (
 			onError: (error) => {
 				console.error(error);
 			},
+			onSettled: () => {
+				setTimeout(() => {
+					overlay.close();
+				}, 500);
+			},
 		},
 	);
 
 	const deleteMyHomeMutation = useGenericMutation(`/my-home/${id}`, 'DELETE', {
+		onMutate: () => {
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="loading-music"
+					message="등록된 음악을 삭제중이에요"
+				/>,
+			);
+		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: [
@@ -91,6 +125,11 @@ export const myHomeMutations = (
 		},
 		onError: (error) => {
 			console.error(error);
+		},
+		onSettled: () => {
+			setTimeout(() => {
+				overlay.close();
+			}, 500);
 		},
 	});
 
