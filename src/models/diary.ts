@@ -14,6 +14,5 @@ export function transformDiaryKey(data: DiaryBackend): DiaryType {
 		reactions: data.reactions || {},
 		createdAt: data.createdAt,
 		updatedAt: data.updatedAt,
-		isPublic: data.isPublic,
 	};
 }
