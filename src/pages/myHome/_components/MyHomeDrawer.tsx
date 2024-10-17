@@ -1,4 +1,4 @@
-import { Overlay } from '@/components';
+import { Overlay } from '@/components/overlay';
 import { OverlayProps } from '@/libs';
 
 interface Props extends Omit<OverlayProps, 'overlayKey'> {
