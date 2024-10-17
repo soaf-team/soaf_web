@@ -27,6 +27,7 @@ const MyDiaryPage: ActivityComponentType = () => {
 	const { currentUserDiaryList } = useMyDiaryListQuery(
 		currentDate.getFullYear(),
 		currentDate.getMonth() + 1,
+		isPrivate,
 	);
 
 	const diaries = formatDiaryByPrivacy(currentUserDiaryList, isPrivate);
