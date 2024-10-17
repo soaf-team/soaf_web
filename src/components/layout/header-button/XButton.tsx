@@ -19,11 +19,14 @@ export const XButton = ({ className, onClick }: XButtonProps) => {
 	};
 
 	return (
-		<img
+		<button
 			onClick={handleClick}
-			src={XIcon}
-			alt="x"
-			className={cn('w-[12px] h-[12px]', className)}
-		/>
+			className={cn(
+				'w-[24px] h-[24px] flex justify-end items-center',
+				className,
+			)}
+		>
+			<img src={XIcon} alt="x" className={cn('w-[12px] h-[12px]')} />
+		</button>
 	);
 };
