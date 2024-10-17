@@ -9,6 +9,7 @@ import {
 } from '@/types';
 import { overlay } from '@/libs';
 import { LoadingDotScreen } from '@/components';
+import { useToast } from '../useToast';
 
 type MyHomePayloadCategory = 'music' | 'movie' | 'book' | 'youtube';
 
@@ -50,6 +51,7 @@ export const myHomeMutations = (
 	category?: MyHomePayloadCategory,
 ) => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 
 	const createMyHomeMutation = useGenericMutation<any, MyHomePayloadType>(
 		'/my-home',
@@ -67,14 +69,14 @@ export const myHomeMutations = (
 				queryClient.invalidateQueries({
 					queryKey: [getQueryKeyByCategory(variables.category, 'list')],
 				});
+				overlay.close();
+				toast({
+					title: '음악이 저장되었어요',
+				});
 			},
 			onError: (error) => {
 				console.error(error);
-			},
-			onSettled: () => {
-				setTimeout(() => {
-					overlay.close();
-				}, 500);
+				overlay.close();
 			},
 		},
 	);
@@ -95,14 +97,14 @@ export const myHomeMutations = (
 				queryClient.invalidateQueries({
 					queryKey: [getQueryKeyByCategory(variables.category, 'detail')],
 				});
+				overlay.close();
+				toast({
+					title: '음악이 수정되었어요',
+				});
 			},
 			onError: (error) => {
 				console.error(error);
-			},
-			onSettled: () => {
-				setTimeout(() => {
-					overlay.close();
-				}, 500);
+				overlay.close();
 			},
 		},
 	);
@@ -122,14 +124,14 @@ export const myHomeMutations = (
 					getQueryKeyByCategory(category as MyHomePayloadCategory, 'list'),
 				],
 			});
+			overlay.close();
+			toast({
+				title: '음악이 삭제되었어요',
+			});
 		},
 		onError: (error) => {
 			console.error(error);
-		},
-		onSettled: () => {
-			setTimeout(() => {
-				overlay.close();
-			}, 500);
+			overlay.close();
 		},
 	});
 
