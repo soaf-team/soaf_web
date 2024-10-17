@@ -22,7 +22,7 @@ export const EmotionSticker = ({
 	return (
 		<div className={cn(stickerSize, className)} {...props}>
 			<img
-				src={EMOTIONS[emotion].icon}
+				src={EMOTIONS[emotion]?.icon}
 				alt="emotion_icon"
 				className="object-cover w-full h-full"
 			/>

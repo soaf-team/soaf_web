@@ -18,8 +18,20 @@ import {
 
 type DiaryReactionProps = {
 	reactions: {
-		[key: string]: number;
+		[key: string]: string[];
 	};
+};
+
+const ITEMS_PER_ROW = [3, 4, 3];
+
+const chunkArray = (array: any[], sizes: number[]) => {
+	const result = [];
+	let index = 0;
+	for (const size of sizes) {
+		result.push(array.slice(index, index + size));
+		index += size;
+	}
+	return result;
 };
 
 export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
@@ -29,21 +41,36 @@ export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
 		setIsOpened(true);
 	};
 
+	const reactionEntries = Object.entries(reactions);
+	const chunkedReactions = chunkArray(reactionEntries, ITEMS_PER_ROW);
+
 	return (
-		<div className="relative w-full border-t border-solid border-border h-[85px] py-[16px]">
+		<div className="relative w-full border-t border-solid border-border py-[16px]">
 			{Object.keys(reactions).length > 0 ? (
-				<div className="flex flex-wrap gap-[6px]">
-					{Object.entries(reactions).map(([key, count]) => (
+				<div className="flex flex-col gap-[6px]">
+					{chunkedReactions.map((chunk, rowIndex) => (
 						<div
-							key={key}
-							className="flex items-center gap-[4px] label4 text-black/70"
+							key={rowIndex}
+							className="flex flex-wrap gap-[6px] justify-start"
 						>
-							<img
-								src={REACTION_EMOJI[key as keyof typeof REACTION_EMOJI].icon}
-								alt={REACTION_EMOJI[key as keyof typeof REACTION_EMOJI].label}
-								className="w-[20px] h-[20px]"
-							/>
-							{REACTION_EMOJI[key as keyof typeof REACTION_EMOJI].label} {count}
+							{chunk.map(([key, users]) => (
+								<div
+									key={key}
+									className="flex items-center gap-[4px] label4 text-black/70"
+								>
+									<img
+										src={
+											REACTION_EMOJI[key as keyof typeof REACTION_EMOJI]?.icon
+										}
+										alt={
+											REACTION_EMOJI[key as keyof typeof REACTION_EMOJI]?.label
+										}
+										className="w-[22px] h-[20px]"
+									/>
+									{REACTION_EMOJI[key as keyof typeof REACTION_EMOJI]?.label}{' '}
+									{users.length}
+								</div>
+							))}
 						</div>
 					))}
 				</div>
@@ -118,8 +145,8 @@ const ReactionCloud = ({
 							className="flex flex-col items-center justify-center text-[10px] leading-[12px] font-semibold"
 						>
 							<img
-								src={emoji.icon}
-								alt={emoji.label}
+								src={emoji?.icon}
+								alt={emoji?.label}
 								className="w-[38px] h-[38px]"
 							/>
 							{emoji.label}
@@ -137,14 +164,14 @@ const ReactionCloud = ({
 };
 
 const REACTION_EMOJI = {
-	best: { label: '최고예요', icon: BestEmoji },
-	sympathy: { label: '공감해요', icon: SympathyEmoji },
-	cheer: { label: '응원해요', icon: CheerEmoji },
-	okay: { label: '괜찮아요', icon: OkayEmoji },
-	impression: { label: '감동이예요', icon: ImpressionEmoji },
-	amazing: { label: '대단해요', icon: AmazingEmoji },
-	fighting: { label: '힘내요', icon: FightingEmoji },
-	funny: { label: '웃겨요', icon: FunnyEmoji },
-	angry: { label: '화냐요', icon: AngryEmoji },
-	sad: { label: '슬퍼요', icon: SadEmoji },
+	best: { label: '최고예요', icon: BestEmoji, value: 'best' },
+	empathy: { label: '공감해요', icon: SympathyEmoji, value: 'empathy' },
+	cheer: { label: '응원해요', icon: CheerEmoji, value: 'cheer' },
+	good: { label: '괜찮아요', icon: OkayEmoji, value: 'good' },
+	touching: { label: '감동이예요', icon: ImpressionEmoji, value: 'touching' },
+	amazing: { label: '대단해요', icon: AmazingEmoji, value: 'amazing' },
+	support: { label: '힘내요', icon: FightingEmoji, value: 'support' },
+	funny: { label: '웃겨요', icon: FunnyEmoji, value: 'funny' },
+	angry: { label: '화나요', icon: AngryEmoji, value: 'angry' },
+	sad: { label: '슬퍼요', icon: SadEmoji, value: 'sad' },
 };

@@ -9,6 +9,7 @@ const getMyDiaryList = async (year: number, month: number) => {
 		params: {
 			year,
 			month,
+			limit: 100,
 		},
 	});
 	return response.data?.data;

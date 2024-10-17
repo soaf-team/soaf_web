@@ -26,9 +26,9 @@ const MOOD_DISTRIBUTION_DATA = {
 };
 
 const EMOTIONS_OF_THE_MONTH_DATA = {
-	슬픈: 4,
-	설레는: 3,
-	화난: 2,
+	sad: 4,
+	excited: 3,
+	angry: 2,
 };
 
 const MOOD_FLOW_DATA: {

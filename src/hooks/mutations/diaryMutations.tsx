@@ -7,15 +7,7 @@ import { useDiaryStore } from '@/store';
 import { overlay } from '@/libs';
 import { LoadingDotScreen } from '@/components';
 
-type DiaryPayloadType = {
-	title: string;
-	date: string;
-	content: string;
-	imageBox: string[];
-	coreEmotion: MoodRating;
-	detailedEmotions: EmotionKey[];
-	isPublic: boolean;
-};
+type DiaryPayloadType = FormData;
 
 type DiaryResponseType = {
 	_id: string;

@@ -5,6 +5,7 @@ import { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
 import { AboveKeyboardBar } from './AboveKeyboardBar';
 import { DeletePhoto } from '@/assets';
 import { diaryMutations } from '@/hooks/mutations';
+import { EMOTIONS } from '@/constants';
 
 const CONTENT_PLACEHOLDER = '오늘 하루는 어땠나요?';
 
@@ -48,15 +49,21 @@ export const DiaryForm = (props: DiaryFormProps) => {
 	};
 
 	const handleSaveDiaryButtonClick = async () => {
-		createUserMutation.mutate({
-			title: diary.title,
-			date: diary.date,
-			content: diary.content,
-			coreEmotion: diary.rating!,
-			detailedEmotions: diary.emotions,
-			isPublic: diary.isPublic,
-			imageBox: diary.photos,
+		if (!diary.rating) return;
+
+		const formData = new FormData();
+		formData.append('title', diary.title);
+		formData.append('date', diary.date);
+		formData.append('content', diary.content);
+		formData.append('coreEmotion', diary.rating!.toString());
+		diary.emotions.forEach((emotion) => {
+			formData.append('detailedEmotions', emotion);
 		});
+		formData.append('isPublic', diary.isPublic.toString());
+		diary.photos.forEach((photo) => {
+			formData.append('imageBox', photo);
+		});
+		createUserMutation.mutate(formData);
 	};
 
 	useEffect(() => {
@@ -141,7 +148,7 @@ type TitleInputProps = {
 const TitleInput = forwardRef(
 	(props: TitleInputProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
 		const { diary, handleTitleChange, ...rest } = props;
-		const initialTitle = `${diary.emotions.join(', ')} 하루`;
+		const initialTitle = `${diary.emotions.map((emotion) => EMOTIONS[emotion].label).join(', ')} 하루`;
 
 		const adjustHeight = () => {
 			const textarea = (ref as any)?.current;

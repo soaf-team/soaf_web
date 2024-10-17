@@ -53,7 +53,7 @@ export const EmotionButton = ({
 			onTouchEnd={onPressEnd}
 			style={getPressStyle(emotion)}
 		>
-			<span className="z-10">{emotion}</span>
+			<span className="z-10">{EMOTIONS[emotion].label}</span>
 			<img
 				src={EMOTIONS[emotion].icon}
 				alt="emotion_icon"
