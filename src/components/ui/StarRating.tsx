@@ -39,6 +39,8 @@ export const StarRating = ({
 		index: number,
 		e: React.MouseEvent<HTMLSpanElement>,
 	) => {
+		if (readonly) return;
+
 		const selectedValue = calculateStarValue(index, e);
 		updateStarRating(selectedValue);
 	};
@@ -47,6 +49,8 @@ export const StarRating = ({
 		index: number,
 		e: React.MouseEvent<HTMLSpanElement>,
 	) => {
+		if (readonly) return;
+
 		const hoverValue = calculateStarValue(index, e);
 		setHover(hoverValue);
 	};
