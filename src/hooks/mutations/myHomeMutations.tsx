@@ -13,6 +13,26 @@ import { useToast } from '../useToast';
 
 type MyHomePayloadCategory = 'music' | 'movie' | 'book' | 'youtube';
 
+const getCategoryMessage = (
+	category: MyHomePayloadCategory,
+	action: string,
+	isLoading: boolean = false,
+) => {
+	const actionWord = isLoading ? `${action}중이에요` : `${action}되었어요`;
+	switch (category) {
+		case 'music':
+			return `음악이 ${actionWord}`;
+		case 'movie':
+			return `영화가 ${actionWord}`;
+		case 'book':
+			return `책이 ${actionWord}`;
+		case 'youtube':
+			return `유튜브 영상이 ${actionWord}`;
+		default:
+			return;
+	}
+};
+
 type MyHomePayloadType = {
 	category: MyHomePayloadCategory;
 	review: string;
@@ -61,7 +81,10 @@ export const myHomeMutations = (
 				overlay.open(
 					<LoadingDotScreen
 						overlayKey="loading-music"
-						message="음악을 저장중이에요"
+						message={getCategoryMessage(
+							category as MyHomePayloadCategory,
+							'저장',
+						)}
 					/>,
 				);
 			},
@@ -71,7 +94,7 @@ export const myHomeMutations = (
 				});
 				overlay.close();
 				toast({
-					title: '음악이 저장되었어요',
+					title: getCategoryMessage(variables.category, '저장'),
 				});
 			},
 			onError: (error) => {
@@ -89,7 +112,10 @@ export const myHomeMutations = (
 				overlay.open(
 					<LoadingDotScreen
 						overlayKey="loading-music"
-						message="음악 정보를 수정중이에요"
+						message={getCategoryMessage(
+							category as MyHomePayloadCategory,
+							'수정',
+						)}
 					/>,
 				);
 			},
@@ -99,7 +125,7 @@ export const myHomeMutations = (
 				});
 				overlay.close();
 				toast({
-					title: '음악이 수정되었어요',
+					title: getCategoryMessage(variables.category, '수정'),
 				});
 			},
 			onError: (error) => {
@@ -114,7 +140,10 @@ export const myHomeMutations = (
 			overlay.open(
 				<LoadingDotScreen
 					overlayKey="loading-music"
-					message="등록된 음악을 삭제중이에요"
+					message={getCategoryMessage(
+						category as MyHomePayloadCategory,
+						'삭제',
+					)}
 				/>,
 			);
 		},
@@ -126,7 +155,7 @@ export const myHomeMutations = (
 			});
 			overlay.close();
 			toast({
-				title: '음악이 삭제되었어요',
+				title: getCategoryMessage(category as MyHomePayloadCategory, '삭제'),
 			});
 		},
 		onError: (error) => {
