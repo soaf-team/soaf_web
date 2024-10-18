@@ -18,8 +18,8 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 		setMessage('');
 	};
 
-	const openCamera = () => {
-		sendMessageToApp({ type: 'OPEN_CAMERA' });
+	const openCamera = (roomId: string) => {
+		sendMessageToApp({ type: 'OPEN_CAMERA', data: roomId });
 	};
 
 	const openAlbum = (roomId: string) => {
@@ -36,7 +36,7 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 			)}
 			onSubmit={handleSubmit}
 		>
-			<button type="button" onClick={openCamera}>
+			<button type="button" onClick={() => openCamera(roomId)}>
 				<img src={CameraIcon} alt="camera" />
 			</button>
 			<Spacing direction="horizontal" size={14} />
@@ -46,13 +46,13 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 			<Spacing direction="horizontal" size={10} />
 			<div
 				className={cn(
-					'flex justify-between items-center flex-1',
+					'flex justify-between gap-2 items-center flex-1',
 					'px-4 py-[10px]',
 					'rounded-[24px] bg-gray50 text-gray200 caret-primary',
 				)}
 			>
 				<input
-					className="h-6 bg-transparent outline-none"
+					className="flex-1 h-6 bg-transparent outline-none"
 					type="text"
 					placeholder="메시지를 입력주세요"
 					value={message}
