@@ -1,37 +1,26 @@
 import { StarRating } from '@/components';
 import { Movie, MovieDetail } from '@/types';
 import { cn } from '@/utils';
-import { useMemo } from 'react';
 import defaultPoster from '@/assets/icons/my-home/movie-default.svg';
 
 interface Props {
 	type?: 'search' | 'set' | 'detail';
 	onClick?: () => void;
 	movie: Movie | MovieDetail;
+	director?: string;
+	genre?: string;
 }
 
-export const MovieItem = ({ type = 'search', onClick, movie }: Props) => {
+export const MovieItem = ({
+	type = 'search',
+	onClick,
+	movie,
+	director,
+	genre,
+}: Props) => {
 	const isMovieDetail = (movie: Movie | MovieDetail): movie is MovieDetail => {
 		return (movie as MovieDetail).genres !== undefined;
 	};
-
-	const director = useMemo((): string => {
-		if (!isMovieDetail(movie)) return '';
-
-		return movie.credits.crew.filter(
-			(crew) => crew.department === 'Directing',
-		)[0].name;
-	}, [movie]);
-
-	const genre = useMemo((): string => {
-		if (!isMovieDetail(movie)) return '';
-
-		return movie.genres.reduce((acc, cur, idx) => {
-			return idx === movie.genres.length - 1
-				? `${acc}${cur.name}`
-				: `${acc}${cur.name}, `;
-		}, '');
-	}, [movie]);
 
 	const posterClass = cn({
 		'min-w-[92px] w-[92px] h-[134px] rounded-[8px]': type === 'search',

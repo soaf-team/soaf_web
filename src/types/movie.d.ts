@@ -111,6 +111,16 @@ export interface MovieDetail {
 	credits: Credits;
 }
 
+export interface MyMovie {
+	_id: string;
+	category: string;
+	review?: string;
+	content: MovieContent;
+	userId: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
 export interface MovieContent {
 	imageUrl: string;
 	title: string;
