@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
 	motion,
 	AnimatePresence,
@@ -24,19 +24,6 @@ export const Overlay = ({
 	const [isVisible, setIsVisible] = useState(true);
 
 	const controls = useDragControls();
-
-	useEffect(() => {
-		const handleKeyPress = (event: KeyboardEvent) => {
-			if (event.key === 'Enter') {
-				handleClose();
-			}
-		};
-
-		document.addEventListener('keydown', handleKeyPress);
-		return () => {
-			document.removeEventListener('keydown', handleKeyPress);
-		};
-	}, []);
 
 	const handleClose = () => {
 		setIsVisible(false);

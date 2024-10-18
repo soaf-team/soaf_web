@@ -15,7 +15,7 @@ export const MyProfile = ({
 		<article className="flex flex-col pt-5 pb-4 px-[18px]">
 			<div className="flex justify-between items-center px-2">
 				<div className="flex flex-col gap-1">
-					<p>뽀송하루</p>
+					<p>{userProfile.name}</p>
 					<p className="text-xs text-gray300 font-medium">
 						{userProfile?.status}
 					</p>

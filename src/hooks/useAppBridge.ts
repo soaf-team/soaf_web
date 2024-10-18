@@ -22,8 +22,6 @@ export const useAppBridge = () => {
 					typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
 				const { type, accessToken, refreshToken, imageArray, roomId } = data;
 
-				console.error(data);
-
 				if (type === 'SELECTED_IMAGES' && roomId && imageArray) {
 					debouncedSendMessage(roomId, imageArray);
 				}
