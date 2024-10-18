@@ -21,7 +21,8 @@ const ChatRoomPage = ({
 	const { friendList } = useFriendListQuery();
 	const { chatHistoryList } = useCurrentChatStore();
 
-	const nickname = friendList.find((friend) => friend.friend._id)?.friend.name;
+	const nickname = friendList.find((friend) => friend.friend._id === friendId)
+		?.friend.name;
 
 	useEffect(() => {
 		chatSocketManager.connectForPage('ChatRoom');
@@ -63,8 +64,7 @@ const ChatRoomPage = ({
 								type={data.type}
 								message={data.content}
 								sentAt={data.timestamp}
-								//TODO: 이후에 senderId로 유저 정보 가져오도록 수정 필요
-								nickname={data.senderId}
+								nickname={nickname}
 								variant={isMine ? 'isMine' : 'isOpponent'}
 								order={
 									isFirst ? (isMine ? 'isFirst' : 'isOpponentFirst') : undefined
