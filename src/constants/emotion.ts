@@ -41,6 +41,7 @@ export const EMOTIONS: Record<EmotionKey, EmotionDetail> = {
 		color: 'bg-flutter',
 		noun: '설렘',
 		label: '설레는',
+		value: 'excited',
 	},
 	proud: {
 		icon: Proud,

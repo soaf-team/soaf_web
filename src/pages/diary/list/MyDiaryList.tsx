@@ -1,19 +1,18 @@
 import { Button, NonDataFallback } from '@/components';
-import { useDiaryQueryByMonth } from '@/hooks';
 import { useFlow } from '@/stackflow';
 import dayjs from 'dayjs';
 import { DiaryList } from '../../../components/DiaryList';
+import { useMyDiaryListQuery } from '@/hooks';
 
 type MyDiaryListProps = {
 	currentDate: Date;
 };
 
 export const MyDiaryList = ({ currentDate }: MyDiaryListProps) => {
-	const formattedDate = dayjs(currentDate).format('YYYY.MM');
+	const year = dayjs(currentDate).year();
+	const month = dayjs(currentDate).month() + 1;
 
-	const { diariesByMonth } = useDiaryQueryByMonth({
-		params: formattedDate,
-	});
+	const { currentUserDiaryList } = useMyDiaryListQuery(year, month);
 
 	const { push } = useFlow();
 
@@ -21,7 +20,7 @@ export const MyDiaryList = ({ currentDate }: MyDiaryListProps) => {
 		push('NewDiaryStep1', {});
 	};
 
-	if (diariesByMonth.length === 0) {
+	if (currentUserDiaryList.length === 0) {
 		return (
 			<>
 				<div className="w-full absolute_center">
@@ -39,5 +38,5 @@ export const MyDiaryList = ({ currentDate }: MyDiaryListProps) => {
 		);
 	}
 
-	return <DiaryList diariesByMonth={diariesByMonth} shadow={false} />;
+	return <DiaryList diariesByMonth={currentUserDiaryList} shadow={false} />;
 };

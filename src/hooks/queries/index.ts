@@ -1,5 +1,3 @@
-export * from './useDiaryListQuery';
-export * from './useDiaryQueryByMonth';
 export * from './useFilteredDiaryQuery';
 export * from './useMatchedUserQuery';
 export * from './myHome';
