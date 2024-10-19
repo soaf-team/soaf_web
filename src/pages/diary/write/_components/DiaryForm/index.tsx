@@ -1,11 +1,13 @@
-import { EmotionSticker } from '@/components';
+import { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
+
 import { DiaryFormType } from '@/store';
 import { EmotionKey } from '@/types';
-import { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
-import { AboveKeyboardBar } from './AboveKeyboardBar';
 import { DeletePhoto } from '@/assets';
-import { diaryMutations } from '@/hooks/mutations';
 import { EMOTIONS } from '@/constants';
+import { useDiaryMutations } from '@/hooks';
+
+import { AboveKeyboardBar } from './AboveKeyboardBar';
+import { EmotionSticker } from '@/components';
 
 const CONTENT_PLACEHOLDER = '오늘 하루는 어땠나요?';
 
@@ -27,7 +29,7 @@ export const DiaryForm = (props: DiaryFormProps) => {
 		handlePhotosChange,
 		handleTogglePublic,
 	} = props;
-	const { createUserMutation } = diaryMutations();
+	const { createDiaryMutation } = useDiaryMutations();
 	const titleRef = useRef<HTMLTextAreaElement>(null);
 	const contentRef = useRef<HTMLTextAreaElement>(null);
 
@@ -63,7 +65,7 @@ export const DiaryForm = (props: DiaryFormProps) => {
 		diary.photos.forEach((photo) => {
 			formData.append('imageBox', photo);
 		});
-		createUserMutation.mutate(formData);
+		createDiaryMutation.mutate(formData);
 	};
 
 	useEffect(() => {
