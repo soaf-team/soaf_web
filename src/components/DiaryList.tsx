@@ -23,7 +23,7 @@ export const DiaryList = ({
 	};
 
 	return (
-		<div className="flex flex-col items-center justify-center gap-[12px]">
+		<div className="flex flex-col items-center justify-center gap-[12px] w-full">
 			{diariesByMonth.map((diary: Diary, index: number) => (
 				<DiaryCard
 					key={diary.id}
