@@ -11,6 +11,7 @@ import {
 import { ActivityComponentType } from '@stackflow/react';
 import { DiaryDetail } from './DiaryDetail';
 import { useRef } from 'react';
+import { useDiaryMutations } from '@/hooks/mutations';
 
 type DiaryDetailPageParams = {
 	diaryId: string;
@@ -21,6 +22,7 @@ const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 }) => {
 	const diaryId = params.diaryId;
 	const triggerRef = useRef<HTMLButtonElement>(null);
+	const { deleteDiaryMutation } = useDiaryMutations();
 
 	return (
 		<Popover>
@@ -45,7 +47,9 @@ const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 			<CustomPopoverContent
 				triggerRef={triggerRef}
 				onEdit={() => {}}
-				onDelete={() => {}}
+				onDelete={() => {
+					deleteDiaryMutation.mutate({ id: diaryId });
+				}}
 			></CustomPopoverContent>
 		</Popover>
 	);
