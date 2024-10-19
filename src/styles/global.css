@@ -23,7 +23,7 @@
 		sans-serif;
 }
 
-* {
+button {
 	-webkit-tap-highlight-color: transparent;
 	outline: none !important;
 }
