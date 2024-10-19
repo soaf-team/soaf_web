@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { DiaryFormType, useDiaryStore } from '@/store';
+import { DiaryFormType, PhotoType, useDiaryStore } from '@/store';
 import { useKeyboardHeight } from '@/hooks';
 import { Lock, Photo, UnLock } from '@/assets';
-import { convertToBase64 } from '@/utils';
 
 type AboveKeyboardBarProps = {
 	diary: DiaryFormType;
-	handleAddPhoto: (photos: string[]) => void;
+	handleAddPhoto: (photos: PhotoType[]) => void;
 	handleSaveDiary: () => void;
 	handleTogglePublic: () => void;
 	handleKeepKeyboard: () => void;
@@ -30,12 +29,21 @@ export const AboveKeyboardBar = ({
 		if (event.target.files && event.target.files[0]) {
 			const img = event.target.files[0];
 
-			try {
-				const base64Image = await convertToBase64(img);
-				onChangePhotos([...diary.photos, base64Image]);
-			} catch (error) {
-				console.error('Error converting image to Base64:', error);
+			const newFiles = Array.from(event.target.files);
+			const validFiles = newFiles.filter(
+				(file) => file.size <= 5 * 1024 * 1024,
+			);
+
+			if (validFiles.length !== newFiles.length) {
+				console.warn('Some files exceeded the 5MB limit and were excluded.');
 			}
+
+			const newPhotos = validFiles.map((file) => ({
+				file,
+				previewUrl: URL.createObjectURL(file),
+			}));
+
+			onChangePhotos([...diary.photos, ...newPhotos].slice(0, 5));
 		}
 	};
 

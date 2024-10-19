@@ -1,12 +1,17 @@
 import { EmotionKey, MoodRating } from '@/types';
 import { create } from 'zustand';
 
+export type PhotoType = {
+	file: File;
+	previewUrl: string;
+};
+
 export type DiaryFormType = {
 	id?: string;
 	rating: MoodRating | null;
 	title: string;
 	content: string;
-	photos: string[];
+	photos: PhotoType[];
 	emotions: EmotionKey[];
 	reactions: any[];
 	date: string;
@@ -19,7 +24,7 @@ type DiaryRatingStore = {
 	onChangeRating: (rating: MoodRating) => void;
 	onChangeEmotions: (emotions: EmotionKey[]) => void;
 	onChangeEmotionOrder: (emotions: EmotionKey[]) => void;
-	onChangePhotos: (photos: string[]) => void;
+	onChangePhotos: (photos: PhotoType[]) => void;
 	onChangeTitle: (title: string) => void;
 	onChangeContent: (content: string) => void;
 	resetAllDiaryState: () => void;
@@ -73,7 +78,7 @@ export const useDiaryStore = create<DiaryRatingStore>((set) => {
 					emotions: reorderEmotions(emotions),
 				},
 			})),
-		onChangePhotos: (photos: string[]) =>
+		onChangePhotos: (photos: PhotoType[]) =>
 			set((state) => ({
 				diary: {
 					...state.diary,

@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
 
-import { DiaryFormType } from '@/store';
+import { DiaryFormType, PhotoType } from '@/store';
 import { EmotionKey } from '@/types';
 import { DeletePhoto } from '@/assets';
 import { EMOTIONS } from '@/constants';
@@ -16,7 +16,7 @@ type DiaryFormProps = {
 	handleReorderEmotions: (emotions: EmotionKey[]) => void;
 	handleTitleChange: (title: string) => void;
 	handleContentChange: (content: string) => void;
-	handlePhotosChange: (photos: string[]) => void;
+	handlePhotosChange: (photos: PhotoType[]) => void;
 	handleTogglePublic: () => void;
 };
 
@@ -63,7 +63,7 @@ export const DiaryForm = (props: DiaryFormProps) => {
 		});
 		formData.append('isPublic', diary.isPublic.toString());
 		diary.photos.forEach((photo) => {
-			formData.append('imageBox', photo);
+			formData.append('imageBox', photo.file);
 		});
 		createDiaryMutation.mutate(formData);
 	};
@@ -115,8 +115,8 @@ export const DiaryForm = (props: DiaryFormProps) => {
 									<img src={DeletePhoto} alt="delete_photo" />
 								</div>
 								<img
-									src={photo}
-									alt={photo}
+									src={photo.previewUrl}
+									alt={photo.previewUrl}
 									className="object-cover w-full h-full"
 								/>
 							</div>
