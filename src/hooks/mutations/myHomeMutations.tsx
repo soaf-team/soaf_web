@@ -84,6 +84,7 @@ export const myHomeMutations = (
 						message={getCategoryMessage(
 							category as MyHomePayloadCategory,
 							'저장',
+							true,
 						)}
 					/>,
 				);
@@ -115,6 +116,7 @@ export const myHomeMutations = (
 						message={getCategoryMessage(
 							category as MyHomePayloadCategory,
 							'수정',
+							true,
 						)}
 					/>,
 				);
@@ -143,6 +145,7 @@ export const myHomeMutations = (
 					message={getCategoryMessage(
 						category as MyHomePayloadCategory,
 						'삭제',
+						true,
 					)}
 				/>,
 			);
