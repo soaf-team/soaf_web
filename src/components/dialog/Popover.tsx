@@ -21,13 +21,15 @@ const CustomPopoverContent = React.forwardRef<
 
 	React.useEffect(() => {
 		const updatePosition = () => {
-			if (triggerRef.current) {
-				const rect = triggerRef.current.getBoundingClientRect();
-				setPosition({
-					top: rect.bottom + window.scrollY,
-					right: window.innerWidth - (rect.right + window.scrollX),
-				});
-			}
+			setTimeout(() => {
+				if (triggerRef.current) {
+					const rect = triggerRef.current.getBoundingClientRect();
+					setPosition({
+						top: rect.bottom + window.scrollY,
+						right: window.innerWidth - (rect.right + window.scrollX),
+					});
+				}
+			}, 500);
 		};
 
 		updatePosition();
