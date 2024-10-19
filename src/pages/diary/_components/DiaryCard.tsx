@@ -84,7 +84,7 @@ export const DiaryCard = ({
 							: onClick?.();
 					}}
 				>
-					<p className="overflow-hidden body4 line-clamp-3 overflow-ellipsis">
+					<p className="flex-1 overflow-hidden body4 line-clamp-3 overflow-ellipsis">
 						{removeHtmlTags(diary.content)}
 					</p>
 					{diary.photos.length > 0 && (
