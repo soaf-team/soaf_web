@@ -43,7 +43,7 @@ export const DiaryCard = ({
 					{dayjs(diary.date).format('ddd')}
 				</p>
 			</div>
-			<div className="flex flex-col gap-[15px]">
+			<div className="flex flex-col w-full gap-[15px]">
 				<div className="flex items-center">
 					<div className="flex flex-col justify-start gap-[4px]">
 						<p className="label2">{diary.title}</p>
@@ -87,13 +87,15 @@ export const DiaryCard = ({
 					<p className="overflow-hidden body4 line-clamp-3 overflow-ellipsis">
 						{removeHtmlTags(diary.content)}
 					</p>
-					<div className="w-[48px] min-w-[48px] h-[48px] rounded-[10px] bg-gray50">
-						<img
-							src={diary.photos[0]}
-							alt="diary-photo"
-							className="object-cover w-full h-full rounded-[10px]"
-						/>
-					</div>
+					{diary.photos.length > 0 && (
+						<div className="w-[48px] min-w-[48px] h-[48px] rounded-[10px] bg-gray50">
+							<img
+								src={diary.photos[0]}
+								alt="diary-photo"
+								className="object-cover w-full h-full rounded-[10px]"
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		</Card>
