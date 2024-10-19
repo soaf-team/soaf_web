@@ -23,6 +23,7 @@ type DiaryReactionProps = {
 };
 
 const ITEMS_PER_ROW = [3, 4, 3];
+const INFO_MESSAGE = '일기에 대한 따뜻한 마음을 남겨보세요.';
 
 const chunkArray = (array: any[], sizes: number[]) => {
 	const result = [];
@@ -82,7 +83,7 @@ export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
 						className="w-[22px] h-[20px]"
 						onClick={handleHeartButtonClick}
 					/>
-					일기에 대한 따뜻한 마음을 남겨보세요.
+					{INFO_MESSAGE}
 				</div>
 			)}
 			<ReactionCloud
