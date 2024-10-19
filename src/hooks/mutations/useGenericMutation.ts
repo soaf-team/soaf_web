@@ -27,15 +27,17 @@ interface MutationOptions<TData, TVariables, TContext = unknown> {
 	minLoadingTime?: number;
 }
 
+type UrlFunction<TVariables> = (variables: TVariables) => string;
+
 /**
  * 제네릭 뮤테이션 훅
- * @param url API 엔드포인트 URL
+ * @param urlOrFunction API 엔드포인트 URL 또는 URL을 생성하는 함수
  * @param method HTTP 메서드
  * @param options 뮤테이션 옵션
- * @returns UseMutationResult와 isLoadingWithMinTime
+ * @returns UseMutationResult와 isLoading
  */
 export function useGenericMutation<TData, TVariables>(
-	url: string,
+	urlOrFunction: string | UrlFunction<TVariables>,
 	method: 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'POST',
 	options?: MutationOptions<TData, TVariables>,
 ): UseMutationResult<ApiResponse<TData>, AxiosError, TVariables> & {
@@ -48,6 +50,10 @@ export function useGenericMutation<TData, TVariables>(
 		variables,
 	) => {
 		const startTime = Date.now();
+		const url =
+			typeof urlOrFunction === 'function'
+				? urlOrFunction(variables)
+				: urlOrFunction;
 		const response = await axiosBase({
 			method,
 			url,
