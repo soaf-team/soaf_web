@@ -1,21 +1,36 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { MyHomeButton } from './MyHomeButton';
+import { BanDialogOverlay } from './BanDialogOverlay';
+import { QUERY_KEY } from '@/constants';
 import { chatSocketManager, overlay } from '@/libs';
 import { useFriendListQuery, useToast } from '@/hooks';
+import { userBlockMutations } from '@/hooks/mutations';
 import { cn } from '@/utils';
 import { AnnotationPlus, BanIcon } from '@/assets';
-import { BanDialogOverlay } from './BanDialogOverlay';
 
 export const FriendList = () => {
-	const [isDragging, setIsDragging] = useState(false);
+	const queryClient = useQueryClient();
+
+	const [isDraggingId, setIsDraggingId] = useState<string | null>(null);
 
 	const { toast } = useToast();
 	const { friendList } = useFriendListQuery();
+	const { postBlockUserMutation } = userBlockMutations({
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: [QUERY_KEY.FRIEND_LIST],
+			});
+		},
+	});
 
-	const handleBanButtonClick = async (userName: string) => {
+	const handleBanButtonClick = async (userName: string, userId: string) => {
 		await overlay.open(<BanDialogOverlay userName={userName} />);
+		await postBlockUserMutation.mutateAsync({
+			userToBlockId: userId,
+		});
 		toast({
 			title: `${userName}님이 차단되었어요`,
 		});
@@ -45,14 +60,15 @@ export const FriendList = () => {
 									left: -10,
 									right: 0,
 								}}
-								onDragStart={() => setIsDragging(true)}
-								onDragEnd={(event, info) => {
+								animate={{ x: isDraggingId === friend._id ? -10 : 0 }}
+								onDragStart={() => setIsDraggingId(friend._id)}
+								onDragEnd={(_, info) => {
 									if (info.offset.x > 0) {
-										setIsDragging(false);
+										setIsDraggingId(null);
 									}
 								}}
 							>
-								{!isDragging ? (
+								{isDraggingId !== friend._id ? (
 									<div className="flex flex-col gap-1">
 										<p>{friend.name}</p>
 										<p className="text-xs text-gray300">{friend?.status}</p>
@@ -73,16 +89,18 @@ export const FriendList = () => {
 											});
 										}}
 									/>
-									{isDragging && (
+									{isDraggingId === friend._id && (
 										<img
 											src={BanIcon}
 											alt="ban"
-											onClick={() => handleBanButtonClick(friend.name)}
+											onClick={() =>
+												handleBanButtonClick(friend.name, friend._id)
+											}
 										/>
 									)}
 								</div>
 							</motion.div>
-							{isDragging && <div />}
+							{isDraggingId === friend._id && <div />}
 						</li>
 					);
 				})}
