@@ -6,6 +6,7 @@ import { useGenericMutation } from './useGenericMutation';
 import { useDiaryStore } from '@/store';
 import { overlay } from '@/libs';
 import { LoadingDotScreen } from '@/components';
+import { useToast } from '../useToast';
 
 type DiaryPayloadType = FormData;
 
@@ -20,12 +21,13 @@ type DiaryResponseType = {
 	isPublic: boolean;
 };
 
-export const diaryMutations = () => {
+export const useDiaryMutations = () => {
 	const { push, pop } = useFlow();
+	const { toast } = useToast();
 	const { resetAllDiaryState } = useDiaryStore();
 	const queryClient = useQueryClient();
 
-	const createUserMutation = useGenericMutation<
+	const createDiaryMutation = useGenericMutation<
 		DiaryResponseType,
 		DiaryPayloadType
 	>('/diary', 'POST', {
@@ -54,5 +56,24 @@ export const diaryMutations = () => {
 		},
 	});
 
-	return { createUserMutation };
+	const deleteDiaryMutation = useGenericMutation<void, { id: string }>(
+		({ id }) => `/diary/${id}`,
+		'DELETE',
+		{
+			onSuccess: () => {
+				pop(1);
+				toast({
+					title: '일기가 삭제되었어요',
+				});
+				queryClient.invalidateQueries({
+					queryKey: [QUERY_KEY.currentUserDiaryList],
+				});
+			},
+			onError: (error) => {
+				console.log(error);
+			},
+		},
+	);
+
+	return { createDiaryMutation, deleteDiaryMutation };
 };
