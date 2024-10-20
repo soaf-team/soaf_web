@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import { ProviderGroup } from './providers';
 import { Stack } from './stackflow';
-import { worker } from './mocks/browser';
 import { AsyncBoundary } from './components';
 import { useAppBridge } from './hooks';
 
@@ -11,10 +9,6 @@ if (import.meta.env.MODE === 'production') {
 
 function App() {
 	useAppBridge();
-
-	useEffect(() => {
-		worker.start();
-	}, []);
 
 	return (
 		<AsyncBoundary>
