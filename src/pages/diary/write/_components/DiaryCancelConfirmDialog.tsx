@@ -10,6 +10,19 @@ import {
 import { useFlow } from '@/stackflow';
 import { useDiaryStore } from '@/store';
 
+const TYPE_TITLE = {
+	write: '일기를 그만 쓸까요?',
+	modify: '수정을 취소할까요?',
+};
+
+const TYPE_DESCRIPTION = {
+	write: '지금까지 입력한 내용이 사라져요',
+	modify: '일기 내용은 원래대로 돌아가요',
+};
+
+const NO_BUTTON_TEXT = '아니요';
+const YES_BUTTON_TEXT = '네, 취소할래요';
+
 type DiaryWriteCancelDialogProps = {
 	popCount: number;
 	type?: 'write' | 'modify';
@@ -40,26 +53,16 @@ export const DiaryCancelConfirmDialog = ({
 				<div className="flex w-full gap-[8px]">
 					<DialogClose className="flex-1">
 						<Button size="sm" variant="secondary">
-							아니요
+							{NO_BUTTON_TEXT}
 						</Button>
 					</DialogClose>
 					<DialogClose className="flex-1">
 						<Button size="sm" onClick={handleCancelClick} variant="warn">
-							네, 취소할래요
+							{YES_BUTTON_TEXT}
 						</Button>
 					</DialogClose>
 				</div>
 			</DialogFooter>
 		</DialogContent>
 	);
-};
-
-const TYPE_TITLE = {
-	write: '일기를 그만 쓸까요?',
-	modify: '수정을 취소할까요?',
-};
-
-const TYPE_DESCRIPTION = {
-	write: '지금까지 입력한 내용이 사라져요',
-	modify: '일기 내용은 원래대로 돌아가요',
 };
