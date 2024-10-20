@@ -34,8 +34,8 @@ export const MyItem = <T,>({ item, onClick }: MyItemProps<T>) => {
 				/>
 			</div>
 
-			<div className="absolute bottom-[-2px] h-[45px] bg-white flex items-center justify-center w-full rounded-b-2xl">
-				<p className="label4">{item.content.title}</p>
+			<div className="absolute bottom-[-2px] h-[45px] bg-white flex items-center justify-center w-full rounded-b-2xl px-1">
+				<p className="text-center label4 line-clamp-1">{item.content.title}</p>
 			</div>
 		</div>
 	);
