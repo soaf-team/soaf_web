@@ -2,7 +2,7 @@ import { useFlow } from '@/stackflow';
 import { chatSocketManager } from '@/libs';
 import { useChatListStore } from '@/store';
 import { useFriendListQuery } from '@/hooks';
-import { cn, formatToLocalTime } from '@/utils';
+import { cn, formatDateTime } from '@/utils';
 
 export const ChatList = () => {
 	const { friendList } = useFriendListQuery();
@@ -43,7 +43,7 @@ export const ChatList = () => {
 							</div>
 							<div className={cn(LIST_CON_STYLE, 'items-end')}>
 								<p className="text-gray600">
-									{formatToLocalTime(chat.lastMessage?.timestamp ?? '')}
+									{formatDateTime(chat.lastMessage?.timestamp ?? '')}
 								</p>
 								{chat.unreadCnt > 0 && (
 									<div
