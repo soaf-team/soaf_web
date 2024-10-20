@@ -15,11 +15,13 @@ import {
 	SympathyEmoji,
 	ReactionCloud as ReactionCloudIcon,
 } from '@/assets';
+import { ReactionKeyType } from '@/types';
 
 type DiaryReactionProps = {
 	reactions: {
 		[key: string]: string[];
 	};
+	handleReactionClick: (reactionType: ReactionKeyType) => void;
 };
 
 const ITEMS_PER_ROW = [3, 4, 3];
@@ -35,7 +37,10 @@ const chunkArray = (array: any[], sizes: number[]) => {
 	return result;
 };
 
-export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
+export const DiaryReaction = ({
+	reactions,
+	handleReactionClick,
+}: DiaryReactionProps) => {
 	const [isOpened, setIsOpened] = useState(false);
 
 	const handleHeartButtonClick = () => {
@@ -44,10 +49,23 @@ export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
 
 	const reactionEntries = Object.entries(reactions);
 	const chunkedReactions = chunkArray(reactionEntries, ITEMS_PER_ROW);
+	const isReactionsEmpty = Object.values(reactions).every(
+		(users) => users.length === 0,
+	);
 
 	return (
 		<div className="relative w-full border-t border-solid border-border py-[16px]">
-			{Object.keys(reactions).length > 0 ? (
+			{isReactionsEmpty ? (
+				<div className="flex items-center gap-[10px] body4">
+					<img
+						src={HeartCircle}
+						alt="heart-circle"
+						className="w-[22px] h-[20px]"
+						onClick={handleHeartButtonClick}
+					/>
+					{INFO_MESSAGE}
+				</div>
+			) : (
 				<div className="flex flex-col gap-[6px]">
 					{chunkedReactions.map((chunk, rowIndex) => (
 						<div
@@ -58,6 +76,7 @@ export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
 								<div
 									key={key}
 									className="flex items-center gap-[4px] label4 text-black/70"
+									onClick={() => handleReactionClick(key as ReactionKeyType)}
 								>
 									<img
 										src={
@@ -75,20 +94,11 @@ export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
 						</div>
 					))}
 				</div>
-			) : (
-				<div className="flex items-center gap-[10px] body4">
-					<img
-						src={HeartCircle}
-						alt="heart-circle"
-						className="w-[22px] h-[20px]"
-						onClick={handleHeartButtonClick}
-					/>
-					{INFO_MESSAGE}
-				</div>
 			)}
 			<ReactionCloud
 				isVisible={isOpened}
 				onCloudClose={() => setIsOpened(false)}
+				handleReactionClick={handleReactionClick}
 			/>
 		</div>
 	);
@@ -97,15 +107,18 @@ export const DiaryReaction = ({ reactions }: DiaryReactionProps) => {
 const ReactionCloud = ({
 	isVisible,
 	onCloudClose,
+	handleReactionClick,
 }: {
 	isVisible: boolean;
 	onCloudClose: () => void;
+	handleReactionClick: (reactionType: ReactionKeyType) => void;
 }) => {
 	const [visible, setVisible] = useState(isVisible);
 	const visibleStyle = isVisible ? 'animate-fadeIn' : 'animate-fadeOut';
 
 	const handleEmojiClick = (emoji: string) => {
 		onCloudClose();
+		handleReactionClick(emoji as ReactionKeyType);
 	};
 
 	useEffect(() => {
@@ -137,12 +150,12 @@ const ReactionCloud = ({
 					onCloudClose();
 				}}
 			/>
-			<div className="absolute flex bottom-[78px] left-[16px] m-auto w-[288px] h-[133px] z-[10000]">
+			<div className="absolute flex bottom-[78px] left-[24px] m-auto w-[288px] h-[133px] z-[10000]">
 				<div className="absolute w-full h-full grid grid-cols-5 gap- py-[12px] px-[12px]">
 					{Object.values(REACTION_EMOJI).map((emoji, index) => (
 						<div
 							key={index}
-							onClick={() => handleEmojiClick(emoji.label)}
+							onClick={() => handleEmojiClick(emoji.value)}
 							className="flex flex-col items-center justify-center text-[10px] leading-[12px] font-semibold"
 						>
 							<img

@@ -35,3 +35,15 @@ export type DiaryType = {
 };
 
 export type MoodRating = 1 | 2 | 3 | 4 | 5;
+
+export type ReactionKeyType =
+	| 'best'
+	| 'funny'
+	| 'touching'
+	| 'good'
+	| 'empathy'
+	| 'sad'
+	| 'angry'
+	| 'amazing'
+	| 'support'
+	| 'cheer';
