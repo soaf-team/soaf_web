@@ -1,10 +1,10 @@
 import { BackButton, PageLayout, PlusButton } from '@/components';
-import { MyHomeDrawer } from '../_components';
+import { MyHomeDrawer, MyItem } from '../_components';
 import { RegisterMovieForm } from './_components/RegisterMovieForm';
 import { overlay } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { useMyMoviesQuery, useUserProfileQuery } from '@/hooks';
-import { MyMovieItem } from './_components/MyMovieItem';
+import { cn } from '@/utils';
 
 const MyMoviePage = () => {
 	const { push } = useFlow();
@@ -12,8 +12,6 @@ const MyMoviePage = () => {
 	const { myMovieList, isFetching } = useMyMoviesQuery(userProfile?.id);
 
 	// TODO: fetching skeleton
-
-	console.log(myMovieList);
 
 	const handleOpenOverlay = async () => {
 		await overlay.open(<MyHomeDrawer component={<RegisterMovieForm />} />);
@@ -33,7 +31,12 @@ const MyMoviePage = () => {
 				rightSlot: <PlusButton onClick={handleOpenOverlay} />,
 			}}
 		>
-			<div className="flex flex-col pt-[56px]">
+			<div
+				className={cn(
+					'flex flex-col pt-[56px] h-full',
+					myMovieList?.data.length === 0 && 'p-0',
+				)}
+			>
 				{myMovieList?.data.length === 0 ? (
 					<div className="flex flex-col gap-[8px] justify-center items-center h-full body2m text-gray200">
 						<p>좋아하는 영화를 추가해</p>
@@ -47,9 +50,9 @@ const MyMoviePage = () => {
 
 						<div className="grid w-full grid-cols-3 gap-2">
 							{myMovieList?.data.map((movie) => (
-								<MyMovieItem
+								<MyItem
 									key={movie._id}
-									movie={movie}
+									item={movie}
 									onClick={() => handleClickMovieItem(movie._id)}
 								/>
 							))}

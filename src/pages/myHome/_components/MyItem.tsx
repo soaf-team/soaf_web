@@ -1,12 +1,18 @@
 import { StarRating } from '@/components';
-import { MyMovie } from '@/types';
+import { RatingType } from '@/types';
 
-interface MyMovieItemProps {
-	movie: MyMovie;
+interface MyItemProps<T> {
+	item: T & {
+		content: {
+			imageUrl: string;
+			title: string;
+			rating: RatingType;
+		};
+	};
 	onClick: () => void;
 }
 
-export const MyMovieItem = ({ movie, onClick }: MyMovieItemProps) => {
+export const MyItem = <T,>({ item, onClick }: MyItemProps<T>) => {
 	return (
 		<div
 			role="button"
@@ -14,7 +20,7 @@ export const MyMovieItem = ({ movie, onClick }: MyMovieItemProps) => {
 			onClick={onClick}
 		>
 			<img
-				src={movie.content.imageUrl}
+				src={item.content.imageUrl}
 				className="object-cover w-full h-full rounded-2xl"
 				alt="poster"
 			/>
@@ -23,13 +29,13 @@ export const MyMovieItem = ({ movie, onClick }: MyMovieItemProps) => {
 				<StarRating
 					onChange={() => {}}
 					size={16}
-					defaultValue={movie.content.rating}
+					defaultValue={item.content.rating}
 					readonly
 				/>
 			</div>
 
 			<div className="absolute bottom-[-2px] h-[45px] bg-white flex items-center justify-center w-full rounded-b-2xl">
-				<p className="label4">{movie.content.title}</p>
+				<p className="label4">{item.content.title}</p>
 			</div>
 		</div>
 	);
