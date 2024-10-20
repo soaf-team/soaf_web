@@ -41,6 +41,7 @@ export const SearchBookList = ({ onNextStep, setBookId }: Props) => {
 			) : (
 				books?.map((book: Document) => (
 					<BookItem
+						type="search"
 						key={book.isbn}
 						book={book}
 						onClick={() => handleItemClick(book)}
