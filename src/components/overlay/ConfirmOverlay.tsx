@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-	motion,
-	AnimatePresence,
-	useDragControls,
-	PanInfo,
-} from 'framer-motion';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { Button } from '@/components';
 import { OverlayProps as Props } from '@/libs';
 import { cn } from '@/utils';
@@ -15,7 +10,7 @@ interface OverlayProps extends Props {
 	resolve: () => void;
 }
 
-export const Overlay = ({
+export const ConfirmOverlay = ({
 	resolve,
 	reject,
 	disabled,
