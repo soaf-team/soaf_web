@@ -12,11 +12,7 @@ interface Props {
 	movieId: string;
 }
 
-export const SetMovieInfo = ({
-	onPrevStep,
-
-	movieId,
-}: Props) => {
+export const SetMovieInfo = ({ onPrevStep, movieId }: Props) => {
 	const { movieInfo } = useMovieDetailQuery({ id: movieId });
 	const [movie, setMovie] = useState<Omit<MovieContent, 'rating'>>({
 		title: '',
