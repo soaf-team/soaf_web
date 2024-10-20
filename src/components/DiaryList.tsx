@@ -1,9 +1,9 @@
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 import { DiaryCard } from '../pages/diary/_components/DiaryCard';
 
 type DiaryListProps = {
-	diariesByMonth: Diary[];
-	isSelected?: Diary[];
+	diariesByMonth: DiaryType[];
+	isSelected?: DiaryType[];
 	isCheckable?: boolean;
 	shadow?: boolean;
 	handleDiarySelect?: (index: number) => void;
@@ -24,7 +24,7 @@ export const DiaryList = ({
 
 	return (
 		<div className="flex flex-col items-center justify-center gap-[12px] w-full">
-			{diariesByMonth.map((diary: Diary, index: number) => (
+			{diariesByMonth.map((diary: DiaryType, index: number) => (
 				<DiaryCard
 					key={diary.id}
 					diary={diary}

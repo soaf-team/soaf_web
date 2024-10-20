@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFlow } from '@/stackflow';
 
 import { cn, getDateStatus } from '@/utils';
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 import { useMyDiaryListQuery } from '@/hooks';
 import { Plus } from '@/assets';
 
@@ -13,7 +13,7 @@ import { YearMonthSelect } from '@/components/YearMonthSelect';
 
 export const MyDiaryCalendar = () => {
 	const { push } = useFlow();
-	const [selectedDiary, setSelectedDiary] = useState<Diary | null>(null);
+	const [selectedDiary, setSelectedDiary] = useState<DiaryType | null>(null);
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const { currentUserDiaryList } = useMyDiaryListQuery(
 		currentDate.getFullYear(),
@@ -24,7 +24,7 @@ export const MyDiaryCalendar = () => {
 	>(0.5);
 
 	const handleDateClick = (
-		diaryAtDate: Diary | undefined,
+		diaryAtDate: DiaryType | undefined,
 		isFuture: boolean,
 		date: string,
 	) => {
@@ -63,7 +63,7 @@ export const MyDiaryCalendar = () => {
 					render={(day, index, isToday) => {
 						const isFuture = day && getDateStatus(day, new Date()) === 'future';
 						const diaryAtDate = currentUserDiaryList.find(
-							(diary: Diary) =>
+							(diary: DiaryType) =>
 								day && getDateStatus(new Date(diary.date), day) === 'today',
 						);
 						const diaryMainEmotion = diaryAtDate?.emotions[0];

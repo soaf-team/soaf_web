@@ -1,7 +1,7 @@
 import { Button, NonDataFallback, PageLayout } from '@/components';
 import { useMyDiaryListQuery, useToast } from '@/hooks';
 import { useFlow } from '@/stackflow';
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 import { overlay, OverlayProps } from '@/libs';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -42,7 +42,7 @@ const SoafExplorePage = () => {
 
 	const handleButtonClick = async (
 		isSelected: string[],
-		currentUserDiaryList: Diary[],
+		currentUserDiaryList: DiaryType[],
 	) => {
 		if (isSelected.length === 0) {
 			await overlay.open(<AutomaticAISearchOverlay overlayKey="ai-search" />);
@@ -95,7 +95,7 @@ const SoafExplorePage = () => {
 					</div>
 				) : (
 					<div className="flex flex-col items-center justify-center gap-[12px] w-[95%] mt-[24px]">
-						{currentUserDiaryList.map((diary: Diary, index: number) => {
+						{currentUserDiaryList.map((diary: DiaryType, index: number) => {
 							return (
 								<DiaryCard
 									key={diary.id}

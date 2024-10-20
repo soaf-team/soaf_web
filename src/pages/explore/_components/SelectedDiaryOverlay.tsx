@@ -3,11 +3,11 @@ import dayjs from 'dayjs';
 import { EmotionSticker } from '@/components';
 import { BasicOverlay } from '@/components/overlay';
 import { OverlayProps } from '@/libs';
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 import { cn, removeHtmlTags } from '@/utils';
 
 interface SelectedDiaryOverlayProps extends OverlayProps {
-	diary: Diary;
+	diary: DiaryType;
 }
 
 export const SelectedDiaryOverlay = ({

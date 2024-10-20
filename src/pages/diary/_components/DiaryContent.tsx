@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 import { EmotionSticker } from '@/components/emotion';
 import { Image } from '@/components/ui';
 
 type DiaryContentProps = {
-	diary: Diary;
+	diary: DiaryType;
 	isImageClickable?: boolean;
 };
 

@@ -1,11 +1,11 @@
 import { Card, CheckBox, EmotionSticker } from '@/components';
 import { useFlow } from '@/stackflow';
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 import { cn, removeHtmlTags } from '@/utils';
 import dayjs from 'dayjs';
 
 interface Props {
-	diary: Diary;
+	diary: DiaryType;
 	isCheckable?: boolean;
 	isSelected?: boolean;
 	shadow?: boolean;

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useFlow } from '@/stackflow';
 import { DrawerClose, DrawerContent } from '@/components/dialog';
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 import { cn } from '@/utils';
 import { DiaryContent } from '../../_components/DiaryContent';
 
 type DiaryContentDrawerProps = {
-	diary: Diary;
+	diary: DiaryType;
 };
 
 export const DiaryContentDrawer = ({ diary }: DiaryContentDrawerProps) => {

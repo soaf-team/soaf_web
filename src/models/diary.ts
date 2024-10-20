@@ -1,6 +1,6 @@
-import { Diary, DiaryBackend } from '@/types';
+import { DiaryType, DiaryBackend } from '@/types';
 
-export function transformDiaryKey(data: DiaryBackend): Diary {
+export function transformDiaryKey(data: DiaryBackend): DiaryType {
 	return {
 		id: data._id,
 		authorId: data.userId,

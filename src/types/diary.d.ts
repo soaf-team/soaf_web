@@ -17,7 +17,7 @@ export type DiaryBackend = {
 	};
 };
 
-export type Diary = {
+export type DiaryType = {
 	id: string;
 	authorId: string;
 	title: string;
