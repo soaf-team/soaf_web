@@ -48,7 +48,7 @@ const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 				triggerRef={triggerRef}
 				onEdit={() => {}}
 				onDelete={() => {
-					deleteDiaryMutation.mutate({ id: diaryId });
+					deleteDiaryMutation.mutate({ params: { id: diaryId } });
 				}}
 			></CustomPopoverContent>
 		</Popover>

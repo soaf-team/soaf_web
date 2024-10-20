@@ -65,7 +65,7 @@ export const DiaryForm = (props: DiaryFormProps) => {
 		diary.photos.forEach((photo) => {
 			formData.append('imageBox', photo.file);
 		});
-		createDiaryMutation.mutate(formData);
+		createDiaryMutation.mutate({ payload: formData });
 	};
 
 	useEffect(() => {

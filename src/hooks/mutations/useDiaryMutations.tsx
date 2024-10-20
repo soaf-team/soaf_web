@@ -29,6 +29,7 @@ export const useDiaryMutations = () => {
 
 	const createDiaryMutation = useGenericMutation<
 		DiaryResponseType,
+		void,
 		DiaryPayloadType
 	>('/diary', 'POST', {
 		onMutate: () => {
@@ -56,8 +57,20 @@ export const useDiaryMutations = () => {
 		},
 	});
 
-	const deleteDiaryMutation = useGenericMutation<void, { id: string }>(
-		({ id }) => `/diary/${id}`,
+	const updateDiaryMutation = useGenericMutation<
+		DiaryResponseType,
+		{ diaryId: string },
+		DiaryPayloadType
+	>((params) => `/diary/${params?.diaryId}`, 'PATCH', {
+		onSuccess: () => {
+			toast({
+				title: '일기가 수정되었어요',
+			});
+		},
+	});
+
+	const deleteDiaryMutation = useGenericMutation<void, { id: string }, void>(
+		(params) => `/diary/${params?.id}`,
 		'DELETE',
 		{
 			onSuccess: () => {
@@ -70,10 +83,12 @@ export const useDiaryMutations = () => {
 				});
 			},
 			onError: (error) => {
-				console.log(error);
+				toast({
+					title: '일기 삭제에 실패했어요',
+				});
 			},
 		},
 	);
 
-	return { createDiaryMutation, deleteDiaryMutation };
+	return { createDiaryMutation, updateDiaryMutation, deleteDiaryMutation };
 };
