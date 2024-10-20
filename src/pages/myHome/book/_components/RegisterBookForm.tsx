@@ -18,12 +18,8 @@ export const RegisterBookForm = () => {
 		setStep(STEP[0]);
 	};
 
-	const handleSubmit = () => {
-		// TODO: Submit 로직
-	};
-
 	return (
-		<GenericForm formOptions={{ mode: 'onSubmit' }} onSubmit={handleSubmit}>
+		<GenericForm formOptions={{ mode: 'onSubmit' }}>
 			<Funnel>
 				<Step name={STEP[0]}>
 					<SearchBookList onNextStep={handleNextStep} setBookId={setBookId} />
