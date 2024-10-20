@@ -41,6 +41,7 @@ export const SearchMovieList = ({ onNextStep, setMovieId }: Props) => {
 			) : (
 				movies?.map((movie: Movie) => (
 					<MovieItem
+						type="search"
 						key={movie.id}
 						movie={movie}
 						onClick={() => handleItemClick(movie)}
