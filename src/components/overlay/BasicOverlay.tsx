@@ -72,7 +72,7 @@ export const BasicOverlay = ({
 						onDragEnd={() => handleCloseButton()}
 					>
 						<div className="self-center mb-[14px] w-10 h-[3px] rounded-[12px] bg-gray200" />
-						<div className="pt-[18px]">{children}</div>
+						{children}
 						<div className={cn('flex items-center gap-2', 'pt-6 w-full')}>
 							{leftButton && (
 								<Button
