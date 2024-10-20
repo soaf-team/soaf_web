@@ -11,7 +11,7 @@ interface Props {
 export const MusicItem = ({ type, onClick, music }: Props) => {
 	const coverClass = cn({
 		'min-w-[56px] w-[56px] h-[56px] rounded-[4px]': type === 'search',
-		'w-[88px] h-[88px] rounded-[8px]': type === 'list',
+		'min-w-[88px] w-[88px] h-[88px] rounded-[8px]': type === 'list',
 		'w-[96px] h-[96px] rounded-[8px]': type === 'detail',
 	});
 
@@ -73,7 +73,9 @@ export const MusicItem = ({ type, onClick, music }: Props) => {
 					<p className={cn('line-clamp-1', artistClass)}>{getArtist()}</p>
 				</div>
 
-				{type === 'list' && <p className="text-black body4">{review}</p>}
+				{type === 'list' && (
+					<p className="text-black body4 line-clamp-1">{review}</p>
+				)}
 			</div>
 		</div>
 	);
