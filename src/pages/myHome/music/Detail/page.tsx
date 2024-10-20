@@ -29,8 +29,8 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 	const { pop } = useFlow();
 	const { myMusicDetail, isFetching } = useMyMusicDetailQuery(musicId);
 	const { updateMyHomeMutation, deleteMyHomeMutation } = myHomeMutations(
-		musicId,
 		'music',
+		musicId,
 	);
 
 	const triggerRef = useRef<HTMLButtonElement>(null);

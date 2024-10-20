@@ -14,6 +14,7 @@ export const useMyMusicListQuery = (userId: string) => {
 		const response = await axiosBase.get<ResMyMusicList>('my-home', {
 			params: {
 				userId,
+				category: 'music',
 			},
 		});
 

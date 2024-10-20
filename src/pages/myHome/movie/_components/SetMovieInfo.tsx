@@ -63,7 +63,7 @@ export const SetMovieInfo = ({
 	});
 
 	const { userProfile } = useUserProfileQuery();
-	const { createMyHomeMutation } = myHomeMutations();
+	const { createMyHomeMutation } = myHomeMutations('movie');
 
 	const handleDataChange = useCallback(
 		(key: keyof typeof movieData, value: string | number) => {
@@ -148,12 +148,7 @@ export const SetMovieInfo = ({
 			</div>
 
 			<div className="flex flex-col gap-[32px]">
-				<MovieItem
-					type="set"
-					movie={movieInfo}
-					director={director}
-					genre={genre}
-				/>
+				<MovieItem type="set" movie={movieInfo} />
 
 				<ReviewSection
 					title="감상평"

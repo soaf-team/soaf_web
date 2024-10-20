@@ -9,7 +9,7 @@ interface Props {
 	onClick?: () => void;
 }
 
-export const MovieItem = ({ type, onClick, movie }: Props) => {
+export const MovieItem = ({ type = 'search', onClick, movie }: Props) => {
 	const posterClass = cn({
 		'min-w-[92px] w-[92px] h-[134px] rounded-[8px]': type === 'search',
 		'w-[85px] h-[124px] rounded-[8px]': type === 'set',

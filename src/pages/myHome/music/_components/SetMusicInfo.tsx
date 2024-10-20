@@ -19,7 +19,7 @@ export const SetMusicInfo = ({ onPrevStep, music }: Props) => {
 
 	const [review, setReview] = useState('');
 	const { userProfile } = useUserProfileQuery();
-	const { createMyHomeMutation } = myHomeMutations();
+	const { createMyHomeMutation } = myHomeMutations('music');
 
 	const handleReviewChange = (value: string) => {
 		setReview(value);
