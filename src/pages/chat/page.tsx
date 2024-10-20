@@ -28,9 +28,6 @@ const ChatMainPage = () => {
 			if (status.includes('initialized')) {
 				const roomId = status.split(' ')[0];
 				chatSocketManager.emit('enterChat', { roomId });
-				push('ChatRoomPage', {
-					roomId,
-				});
 			}
 		};
 
@@ -48,10 +45,25 @@ const ChatMainPage = () => {
 			setChatHistoryList(messageHistory);
 		};
 
+		const handleRoomMembers = (roomMember: {
+			roomId: string;
+			members: string[];
+		}) => {
+			console.log(roomMember);
+			const roomId = roomMember.roomId;
+			const friendId = roomMember.members[0];
+
+			push('ChatRoomPage', {
+				roomId,
+				friendId,
+			});
+		};
+
 		chatSocketManager.on('status', handleStatus);
 		chatSocketManager.on('chatList', handleChatList);
 		chatSocketManager.on('newMessage', handleNewMessage);
 		chatSocketManager.on('chatHistory', handleChatHistory);
+		chatSocketManager.on('roomMembers', handleRoomMembers);
 
 		return () => {
 			socketManager.disconnect();
@@ -59,6 +71,7 @@ const ChatMainPage = () => {
 			chatSocketManager.off('chatList', handleChatList);
 			chatSocketManager.off('newMessage', handleNewMessage);
 			chatSocketManager.off('chatHistory', handleChatHistory);
+			chatSocketManager.off('roomMembers', handleRoomMembers);
 			chatSocketManager.disconnectForPage('ChatList');
 		};
 	}, []);

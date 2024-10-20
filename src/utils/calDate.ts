@@ -36,18 +36,33 @@ export const detailDate = (date: string) => {
 	return `방금 전`;
 };
 
-export const formatToLocalTime = (utcTimeString: string): string => {
+export const formatDateTime = (utcTimeString: string): string => {
 	if (!utcTimeString) {
-		return '오전 12:00';
+		return '오늘 오전 12:00';
 	}
 
 	const date = new Date(utcTimeString);
+	const today = new Date();
 
-	const formatter = new Intl.DateTimeFormat(undefined, {
-		hour: '2-digit',
-		minute: '2-digit',
-		hour12: true,
-	});
+	const isToday =
+		date.getDate() === today.getDate() &&
+		date.getMonth() === today.getMonth() &&
+		date.getFullYear() === today.getFullYear();
 
-	return formatter.format(date);
+	if (isToday) {
+		// 오늘 날짜인 경우 시간만 표시
+		const timeFormatter = new Intl.DateTimeFormat('ko-KR', {
+			hour: '2-digit',
+			minute: '2-digit',
+			hour12: true,
+		});
+		return `오늘 ${timeFormatter.format(date)}`;
+	} else {
+		// 다른 날짜의 경우 날짜만 표시
+		const dateFormatter = new Intl.DateTimeFormat('ko-KR', {
+			month: 'long',
+			day: 'numeric',
+		});
+		return dateFormatter.format(date);
+	}
 };

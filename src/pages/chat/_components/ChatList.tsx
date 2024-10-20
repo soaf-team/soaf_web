@@ -2,7 +2,7 @@ import { useFlow } from '@/stackflow';
 import { chatSocketManager } from '@/libs';
 import { useChatListStore } from '@/store';
 import { useFriendListQuery } from '@/hooks';
-import { cn, formatToLocalTime } from '@/utils';
+import { cn, formatDateTime } from '@/utils';
 
 export const ChatList = () => {
 	const { friendList } = useFriendListQuery();
@@ -38,12 +38,12 @@ export const ChatList = () => {
 								<p className="text-sm text-gray300 font-medium">
 									{chat.lastMessage?.content[0].includes('base64')
 										? '사진'
-										: chat.lastMessage?.content[0]}
+										: `${chat.lastMessage?.content[0].slice(0, 14)}...`}
 								</p>
 							</div>
 							<div className={cn(LIST_CON_STYLE, 'items-end')}>
 								<p className="text-gray600">
-									{formatToLocalTime(chat.lastMessage?.timestamp ?? '')}
+									{formatDateTime(chat.lastMessage?.timestamp ?? '')}
 								</p>
 								{chat.unreadCnt > 0 && (
 									<div

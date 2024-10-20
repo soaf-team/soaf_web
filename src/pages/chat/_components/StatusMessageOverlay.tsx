@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Overlay } from '@/components/overlay';
+import { ConfirmOverlay } from '@/components/overlay';
 import { Input } from '@/components/ui';
 import { OverlayProps } from '@/libs';
 
@@ -12,7 +12,7 @@ export const StatusMessageOverlay = ({ resolve, reject }: OverlayProps) => {
 	};
 
 	return (
-		<Overlay
+		<ConfirmOverlay
 			overlayKey="status-message-overlay"
 			disabled={statusMessage.length === 0}
 			reject={() => reject?.('close')}
@@ -29,6 +29,6 @@ export const StatusMessageOverlay = ({ resolve, reject }: OverlayProps) => {
 			<p className="pt-1 pb-2 font-medium text-gray300 text-end">
 				{statusMessage.length} / <span className="text-black">20</span>
 			</p>
-		</Overlay>
+		</ConfirmOverlay>
 	);
 };
