@@ -6,7 +6,7 @@ import { FriendList } from './FriendList';
 import { StatusMessageOverlay } from './StatusMessageOverlay';
 import { QUERY_KEY } from '@/constants';
 import { useToast, useUserProfileQuery } from '@/hooks';
-import { userMutations } from '@/hooks/mutations';
+import { userMutations, UserPayloadType } from '@/hooks/mutations';
 
 export const SoafList = () => {
 	const queryClient = useQueryClient();
@@ -30,7 +30,7 @@ export const SoafList = () => {
 		);
 
 		await patchUserMutation.mutateAsync({
-			status,
+			payload: status as UserPayloadType,
 		});
 	};
 

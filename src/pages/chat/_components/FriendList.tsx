@@ -29,7 +29,9 @@ export const FriendList = () => {
 	const handleBanButtonClick = async (userName: string, userId: string) => {
 		await overlay.open(<BanDialogOverlay userName={userName} />);
 		await postBlockUserMutation.mutateAsync({
-			userToBlockId: userId,
+			payload: {
+				userToBlockId: userId,
+			},
 		});
 		toast({
 			title: `${userName}님이 차단되었어요`,

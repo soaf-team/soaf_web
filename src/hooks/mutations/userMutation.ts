@@ -1,6 +1,6 @@
 import { useGenericMutation } from './useGenericMutation';
 
-type UserPayloadType = {
+export type UserPayloadType = {
 	name: string;
 	alarm: boolean;
 	imgUrl: string;
@@ -12,6 +12,7 @@ type UserResponseType = {};
 export const userMutations = ({ onSuccess }: { onSuccess: () => void }) => {
 	const patchUserMutation = useGenericMutation<
 		UserPayloadType,
+		void,
 		UserResponseType
 	>('/user', 'PATCH', {
 		onMutate: () => {},

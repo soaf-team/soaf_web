@@ -13,6 +13,7 @@ export const userBlockMutations = ({
 }) => {
 	const postBlockUserMutation = useGenericMutation<
 		UserPayloadType,
+		void,
 		UserResponseType
 	>('/user/block', 'POST', {
 		onMutate: () => {},
