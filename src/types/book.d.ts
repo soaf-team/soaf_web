@@ -35,3 +35,13 @@ export interface BookContent {
 	story: string;
 	rating: RatingType;
 }
+
+export interface MyBook {
+	_id: string;
+	category: string;
+	review?: string;
+	content: BookContent;
+	userId: string;
+	createdAt: string;
+	updatedAt: string;
+}
