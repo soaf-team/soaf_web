@@ -38,7 +38,7 @@ export const ChatList = () => {
 								<p className="text-sm text-gray300 font-medium">
 									{chat.lastMessage?.content[0].includes('base64')
 										? '사진'
-										: chat.lastMessage?.content[0]}
+										: `${chat.lastMessage?.content[0].slice(0, 14)}...`}
 								</p>
 							</div>
 							<div className={cn(LIST_CON_STYLE, 'items-end')}>
