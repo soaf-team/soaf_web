@@ -34,7 +34,7 @@ export const ReviewSection = ({
 
 	useEffect(() => {
 		autoResizeTextarea();
-	}, []);
+	}, [value]);
 
 	return (
 		<div className="flex flex-col gap-[16px]">
