@@ -13,7 +13,7 @@ export type DiaryBackend = {
 	updatedAt: string;
 	imageBox: string[];
 	reactions: {
-		[key: string]: number;
+		[key: string]: string[];
 	};
 };
 
@@ -27,7 +27,7 @@ export type DiaryType = {
 	emotions: EmotionKey[];
 	date: string;
 	reactions: {
-		[key: string]: number;
+		[key: string]: string[];
 	};
 	createdAt: string;
 	updatedAt: string;

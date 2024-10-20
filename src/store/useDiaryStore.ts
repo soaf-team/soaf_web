@@ -1,8 +1,8 @@
-import { EmotionKey, MoodRating } from '@/types';
+import { DiaryType, EmotionKey, MoodRating } from '@/types';
 import { create } from 'zustand';
 
 export type PhotoType = {
-	file: File;
+	file: File | null;
 	previewUrl: string;
 };
 
@@ -13,7 +13,9 @@ export type DiaryFormType = {
 	content: string;
 	photos: PhotoType[];
 	emotions: EmotionKey[];
-	reactions: any[];
+	reactions: {
+		[key: string]: string[];
+	};
 	date: string;
 	isPublic: boolean;
 };
@@ -29,6 +31,7 @@ type DiaryRatingStore = {
 	onChangeContent: (content: string) => void;
 	resetAllDiaryState: () => void;
 	togglePublic: () => void;
+	setDiary: (diary: DiaryType) => void;
 };
 
 export const useDiaryStore = create<DiaryRatingStore>((set) => {
@@ -38,7 +41,7 @@ export const useDiaryStore = create<DiaryRatingStore>((set) => {
 		content: '',
 		photos: [],
 		emotions: [],
-		reactions: [],
+		reactions: {},
 		date: '',
 		isPublic: false,
 	};
@@ -115,6 +118,23 @@ export const useDiaryStore = create<DiaryRatingStore>((set) => {
 		resetAllDiaryState: () =>
 			set({
 				diary: defaultDiary,
+			}),
+		setDiary: (diary: DiaryType) =>
+			set({
+				diary: {
+					id: diary.id,
+					rating: diary.rating,
+					title: diary.title,
+					content: diary.content,
+					photos: diary.photos.map((photo) => ({
+						file: null,
+						previewUrl: photo,
+					})),
+					emotions: diary.emotions,
+					reactions: diary.reactions,
+					date: diary.date,
+					isPublic: diary.isPublic,
+				},
 			}),
 	};
 });
