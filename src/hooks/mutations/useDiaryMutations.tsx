@@ -27,6 +27,15 @@ export const useDiaryMutations = () => {
 	const { resetAllDiaryState } = useDiaryStore();
 	const queryClient = useQueryClient();
 
+	const invalidateDiaryQueries = (diaryId: string) => {
+		queryClient.invalidateQueries({
+			queryKey: [QUERY_KEY.currentUserDiaryList],
+		});
+		queryClient.invalidateQueries({
+			queryKey: [QUERY_KEY.diaryDetail, diaryId],
+		});
+	};
+
 	const createDiaryMutation = useGenericMutation<
 		DiaryResponseType,
 		void,
@@ -34,21 +43,33 @@ export const useDiaryMutations = () => {
 	>('/diary', 'POST', {
 		onMutate: () => {
 			overlay.open(
-				<LoadingDotScreen overlayKey="loading" message="일기를 저장중이에요" />,
+				<LoadingDotScreen
+					overlayKey="diary_save_loading"
+					message="일기를 저장중이에요"
+				/>,
 			);
 		},
 		onSuccess: async (response) => {
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="diary_save_completed"
+					message="일기를 저장이 완료됐어요!"
+				/>,
+			);
+
 			const { _id } = response.data;
 			pop(4);
 			push('DiaryDetailPage', { diaryId: _id });
-			queryClient.invalidateQueries({
-				queryKey: [QUERY_KEY.currentUserDiaryList],
-			});
-			queryClient.invalidateQueries({ queryKey: [QUERY_KEY.diaryDetail, _id] });
+			invalidateDiaryQueries(_id);
 			resetAllDiaryState();
 		},
 		onError: (error) => {
-			console.log(error);
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="diary_save_failed"
+					message="일기를 저장에 실패했어요."
+				/>,
+			);
 		},
 		onSettled: () => {
 			setTimeout(() => {
@@ -62,10 +83,37 @@ export const useDiaryMutations = () => {
 		{ diaryId: string },
 		DiaryPayloadType
 	>((params) => `/diary/${params?.diaryId}`, 'PATCH', {
-		onSuccess: () => {
-			toast({
-				title: '일기가 수정되었어요',
-			});
+		onMutate: () => {
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="diary_edit_loading"
+					message="일기를 수정중이에요"
+				/>,
+			);
+		},
+		onSuccess: (response) => {
+			const { _id } = response.data;
+			pop(1);
+			invalidateDiaryQueries(_id);
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="diary_edit_completed"
+					message="일기를 수정이 완료됐어요!"
+				/>,
+			);
+		},
+		onError: (error) => {
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="diary_edit_failed"
+					message="일기를 수정에 실패했어요."
+				/>,
+			);
+		},
+		onSettled: () => {
+			setTimeout(() => {
+				overlay.close();
+			}, 500);
 		},
 	});
 
