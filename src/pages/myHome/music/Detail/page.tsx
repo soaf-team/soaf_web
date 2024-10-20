@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useMyMusicDetailQuery } from '@/hooks';
 import { myHomeMutations } from '@/hooks/mutations';
 import { ActivityComponentType } from '@stackflow/react';
@@ -78,6 +78,12 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 		);
 	};
 
+	useEffect(() => {
+		if (myMusicDetail && !isFetching) {
+			setReview(myMusicDetail.data.review || '');
+		}
+	}, [myMusicDetail, isFetching]);
+
 	if (!myMusicDetail) return null;
 
 	return (
@@ -109,7 +115,7 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 							{isFetching ? (
 								<MusicItemSkeleton type="detail" />
 							) : (
-								<MusicItem type="detail" music={myMusicDetail.data} />
+								<MusicItem type="detail" music={myMusicDetail?.data} />
 							)}
 
 							<div className="flex flex-col gap-[16px]">
