@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useMovieDetailQuery, useUserProfileQuery } from '@/hooks';
 import { MovieItem } from './MovieItem';
 import { BackButton, Header, StarRating } from '@/components';
@@ -61,12 +61,12 @@ export const SetMovieInfo = ({ onPrevStep, movieId }: Props) => {
 	const { userProfile } = useUserProfileQuery();
 	const { createMyHomeMutation } = myHomeMutations('movie');
 
-	const handleDataChange = useCallback(
-		(key: keyof typeof movieData, value: string | number) => {
-			setMovieData((prev) => ({ ...prev, [key]: value }));
-		},
-		[],
-	);
+	const handleDataChange = (
+		key: keyof typeof movieData,
+		value: string | number,
+	) => {
+		setMovieData((prev) => ({ ...prev, [key]: value }));
+	};
 
 	const handleSubmit = () => {
 		createMyHomeMutation.mutate({
@@ -106,7 +106,7 @@ export const SetMovieInfo = ({ onPrevStep, movieId }: Props) => {
 				story: movieInfo.overview,
 			});
 		}
-	}, [movieInfo, actors, director, genre, setMovie]);
+	}, [movieInfo, actors, director, genre]);
 
 	useEffect(() => {
 		if (actors) {
