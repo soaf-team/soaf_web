@@ -26,7 +26,9 @@ export const MatchedUserItem = ({
 		>
 			<p className="label2">{name}</p>
 
-			<p className="text-gray-400 label3">유사율 {percent}%</p>
+			<p className="text-gray-400 label3 whitespace-nowrap">
+				유사율 {percent}%
+			</p>
 		</Card>
 	);
 };
