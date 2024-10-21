@@ -1,5 +1,5 @@
 import { Button, PageLayout } from '@/components';
-import { useSimilarUserQuery } from '@/hooks/queries';
+import { useMetaQuery } from '@/hooks/queries';
 import { useFlow } from '@/stackflow';
 import { MatchingUser } from '@/types';
 import { useState } from 'react';
@@ -7,16 +7,9 @@ import { MatchedUserItem } from '../_components';
 import { IconBack } from '@stackflow/plugin-basic-ui';
 import { XIcon } from '@/assets';
 
-const MatchedUserPage = ({
-	params,
-}: {
-	params: {
-		diaryId: string;
-	};
-}) => {
-	const { diaryId } = params;
+const MatchedAIUserPage = () => {
 	const { replace } = useFlow();
-	const { similarUser } = useSimilarUserQuery(diaryId);
+	const { metaUsers } = useMetaQuery();
 
 	const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
@@ -41,7 +34,7 @@ const MatchedUserPage = ({
 				</div>
 
 				<div className="flex flex-col justify-center items-center gap-[12px] w-[95%] mb-[150px]">
-					{similarUser
+					{metaUsers
 						.sort((a: any, b: any) =>
 							a.confidenceScore > b.confidenceScore
 								? -1
@@ -57,7 +50,7 @@ const MatchedUserPage = ({
 								percent={user.confidenceScore}
 								onClick={() => handleSelect(user.userId)}
 								isSelected={selectedUser === user.userId}
-								className={index === similarUser.length - 1 ? 'mb-[120px]' : ''}
+								className={index === metaUsers.length - 1 ? 'mb-[120px]' : ''}
 							/>
 						))}
 				</div>
@@ -74,9 +67,9 @@ const MatchedUserPage = ({
 	);
 };
 
-export default MatchedUserPage;
+export default MatchedAIUserPage;
 
-MatchedUserPage.displayName = 'MatchedUserPage';
+MatchedAIUserPage.displayName = 'MatchedAIUserPage';
 
 const LeftIcon = () => {
 	const { pop } = useFlow();
