@@ -19,7 +19,7 @@ const NO_DIARY_DESCRIPTION =
 const BUTTON_TEXT_WHEN_NO_DIARY = '일기 작성';
 const BUTTON_TEXT_WHEN_DIARY_EXIST = '소프 탐색';
 const SoafExplorePage = () => {
-	const { replace, push } = useFlow();
+	const { push } = useFlow();
 	const { toast } = useToast();
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const { currentUserDiaryList } = useMyDiaryListQuery(
@@ -46,6 +46,7 @@ const SoafExplorePage = () => {
 	) => {
 		if (isSelected.length === 0) {
 			await overlay.open(<AutomaticAISearchOverlay overlayKey="ai-search" />);
+			push('MatchedAIUserPage', {});
 			return;
 		}
 
@@ -64,6 +65,9 @@ const SoafExplorePage = () => {
 			await overlay.open(
 				<SelectedDiaryOverlay diary={currentSelectedDiary} overlayKey="" />,
 			);
+			push('MatchedUserPage', {
+				diaryId: currentSelectedDiary.id,
+			});
 		}
 	};
 
