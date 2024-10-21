@@ -12,4 +12,7 @@ export const QUERY_KEY = {
 	MY_DIARY_BY_MONTH: 'myDiaryByMonth',
 
 	FRIEND_LIST: 'friendList',
+
+	META_DIARY: 'metaDiary',
+	SIMILAR_USER: 'similarUser',
 };
