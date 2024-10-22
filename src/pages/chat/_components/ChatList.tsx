@@ -34,7 +34,7 @@ export const ChatList = () => {
 							}}
 						>
 							<div className={LIST_CON_STYLE}>
-								<p>{friend?.friend.name}</p>
+								<p>{friend?.friend.name ?? '알수없음'}</p>
 								<p className="text-sm text-gray300 font-medium">
 									{chat.lastMessage?.content[0].includes('base64')
 										? '사진'
