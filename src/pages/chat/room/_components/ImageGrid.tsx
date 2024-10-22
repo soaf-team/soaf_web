@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import { cn } from '@/utils';
 import { XButton } from '@/components';
 
@@ -31,114 +32,97 @@ const sliderTransition = {
 	opacity: { duration: 0.2 },
 };
 
-export const ImageGrid = ({ images }: { images: string[] }) => {
-	const [currentImage, setCurrentImage] = useState(0);
-	const [direction, setDirection] = useState(0);
-	const [isFullscreen, setIsFullscreen] = useState(false);
-
-	const dragEndHandler = (
+const FullscreenModal = ({
+	isFullscreen,
+	images,
+	currentImage,
+	direction,
+	onChangeFullScreen,
+	dragEndHandler,
+}: {
+	isFullscreen: boolean;
+	images: string[];
+	currentImage: number;
+	direction: number;
+	onChangeFullScreen: (value: boolean) => void;
+	dragEndHandler: (
 		event: MouseEvent | TouchEvent | PointerEvent,
 		info: PanInfo,
-	) => {
-		const threshold = 50;
-		if (info.offset.x < -threshold && currentImage < images.length - 1) {
-			setDirection(1);
-			setCurrentImage(currentImage + 1);
-		} else if (info.offset.x > threshold && currentImage > 0) {
-			setDirection(-1);
-			setCurrentImage(currentImage - 1);
+	) => void;
+}) => {
+	useEffect(() => {
+		if (isFullscreen) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
 		}
-	};
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, [isFullscreen]);
 
-	return (
-		<div
-			className={cn(
-				'grid max-w-[260px] rounded-[16px] overflow-hidden',
-				gridClass(images.length),
-			)}
+	if (!isFullscreen) return null;
+
+	return createPortal(
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			className={cn('fixed inset-0 z-[9999]', 'flex flex-col', 'bg-white')}
 		>
-			{images.map((image, index) => (
-				<ImageWithPlaceholder
-					key={`${image}-${index}`}
-					src={image}
-					alt={`Image ${index + 1}`}
-					className={cn(
-						'w-full h-full object-cover rounded-[4px] cursor-pointer',
-						images.length === 3 && index === 0 ? 'col-span-2' : '',
-					)}
-					onClick={() => {
-						setCurrentImage(index);
-						setIsFullscreen(true);
-					}}
-				/>
-			))}
-			<AnimatePresence initial={false} custom={direction}>
-				{isFullscreen && (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						className={cn(
-							'fixed z-[9999] top-0 bottom-0 left-0 right-0',
-							'flex flex-col',
-							'bg-white',
-						)}
-					>
-						<div
-							className={cn(
-								'flex justify-between items-center relative',
-								'py-[14px] px-[18px] w-full h-[52px]',
-							)}
-						>
-							<div className="flex-1" />
-							<p
-								className={cn(
-									'absolute left-1/2 transform -translate-x-1/2',
-									'font-bold',
-								)}
-							>
-								{currentImage + 1}/{images.length}
-							</p>
-							<XButton
-								className="flex-none z-[9999]"
-								onClick={() => setIsFullscreen(false)}
-							/>
-						</div>
-						<motion.div
-							className={cn(
-								'flex-1 flex justify-center items-center',
-								'w-full',
-								'bg-white',
-								'overflow-hidden',
-							)}
-							drag="x"
-							dragConstraints={{ left: 0, right: 0 }}
-							dragElastic={1}
-							onDragEnd={dragEndHandler}
-						>
-							<AnimatePresence initial={false} custom={direction}>
-								<motion.img
-									key={currentImage}
-									src={images[currentImage]}
-									custom={direction}
-									variants={sliderVariants}
-									initial={{ x: direction > 0 ? '100%' : '-100%', opacity: 0 }}
-									animate="center"
-									exit="exit"
-									transition={sliderTransition}
-									drag="x"
-									dragConstraints={{ left: 0, right: 0 }}
-									dragElastic={1}
-									onDragEnd={dragEndHandler}
-									className="w-full h-full object-contain absolute"
-								/>
-							</AnimatePresence>
-						</motion.div>
-						<motion.div className="h-[52px]" />
-					</motion.div>
+			<div
+				className={cn(
+					'flex justify-between items-center relative',
+					'py-[14px] px-[18px] w-full h-[52px]',
 				)}
-			</AnimatePresence>
-		</div>
+			>
+				<div className="flex-1" />
+				<p
+					className={cn(
+						'absolute left-1/2 transform -translate-x-1/2',
+						'font-bold',
+					)}
+				>
+					{currentImage + 1}/{images.length}
+				</p>
+				<XButton
+					className="flex-none z-[9999]"
+					onClick={() => onChangeFullScreen(false)}
+				/>
+			</div>
+			<motion.div
+				className={cn(
+					'flex-1 flex justify-center items-center',
+					'w-full',
+					'bg-white',
+					'overflow-hidden',
+				)}
+				drag="x"
+				dragConstraints={{ left: 0, right: 0 }}
+				dragElastic={1}
+				onDragEnd={dragEndHandler}
+			>
+				<AnimatePresence initial={false} custom={direction}>
+					<motion.img
+						key={currentImage}
+						src={images[currentImage]}
+						custom={direction}
+						variants={sliderVariants}
+						initial={{ x: direction > 0 ? '100%' : '-100%', opacity: 0 }}
+						animate="center"
+						exit="exit"
+						transition={sliderTransition}
+						drag="x"
+						dragConstraints={{ left: 0, right: 0 }}
+						dragElastic={1}
+						onDragEnd={dragEndHandler}
+						className="w-full h-full object-contain absolute"
+					/>
+				</AnimatePresence>
+			</motion.div>
+			<motion.div className="h-[52px]" />
+		</motion.div>,
+		document.body,
 	);
 };
 
@@ -170,5 +154,62 @@ const ImageWithPlaceholder = ({
 			{!isLoaded && <ImagePlaceholder />}
 			<img className={className} src={src} alt={alt} onClick={onClick} />
 		</div>
+	);
+};
+
+export const ImageGrid = ({ images }: { images: string[] }) => {
+	const [currentImage, setCurrentImage] = useState(0);
+	const [direction, setDirection] = useState(0);
+	const [isFullscreen, setIsFullscreen] = useState(false);
+
+	const dragEndHandler = (
+		event: MouseEvent | TouchEvent | PointerEvent,
+		info: PanInfo,
+	) => {
+		const threshold = 50;
+		if (info.offset.x < -threshold && currentImage < images.length - 1) {
+			setDirection(1);
+			setCurrentImage(currentImage + 1);
+		} else if (info.offset.x > threshold && currentImage > 0) {
+			setDirection(-1);
+			setCurrentImage(currentImage - 1);
+		}
+	};
+
+	return (
+		<>
+			<div
+				className={cn(
+					'grid max-w-[260px] rounded-[16px] overflow-hidden',
+					gridClass(images.length),
+				)}
+			>
+				{images.map((image, index) => (
+					<ImageWithPlaceholder
+						key={`${image}-${index}`}
+						src={image}
+						alt={`Image ${index + 1}`}
+						className={cn(
+							'w-full h-full object-cover rounded-[4px] cursor-pointer',
+							images.length === 3 && index === 0 ? 'col-span-2' : '',
+						)}
+						onClick={() => {
+							setCurrentImage(index);
+							setIsFullscreen(true);
+						}}
+					/>
+				))}
+			</div>
+			<FullscreenModal
+				isFullscreen={isFullscreen}
+				images={images}
+				currentImage={currentImage}
+				direction={direction}
+				onChangeFullScreen={(value) => {
+					setIsFullscreen(value);
+				}}
+				dragEndHandler={dragEndHandler}
+			/>
+		</>
 	);
 };
