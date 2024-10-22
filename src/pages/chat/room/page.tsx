@@ -44,7 +44,7 @@ const ChatRoomPage = ({
 			className="relative"
 			header={{
 				leftSlot: <BackButton />,
-				title: nickname,
+				title: nickname ?? '알수없음',
 				rightSlot: <MyHomeButton userId="1" />,
 			}}
 		>
