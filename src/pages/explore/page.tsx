@@ -46,7 +46,7 @@ const SoafExplorePage = () => {
 	) => {
 		if (isSelected.length === 0) {
 			await overlay.open(<AutomaticAISearchOverlay overlayKey="ai-search" />);
-			push('MatchedAIUserPage', {});
+			push('MatchedUserPage', {});
 			return;
 		}
 
