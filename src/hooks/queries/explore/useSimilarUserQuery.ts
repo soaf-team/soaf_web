@@ -14,7 +14,7 @@ const getSimilarUsers = async (diaryId: string) => {
 
 export const useSimilarUserQuery = (diaryId: string) => {
 	const { data: similarUser } = useSuspenseQuery<MatchingUser[]>({
-		queryKey: [QUERY_KEY.SIMILAR_USER],
+		queryKey: [QUERY_KEY.SIMILAR_USER, diaryId],
 		queryFn: () => getSimilarUsers(diaryId),
 	});
 

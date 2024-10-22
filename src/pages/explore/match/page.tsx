@@ -1,10 +1,12 @@
-import { Button, PageLayout } from '@/components';
-import { useSimilarUserQuery } from '@/hooks/queries';
-import { useFlow } from '@/stackflow';
-import { MatchingUser } from '@/types';
 import { useState } from 'react';
-import { MatchedUserItem } from '../_components';
 import { IconBack } from '@stackflow/plugin-basic-ui';
+import { useFlow } from '@/stackflow';
+import { Button, PageLayout } from '@/components';
+import { MatchedUserItem } from '../_components';
+import { DialogOverlay } from '@/components/overlay';
+import { MatchingUser } from '@/types';
+import { useSimilarUserQuery } from '@/hooks/queries';
+import { overlay, OverlayProps } from '@/libs';
 import { XIcon } from '@/assets';
 
 const MatchedUserPage = ({
@@ -81,8 +83,13 @@ MatchedUserPage.displayName = 'MatchedUserPage';
 const LeftIcon = () => {
 	const { pop } = useFlow();
 
+	const handleClickLeftButton = async () => {
+		await overlay.open(<BackDialogOverlay overlayKey="backOverlay" />);
+		pop();
+	};
+
 	return (
-		<button onClick={pop}>
+		<button onClick={handleClickLeftButton}>
 			<IconBack />
 		</button>
 	);
@@ -91,9 +98,58 @@ const LeftIcon = () => {
 const RightIcon = () => {
 	const { replace } = useFlow();
 
+	const handleClickRightButton = async () => {
+		await overlay.open(<CloseDialogOverlay overlayKey="end" />);
+		replace('DiaryCalendarPage', {});
+	};
+
 	return (
-		<button onClick={() => replace('DiaryCalendar', {})}>
+		<button onClick={handleClickRightButton}>
 			<img src={XIcon} alt="x" className="w-[12px] h-[12px]" />
 		</button>
+	);
+};
+
+const BackDialogOverlay = ({ resolve, reject }: OverlayProps) => {
+	return (
+		<DialogOverlay
+			title="정말 이전으로 돌아갈까요?"
+			leftButton={{
+				text: '아니요',
+				onClick: () => reject?.('close'),
+				leftButtonClassName: 'h-[48px]',
+			}}
+			rightButton={{
+				text: '네, 뒤로갈래요',
+				onClick: () => resolve?.('back'),
+				rightButtonClassName: 'h-[48px]',
+			}}
+			onClose={() => reject?.('close')}
+		>
+			<p className="text-[14px]">
+				이전으로 돌아가면 매칭된 유저목록이 사라져요
+			</p>
+		</DialogOverlay>
+	);
+};
+
+const CloseDialogOverlay = ({ resolve, reject }: OverlayProps) => {
+	return (
+		<DialogOverlay
+			title="정말 종료할까요?"
+			leftButton={{
+				text: '아니요',
+				onClick: () => reject?.('close'),
+				leftButtonClassName: 'h-[48px]',
+			}}
+			rightButton={{
+				text: '네, 종료할래요',
+				onClick: () => resolve?.('end'),
+				rightButtonClassName: 'h-[48px]',
+			}}
+			onClose={() => reject?.('close')}
+		>
+			<p className="text-[14px]">창을 닫으면 매칭된 유저 목록이 사라져요</p>
+		</DialogOverlay>
 	);
 };
