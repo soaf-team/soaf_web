@@ -1,12 +1,8 @@
 {
 	"rewrites": [
 		{
-			"source": "/api/:path*",
-			"destination": "http://default-api-service-77559-26019998-ded2c8967f62.kr.lb.naverncp.com:8443/:path*",
-			"transformPath": {
-				"regex": "^/api/(.*)",
-				"replacement": "/$1"
-			}
+			"source": "/:path*",
+			"destination": "http://default-api-service-77559-26019998-ded2c8967f62.kr.lb.naverncp.com:8443/:path*"
 		}
 	]
 }
