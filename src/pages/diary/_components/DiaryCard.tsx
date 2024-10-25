@@ -46,7 +46,11 @@ export const DiaryCard = ({
 			<div className="flex flex-col w-full gap-[15px]">
 				<div className="flex items-center">
 					<div className="flex flex-col justify-start gap-[4px]">
-						<p className="label2">{diary.title}</p>
+						<p className="label2">
+							{diary.title.length > 18
+								? `${diary.title.slice(0, 18)}...`
+								: diary.title}
+						</p>
 						<div className="flex">
 							{diary.emotions.map((emotion, index) => (
 								<EmotionSticker
