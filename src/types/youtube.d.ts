@@ -56,3 +56,12 @@ export interface YoutubeContent {
 	publishedAt: string;
 	thumbnailUrl: string;
 }
+
+export interface MyYoutube {
+	_id: string;
+	content: YoutubeContent;
+	review?: string;
+	userId: string;
+	createdAt: string;
+	updatedAt: string;
+}
