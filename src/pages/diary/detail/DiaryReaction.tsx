@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-import { cn } from '@/utils';
 import {
 	AmazingEmoji,
 	AngryEmoji,
@@ -16,6 +16,7 @@ import {
 	ReactionCloud as ReactionCloudIcon,
 } from '@/assets';
 import { ReactionKeyType } from '@/types';
+import { useUserProfileQuery } from '@/hooks';
 
 type DiaryReactionProps = {
 	reactions: {
@@ -43,42 +44,44 @@ export const DiaryReaction = ({
 }: DiaryReactionProps) => {
 	const [isOpened, setIsOpened] = useState(false);
 
+	const { userProfile } = useUserProfileQuery();
+	const userId = userProfile.id;
+	const isNotReacted = Object.values(reactions).every(
+		(users) => !users.includes(userId),
+	);
+	const reactionEntries = Object.entries(reactions);
+	const chunkedReactions = chunkArray(reactionEntries, ITEMS_PER_ROW);
+
 	const handleHeartButtonClick = () => {
 		setIsOpened(true);
 	};
 
-	const reactionEntries = Object.entries(reactions);
-	const chunkedReactions = chunkArray(reactionEntries, ITEMS_PER_ROW);
-	const isReactionsEmpty = Object.values(reactions).every(
-		(users) => users.length === 0,
-	);
-
 	return (
-		<div className="relative w-full border-t border-solid border-border py-[16px]">
-			{isReactionsEmpty ? (
-				<div className="flex items-center gap-[10px] body4">
-					<img
-						src={HeartCircle}
-						alt="heart-circle"
-						className="w-[22px] h-[20px]"
-						onClick={handleHeartButtonClick}
-					/>
-					{INFO_MESSAGE}
-				</div>
-			) : (
-				<div className="flex flex-col gap-[6px]">
+		<div className="pb-[40px]">
+			<div className="relative w-full border-t border-solid border-border py-[16px]">
+				<motion.div
+					className="flex flex-col gap-[6px]"
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.3 }}
+				>
 					{chunkedReactions.map((chunk, rowIndex) => (
 						<div
 							key={rowIndex}
 							className="flex flex-wrap gap-[6px] justify-start"
 						>
 							{chunk.map(([key, users]) => (
-								<div
+								<motion.div
 									key={key}
 									className="flex items-center gap-[4px] label4 text-black/70"
 									onClick={() => handleReactionClick(key as ReactionKeyType)}
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ duration: 0.3, delay: rowIndex * 0.1 }}
 								>
-									<img
+									<motion.img
 										src={
 											REACTION_EMOJI[key as keyof typeof REACTION_EMOJI]?.icon
 										}
@@ -89,23 +92,47 @@ export const DiaryReaction = ({
 									/>
 									{REACTION_EMOJI[key as keyof typeof REACTION_EMOJI]?.label}{' '}
 									{users.length}
-								</div>
+								</motion.div>
 							))}
 						</div>
 					))}
-				</div>
-			)}
-			<ReactionCloud
-				isVisible={isOpened}
-				onCloudClose={() => setIsOpened(false)}
-				handleReactionClick={handleReactionClick}
-			/>
+				</motion.div>
+			</div>
+			<div className="relative w-full border-t border-solid border-border py-[16px]">
+				{isNotReacted && (
+					<motion.div
+						className="flex items-center gap-[10px] body4"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.3 }}
+					>
+						<motion.img
+							src={HeartCircle}
+							alt="heart-circle"
+							className="w-[22px] h-[20px]"
+							onClick={handleHeartButtonClick}
+							whileHover={{ scale: 1.1 }}
+							whileTap={{ scale: 0.95 }}
+						/>
+						{INFO_MESSAGE}
+					</motion.div>
+				)}
+			</div>
+
+			<AnimatePresence>
+				{isOpened && (
+					<ReactionCloud
+						isVisible={isOpened}
+						onCloudClose={() => setIsOpened(false)}
+						handleReactionClick={handleReactionClick}
+					/>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 };
 
 const ReactionCloud = ({
-	isVisible,
 	onCloudClose,
 	handleReactionClick,
 }: {
@@ -113,67 +140,68 @@ const ReactionCloud = ({
 	onCloudClose: () => void;
 	handleReactionClick: (reactionType: ReactionKeyType) => void;
 }) => {
-	const [visible, setVisible] = useState(isVisible);
-	const visibleStyle = isVisible ? 'animate-fadeIn' : 'animate-fadeOut';
-
 	const handleEmojiClick = (emoji: string) => {
 		onCloudClose();
 		handleReactionClick(emoji as ReactionKeyType);
 	};
 
-	useEffect(() => {
-		if (isVisible) {
-			setVisible(true);
-		} else {
-			const timeout = setTimeout(() => {
-				setVisible(false);
-			}, 300);
-			return () => {
-				clearTimeout(timeout);
-			};
-		}
-	}, [isVisible]);
-
-	if (!visible) return null;
-
 	return (
-		<div
-			className={cn([
-				'fixed inset-0 max-w-window m-auto transition-all duration-300 z-[9999]',
-				visibleStyle,
-			])}
+		<motion.div
+			className="fixed inset-0 max-w-window m-auto z-[9999]"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 0.2 }}
 		>
-			<div
-				className={cn(['absolute inset-0 max-w-window m-auto bg-overlay'])}
+			<motion.div
+				className="absolute inset-0 max-w-window m-auto bg-overlay"
 				onClick={(e) => {
 					e.stopPropagation();
 					onCloudClose();
 				}}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
 			/>
-			<div className="absolute flex bottom-[78px] left-[24px] m-auto w-[288px] h-[133px] z-[10000]">
+			<motion.div
+				className="absolute flex bottom-[78px] left-[24px] m-auto w-[288px] h-[133px] z-[10000]"
+				initial={{ scale: 0.8, opacity: 0, y: 20 }}
+				animate={{ scale: 1, opacity: 1, y: 0 }}
+				exit={{ scale: 0.8, opacity: 0, y: 20 }}
+				transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+			>
 				<div className="absolute w-full h-full grid grid-cols-5 gap- py-[12px] px-[12px]">
 					{Object.values(REACTION_EMOJI).map((emoji, index) => (
-						<div
+						<motion.div
 							key={index}
 							onClick={() => handleEmojiClick(emoji.value)}
 							className="flex flex-col items-center justify-center text-[10px] leading-[12px] font-semibold"
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ delay: index * 0.03 }}
+							whileHover={{ scale: 1.1 }}
+							whileTap={{ scale: 0.95 }}
 						>
-							<img
+							<motion.img
 								src={emoji?.icon}
 								alt={emoji?.label}
 								className="w-[38px] h-[38px]"
 							/>
 							{emoji.label}
-						</div>
+						</motion.div>
 					))}
 				</div>
-				<img
+				<motion.img
 					src={ReactionCloudIcon}
 					alt="reaction-cloud"
 					className="absolute w-[296px] h-[157px] z-[-1]"
+					initial={{ scale: 0.9, opacity: 0 }}
+					animate={{ scale: 1, opacity: 1 }}
+					exit={{ scale: 0.9, opacity: 0 }}
+					transition={{ duration: 0.2 }}
 				/>
-			</div>
-		</div>
+			</motion.div>
+		</motion.div>
 	);
 };
 
