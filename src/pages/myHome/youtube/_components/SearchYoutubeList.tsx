@@ -1,13 +1,15 @@
 import { useGetYoutubeQuery } from '@/hooks';
 import { Youtube } from '@/types';
 import React, { useState } from 'react';
-import { YoutubeItem, YoutubeItemProps } from './YoutubeItem';
+import { YoutubeItemProps, YoutubeItem } from './YoutubeItem';
 import { SearchInput } from '../../_components';
 import { NonDataFallback } from '@/components';
 
 interface Props {
 	onNextStep: () => void;
-	setYoutubeInfo: React.Dispatch<React.SetStateAction<YoutubeItemProps>>;
+	setYoutubeInfo: React.Dispatch<
+		React.SetStateAction<YoutubeItemProps & { url: string }>
+	>;
 }
 
 export const SearchYoutubeList = ({ onNextStep, setYoutubeInfo }: Props) => {
@@ -22,6 +24,7 @@ export const SearchYoutubeList = ({ onNextStep, setYoutubeInfo }: Props) => {
 			channelTitle: video.snippet.channelTitle,
 			publishedAt: video.snippet.publishedAt,
 			thumbnail: video.snippet.thumbnails.medium.url,
+			url: searchQuery,
 		});
 		onNextStep();
 	};
