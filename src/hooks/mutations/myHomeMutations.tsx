@@ -67,8 +67,8 @@ const getQueryKeyByCategory = (
 };
 
 export const myHomeMutations = (
+	category: MyHomePayloadCategory,
 	id?: number,
-	category?: MyHomePayloadCategory,
 ) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
