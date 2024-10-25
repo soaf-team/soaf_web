@@ -7,7 +7,7 @@ import { useFlow } from '@/stackflow';
 import { MessageType, ChatType } from '@/types';
 import { useChatListStore, useCurrentChatStore } from '@/store';
 
-const TOKEN = import.meta.env.VITE_TOKEN;
+const TOKEN = import.meta.env.VITE_API_TOKEN;
 
 const ChatMainPage = () => {
 	const [selectedMenu, setSelectedMenu] = useState<'소프 목록' | '친구 목록'>(
