@@ -15,7 +15,9 @@ export const NonDataFallback = ({ children }: NonDataFallbackProps) => {
 				/>
 			</div>
 
-			<div className="flex flex-col body2">{children}</div>
+			<div className="flex flex-col items-center justify-center body2">
+				{children}
+			</div>
 		</div>
 	);
 };

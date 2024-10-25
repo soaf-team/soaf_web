@@ -4,6 +4,8 @@ import { useState } from 'react';
 interface Props {
 	onChange: (value: number) => void;
 	size?: number;
+	defaultValue?: number;
+	readonly?: boolean;
 }
 
 const starsArray = Array.from({ length: 5 });
@@ -17,11 +19,18 @@ const calculateStarValue = (
 	return offsetX < rect.width / 2 ? index + 0.5 : index + 1;
 };
 
-export const StarRating = ({ size = 16, onChange }: Props) => {
-	const [rating, setRating] = useState<number | null>(null);
+export const StarRating = ({
+	size = 16,
+	onChange,
+	defaultValue,
+	readonly,
+}: Props) => {
+	const [rating, setRating] = useState<number | null>(defaultValue ?? null);
 	const [hover, setHover] = useState<number | null>(null);
 
 	const updateStarRating = (value: number) => {
+		if (readonly) return;
+
 		setRating(value);
 		onChange(value);
 	};
@@ -30,6 +39,8 @@ export const StarRating = ({ size = 16, onChange }: Props) => {
 		index: number,
 		e: React.MouseEvent<HTMLSpanElement>,
 	) => {
+		if (readonly) return;
+
 		const selectedValue = calculateStarValue(index, e);
 		updateStarRating(selectedValue);
 	};
@@ -38,6 +49,8 @@ export const StarRating = ({ size = 16, onChange }: Props) => {
 		index: number,
 		e: React.MouseEvent<HTMLSpanElement>,
 	) => {
+		if (readonly) return;
+
 		const hoverValue = calculateStarValue(index, e);
 		setHover(hoverValue);
 	};

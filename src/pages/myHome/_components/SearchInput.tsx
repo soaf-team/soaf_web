@@ -1,7 +1,8 @@
 import { SearchIcon } from '@/assets';
-import { DrawerClose, Input } from '@/components';
+import { Input } from '@/components';
 
 import { useState } from 'react';
+import { overlay } from '@/libs';
 
 interface Props {
 	type: 'music' | 'movie' | 'book' | 'youtube';
@@ -21,11 +22,16 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 
 	const handleInputChange = (value: string) => {
 		setInputValue(value);
+		setSearchQuery('');
 		setIsSearch(value.length > 0);
 	};
 
 	const handleSearchSubmit = () => {
 		setSearchQuery(inputValue);
+	};
+
+	const handleClose = () => {
+		overlay.close();
 	};
 
 	return (
@@ -40,11 +46,9 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 				className="flex-1"
 			/>
 			{isSearch === false ? (
-				<DrawerClose>
-					<button type="button" className="label2">
-						취소
-					</button>
-				</DrawerClose>
+				<button type="button" className="label2" onClick={handleClose}>
+					취소
+				</button>
 			) : (
 				<button type="button" className="label2" onClick={handleSearchSubmit}>
 					검색

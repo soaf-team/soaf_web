@@ -8,6 +8,8 @@ interface OverlayProps extends Props {
 	disabled?: boolean;
 	reject: () => void;
 	resolve: () => void;
+	isConfirm?: boolean;
+	overlayClassName?: string;
 }
 
 export const ConfirmOverlay = ({
@@ -15,6 +17,8 @@ export const ConfirmOverlay = ({
 	reject,
 	disabled,
 	children,
+	isConfirm = true,
+	overlayClassName,
 }: OverlayProps) => {
 	const [isVisible, setIsVisible] = useState(true);
 
@@ -35,7 +39,7 @@ export const ConfirmOverlay = ({
 			{isVisible && (
 				<>
 					<motion.div
-						className="fixed inset-0 z-[9998]"
+						className="fixed inset-0 z-[9998] bg-black/80"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
@@ -47,6 +51,7 @@ export const ConfirmOverlay = ({
 							'flex flex-col',
 							'pt-2 px-[18px] pb-2 max-w-window',
 							'rounded-t-[28px] bg-white shadow-shadow1',
+							overlayClassName,
 						)}
 						initial={{ y: '100%' }}
 						animate={{ y: 0 }}
@@ -59,16 +64,18 @@ export const ConfirmOverlay = ({
 					>
 						<div className="self-center mb-[14px] w-10 h-[3px] rounded-[12px] bg-gray200" />
 						{children}
-						<Button
-							size="sm"
-							onClick={() => (disabled ? {} : handleClose())}
-							className={cn(
-								'w-full',
-								disabled && 'cursor-not-allowed bg-gray100',
-							)}
-						>
-							확인
-						</Button>
+						{isConfirm && (
+							<Button
+								size="sm"
+								onClick={() => (disabled ? {} : handleClose())}
+								className={cn(
+									'w-full',
+									disabled && 'cursor-not-allowed bg-gray100',
+								)}
+							>
+								확인
+							</Button>
+						)}
 					</motion.div>
 				</>
 			)}

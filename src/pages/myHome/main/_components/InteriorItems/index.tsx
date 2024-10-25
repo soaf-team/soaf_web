@@ -3,6 +3,12 @@ import { useFlow } from '@/stackflow';
 import { DraggableData } from 'react-draggable';
 import { Interior as InteriorData, InteriorName } from '@/types';
 import { Interior } from './Interior';
+import {
+	getPercentageToPosition,
+	getPositionToPercentage,
+} from '@/pages/myHome/utils/position';
+import { useWindowDimensions } from '@/hooks';
+import { cn } from '@/utils';
 
 interface Props {
 	interiorItems: InteriorData[];
@@ -36,7 +42,7 @@ export const InteriorItems = ({
 	setPositions,
 }: Props) => {
 	const { push } = useFlow();
-
+	const windowDimensions = useWindowDimensions();
 	const { debounced: handleOnDrag } = useDebounce(
 		(name: string, data: DraggableData) => {
 			setPositions((prevPositions) => ({
@@ -85,6 +91,11 @@ export const InteriorItems = ({
 	return (
 		<>
 			{interiorItems.map((item) => {
+				const positionPercent = getPositionToPercentage(
+					positions[item.name],
+					windowDimensions,
+				);
+
 				return (
 					<Interior
 						key={item.id}
@@ -101,7 +112,7 @@ export const InteriorItems = ({
 						isDraggable={isDraggable}
 						position={positions[item.name]}
 						initialPosition={initialPositions[item.name]}
-						className={CLASS_NAMES[item.name]}
+						className={cn(CLASS_NAMES[item.name], positionPercent)}
 						handleDrag={(data) => handleOnDrag(item.name, data)}
 						onItemClick={() => handleItemClick(item.name, isEdit)}
 					/>
@@ -112,13 +123,13 @@ export const InteriorItems = ({
 };
 
 const CLASS_NAMES: Record<InteriorName, string> = {
-	books: 'absolute w-1/4 top-16',
-	movie: 'absolute w-1/4 top-1/3',
-	music: 'absolute w-1/5 top-[18%] left-[10%]',
-	picture: 'absolute w-1/5 left-[45%] top-[5%]',
-	plant: 'absolute top-[35%] right-1/4 w-1/6',
-	sofa: 'absolute right-[5%] top-1/3',
-	windowNight: 'absolute w-1/4 top-14 right-4',
-	windowDay: 'absolute w-1/4 top-14 right-4',
-	youtube: 'absolute w-[15%] left-1/2 top-1/4',
+	books: 'absolute w-1/3',
+	movie: 'absolute w-1/4',
+	music: 'absolute w-1/5',
+	picture: 'absolute w-1/5',
+	plant: 'absolute w-1/6',
+	sofa: 'absolute w-1/4',
+	windowNight: 'absolute w-1/4',
+	windowDay: 'absolute w-1/4',
+	youtube: 'absolute w-[15%]',
 } as const;

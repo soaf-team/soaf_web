@@ -13,6 +13,7 @@ import PencilIcon from './pencil.svg';
 import TrashIcon from './trash.svg';
 import WarningIcon from './warning.svg';
 import BanIcon from './ban.svg';
+import PlayIcon from './my-home/play.svg';
 
 export {
 	Plus,
@@ -30,6 +31,7 @@ export {
 	TrashIcon,
 	WarningIcon,
 	BanIcon,
+	PlayIcon,
 };
 
 export * from './header';

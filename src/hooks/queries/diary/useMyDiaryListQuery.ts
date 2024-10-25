@@ -4,18 +4,27 @@ import { transformDiaryKey } from '@/models';
 import { DiaryBackend } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
-const getMyDiaryList = async (year: number, month: number) => {
+const getMyDiaryList = async (
+	year: number,
+	month: number,
+	isPublic?: boolean,
+) => {
 	const response = await axiosBase.get('diary', {
 		params: {
 			year,
 			month,
+			isPublic,
 			limit: 100,
 		},
 	});
 	return response.data?.data;
 };
 
-export const useMyDiaryListQuery = (year: number, month: number) => {
+export const useMyDiaryListQuery = (
+	year: number,
+	month: number,
+	isPublic?: boolean,
+) => {
 	const {
 		data = {
 			items: [],
@@ -26,8 +35,8 @@ export const useMyDiaryListQuery = (year: number, month: number) => {
 	} = useQuery<{
 		items: DiaryBackend[];
 	}>({
-		queryKey: [QUERY_KEY.currentUserDiaryList, year, month],
-		queryFn: () => getMyDiaryList(year, month),
+		queryKey: [QUERY_KEY.currentUserDiaryList, year, month, isPublic],
+		queryFn: () => getMyDiaryList(year, month, isPublic),
 	});
 
 	const currentUserDiaryList = data.items;

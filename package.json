@@ -36,7 +36,6 @@
 		"react-dom": "^18.2.0",
 		"react-draggable": "^4.4.6",
 		"react-hook-form": "^7.51.3",
-		"recoil": "^0.7.7",
 		"socket.io-client": "^4.8.0",
 		"tailwind-merge": "^2.2.2",
 		"tailwindcss": "latest",

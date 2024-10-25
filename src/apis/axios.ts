@@ -10,6 +10,8 @@ export const axiosBase = axios.create({
 	},
 });
 axiosBase.defaults.withCredentials = true;
+axiosBase.defaults.headers['x-access-token'] =
+	`${import.meta.env.VITE_API_TOKEN}`;
 
 axiosBase.interceptors.request.use((config) => {
 	console.error('요청 ' + config.url);

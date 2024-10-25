@@ -5,13 +5,18 @@ import {
 	NonDataFallback,
 	PageLayout,
 } from '@/components';
-import { useFilteredDiaryQuery } from '@/hooks';
+import { useMyDiaryListQuery } from '@/hooks';
 import { useFlow } from '@/stackflow';
 import { useState } from 'react';
 import { DiaryFilter } from './_components/DiaryFilter';
 import { YearMonthSelect } from '@/components/YearMonthSelect';
 import { DiaryList } from '@/components/DiaryList';
 import { ActivityComponentType } from '@stackflow/react';
+import { Diary } from '@/types';
+
+const formatDiaryByPrivacy = (diaries: Diary[], isPrivate: boolean) => {
+	return diaries.filter((diary) => diary.isPublic === isPrivate);
+};
 
 const MyDiaryPage: ActivityComponentType = () => {
 	const { push } = useFlow();
@@ -19,10 +24,13 @@ const MyDiaryPage: ActivityComponentType = () => {
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const [isPrivate, setIsPrivate] = useState(true);
 
-	const { diaries } = useFilteredDiaryQuery({
-		isPrivate: isPrivate.toString(),
-		date: String(currentDate.getMonth() + 1),
-	});
+	const { currentUserDiaryList } = useMyDiaryListQuery(
+		currentDate.getFullYear(),
+		currentDate.getMonth() + 1,
+		isPrivate,
+	);
+
+	const diaries = formatDiaryByPrivacy(currentUserDiaryList, isPrivate);
 
 	const handleClickWriteDiaryButton = () => {
 		push('NewDiaryStep1', {});

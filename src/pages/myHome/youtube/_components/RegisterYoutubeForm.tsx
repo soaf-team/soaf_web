@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { YoutubeItemProps } from './YoutubeItems';
+import { YoutubeItemProps } from './YoutubeItem';
 import { useFunnel } from '@/hooks';
 import { GenericForm } from '@/components';
 import { SearchYoutubeList } from './SearchYoutubeList';
@@ -8,11 +8,14 @@ import { SetYoutubeInfo } from './SetYoutubeInfo';
 const STEP = ['유튜브 검색', '유튜브 등록'] as const;
 
 export const RegisterYoutubeForm = () => {
-	const [youtubeInfo, setYoutubeInfo] = useState<YoutubeItemProps>({
+	const [youtubeInfo, setYoutubeInfo] = useState<
+		YoutubeItemProps & { url: string }
+	>({
 		title: '',
 		channelTitle: '',
 		publishedAt: '',
 		thumbnail: '',
+		url: '',
 	});
 	const { Funnel, Step, setStep } = useFunnel(STEP[0]);
 
@@ -24,12 +27,8 @@ export const RegisterYoutubeForm = () => {
 		setStep(STEP[0]);
 	};
 
-	const handleSubmit = () => {
-		// TODO: Submit 로직
-	};
-
 	return (
-		<GenericForm formOptions={{ mode: 'onSubmit' }} onSubmit={handleSubmit}>
+		<GenericForm formOptions={{ mode: 'onSubmit' }}>
 			<Funnel>
 				<Step name={STEP[0]}>
 					<SearchYoutubeList

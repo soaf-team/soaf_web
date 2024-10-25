@@ -15,4 +15,12 @@ export const QUERY_KEY = {
 
 	META_DIARY: 'metaDiary',
 	SIMILAR_USER: 'similarUser',
+	MY_MUSIC_LIST: 'myMusicList',
+	MY_MUSIC_DETAIL: 'myMusicDetail',
+	MY_MOVIE_LIST: 'myMovieList',
+	MY_MOVIE_DETAIL: 'myMovieDetail',
+	MY_BOOK_LIST: 'myBookList',
+	MY_BOOK_DETAIL: 'myBookDetail',
+	MY_YOUTUBE_LIST: 'myYoutubeList',
+	MY_YOUTUBE_DETAIL: 'myYoutubeDetail',
 };
