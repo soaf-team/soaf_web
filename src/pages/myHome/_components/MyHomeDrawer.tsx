@@ -1,4 +1,4 @@
-import { Overlay } from '@/components/overlay';
+import { ConfirmOverlay } from '@/components/overlay';
 import { OverlayProps } from '@/libs';
 
 interface Props extends Omit<OverlayProps, 'overlayKey'> {
@@ -7,14 +7,14 @@ interface Props extends Omit<OverlayProps, 'overlayKey'> {
 
 export const MyHomeDrawer = ({ component, resolve, reject }: Props) => {
 	return (
-		<Overlay
+		<ConfirmOverlay
 			overlayKey="my-home-overlay"
 			reject={() => reject?.('close')}
 			resolve={() => resolve?.('close')}
-			isConfirm={false}
 			overlayClassName="min-h-[92%] max-h-[92%]"
+			isConfirm={false}
 		>
 			<div className="flex-1 overflow-auto">{component}</div>
-		</Overlay>
+		</ConfirmOverlay>
 	);
 };

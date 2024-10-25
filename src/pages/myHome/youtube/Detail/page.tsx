@@ -66,7 +66,7 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 				description="삭제한 기록은 복원할 수 없어요"
 				confirmButtonText="네, 삭제할래요"
 				resolve={() => {
-					deleteMyHomeMutation.mutate(youtubeId);
+					deleteMyHomeMutation.mutate();
 					pop();
 				}}
 			/>,

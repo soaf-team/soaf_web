@@ -1,5 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useGenericMutation } from './useGenericMutation';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants';
 import {
 	MusicContent,
@@ -10,6 +9,7 @@ import {
 import { overlay } from '@/libs';
 import { LoadingDotScreen } from '@/components';
 import { useToast } from '../useToast';
+import { axiosBase } from '@/apis';
 
 type MyHomePayloadCategory = 'music' | 'movie' | 'book' | 'youtube';
 
@@ -73,71 +73,75 @@ export const myHomeMutations = (
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
-	const createMyHomeMutation = useGenericMutation<any, MyHomePayloadType>(
-		'/my-home',
-		'POST',
-		{
-			onMutate: () => {
-				overlay.open(
-					<LoadingDotScreen
-						overlayKey="loading-music"
-						message={getCategoryMessage(
-							category as MyHomePayloadCategory,
-							'저장',
-							true,
-						)}
-					/>,
-				);
-			},
-			onSuccess: (_, variables) => {
-				queryClient.invalidateQueries({
-					queryKey: [getQueryKeyByCategory(variables.category, 'list')],
-				});
-				overlay.close();
-				toast({
-					title: getCategoryMessage(variables.category, '저장'),
-				});
-			},
-			onError: (error) => {
-				console.error(error);
-				overlay.close();
-			},
+	const createMyHomeMutation = useMutation({
+		mutationFn: async (payload: MyHomePayloadType) => {
+			const response = await axiosBase.post('/my-home', payload);
+			return response.data;
 		},
-	);
-
-	const updateMyHomeMutation = useGenericMutation<any, MyHomePayloadType>(
-		`/my-home/${id}`,
-		'PATCH',
-		{
-			onMutate: () => {
-				overlay.open(
-					<LoadingDotScreen
-						overlayKey="loading-music"
-						message={getCategoryMessage(
-							category as MyHomePayloadCategory,
-							'수정',
-							true,
-						)}
-					/>,
-				);
-			},
-			onSuccess: (_, variables) => {
-				queryClient.invalidateQueries({
-					queryKey: [getQueryKeyByCategory(variables.category, 'detail')],
-				});
-				overlay.close();
-				toast({
-					title: getCategoryMessage(variables.category, '수정'),
-				});
-			},
-			onError: (error) => {
-				console.error(error);
-				overlay.close();
-			},
+		onMutate: () => {
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="loading-music"
+					message={getCategoryMessage(
+						category as MyHomePayloadCategory,
+						'저장',
+						true,
+					)}
+				/>,
+			);
 		},
-	);
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: [getQueryKeyByCategory(variables.category, 'list')],
+			});
+			overlay.close();
+			toast({
+				title: getCategoryMessage(variables.category, '저장'),
+			});
+		},
+		onError: (error) => {
+			console.error(error);
+			overlay.close();
+		},
+	});
 
-	const deleteMyHomeMutation = useGenericMutation(`/my-home/${id}`, 'DELETE', {
+	const updateMyHomeMutation = useMutation({
+		mutationFn: async (payload: MyHomePayloadType) => {
+			const response = await axiosBase.patch(`/my-home/${id}`, payload);
+			return response.data;
+		},
+		onMutate: () => {
+			overlay.open(
+				<LoadingDotScreen
+					overlayKey="loading-music"
+					message={getCategoryMessage(
+						category as MyHomePayloadCategory,
+						'수정',
+						true,
+					)}
+				/>,
+			);
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: [getQueryKeyByCategory(variables.category, 'detail')],
+			});
+			overlay.close();
+			toast({
+				title: getCategoryMessage(variables.category, '수정'),
+			});
+		},
+		onError: (error) => {
+			console.error(error);
+			overlay.close();
+		},
+	});
+
+	const deleteMyHomeMutation = useMutation({
+		mutationFn: async () => {
+			const response = await axiosBase.delete(`/my-home/${id}`);
+			return response.data;
+		},
 		onMutate: () => {
 			overlay.open(
 				<LoadingDotScreen
