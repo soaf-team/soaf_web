@@ -4,7 +4,6 @@ import { DiaryFormType, PhotoType } from '@/store';
 import { EmotionKey } from '@/types';
 import { DeletePhoto } from '@/assets';
 import { EMOTIONS } from '@/constants';
-import { useDiaryMutations } from '@/hooks';
 
 import { AboveKeyboardBar } from './AboveKeyboardBar';
 import { EmotionSticker } from '@/components';

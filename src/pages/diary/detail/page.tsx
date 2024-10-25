@@ -9,7 +9,7 @@ import {
 import { ActivityComponentType } from '@stackflow/react';
 import { useRef } from 'react';
 import { useDiaryMutations, useReactionMutation } from '@/hooks/mutations';
-import { useDiaryDetailQuery } from '@/hooks';
+import { useDiaryDetailQuery, useUserProfileQuery } from '@/hooks';
 import { useFlow } from '@/stackflow';
 import { useDiaryStore } from '@/store';
 import { DiaryReaction } from './DiaryReaction';
@@ -28,8 +28,13 @@ const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 	const { push } = useFlow();
 	const { setDiary } = useDiaryStore();
 	const { diary, isLoading, isError } = useDiaryDetailQuery(diaryId);
+	const { userProfile } = useUserProfileQuery();
+
 	const { deleteDiaryMutation } = useDiaryMutations();
 	const { toggleReactionMutation } = useReactionMutation();
+
+	const userId = userProfile?.id;
+	const isMyDiary = diary?.authorId === userId;
 
 	const handleEditDiary = () => {
 		setDiary(diary);
@@ -61,6 +66,8 @@ const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 				<div className="flex flex-col justify-between h-full">
 					{diary && <DiaryContent diary={diary} isImageClickable />}
 					<DiaryReaction
+						userId={userId}
+						isMyDiary={isMyDiary}
 						reactions={diary.reactions}
 						handleReactionClick={handleReactionClick}
 					/>

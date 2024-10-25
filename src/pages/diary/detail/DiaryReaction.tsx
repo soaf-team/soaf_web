@@ -16,13 +16,15 @@ import {
 	ReactionCloud as ReactionCloudIcon,
 } from '@/assets';
 import { ReactionKeyType } from '@/types';
-import { useUserProfileQuery } from '@/hooks';
+import { QUOTES } from '@/constants/quotes';
 
 type DiaryReactionProps = {
 	reactions: {
 		[key: string]: string[];
 	};
+	userId: string;
 	handleReactionClick: (reactionType: ReactionKeyType) => void;
+	isMyDiary: boolean;
 };
 
 const ITEMS_PER_ROW = [3, 4, 3];
@@ -39,21 +41,29 @@ const chunkArray = (array: any[], sizes: number[]) => {
 };
 
 export const DiaryReaction = ({
+	userId,
 	reactions,
 	handleReactionClick,
+	isMyDiary,
 }: DiaryReactionProps) => {
 	const [isOpened, setIsOpened] = useState(false);
-
-	const { userProfile } = useUserProfileQuery();
-	const userId = userProfile.id;
 	const isNotReacted = Object.values(reactions).every(
 		(users) => !users.includes(userId),
 	);
+	const isReacted = Object.values(reactions).some((users) =>
+		users.includes(userId),
+	);
+
 	const reactionEntries = Object.entries(reactions);
 	const chunkedReactions = chunkArray(reactionEntries, ITEMS_PER_ROW);
 
 	const handleHeartButtonClick = () => {
 		setIsOpened(true);
+	};
+
+	const getRandomQuotes = () => {
+		const randomIndex = Math.floor(Math.random() * QUOTES.length);
+		return QUOTES[randomIndex];
 	};
 
 	return (
@@ -68,13 +78,18 @@ export const DiaryReaction = ({
 					{chunkedReactions.map((chunk, rowIndex) => (
 						<div
 							key={rowIndex}
-							className="flex flex-wrap gap-[6px] justify-start"
+							className="flex flex-wrap gap-[6px] justify-start cursor-pointer"
 						>
 							{chunk.map(([key, users]) => (
 								<motion.div
 									key={key}
 									className="flex items-center gap-[4px] label4 text-black/70"
-									onClick={() => handleReactionClick(key as ReactionKeyType)}
+									onClick={() => {
+										if (isReacted) {
+											return;
+										}
+										handleReactionClick(key as ReactionKeyType);
+									}}
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
 									initial={{ opacity: 0, y: 10 }}
@@ -98,23 +113,23 @@ export const DiaryReaction = ({
 					))}
 				</motion.div>
 			</div>
-			<div className="relative w-full border-t border-solid border-border py-[16px]">
+			<div className="relative w-full border-t border-solid border-border py-[10px]">
 				{isNotReacted && (
 					<motion.div
-						className="flex items-center gap-[10px] body4"
+						className="flex items-center gap-[10px] body4 cursor-pointer"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3 }}
+						onClick={handleHeartButtonClick}
 					>
 						<motion.img
 							src={HeartCircle}
 							alt="heart-circle"
 							className="w-[22px] h-[20px]"
-							onClick={handleHeartButtonClick}
 							whileHover={{ scale: 1.1 }}
 							whileTap={{ scale: 0.95 }}
 						/>
-						{INFO_MESSAGE}
+						{isMyDiary ? getRandomQuotes() : INFO_MESSAGE}
 					</motion.div>
 				)}
 			</div>
@@ -164,18 +179,18 @@ const ReactionCloud = ({
 				exit={{ opacity: 0 }}
 			/>
 			<motion.div
-				className="absolute flex bottom-[78px] left-[24px] m-auto w-[288px] h-[133px] z-[10000]"
+				className="absolute flex bottom-[106px] left-[24px] m-auto w-[288px] h-[133px] z-[10000]"
 				initial={{ scale: 0.8, opacity: 0, y: 20 }}
 				animate={{ scale: 1, opacity: 1, y: 0 }}
 				exit={{ scale: 0.8, opacity: 0, y: 20 }}
 				transition={{ type: 'spring', damping: 20, stiffness: 300 }}
 			>
-				<div className="absolute w-full h-full grid grid-cols-5 gap- py-[12px] px-[12px]">
+				<div className="absolute w-full h-full grid grid-cols-5 py-[12px] px-[12px]">
 					{Object.values(REACTION_EMOJI).map((emoji, index) => (
 						<motion.div
 							key={index}
 							onClick={() => handleEmojiClick(emoji.value)}
-							className="flex flex-col items-center justify-center text-[10px] leading-[12px] font-semibold"
+							className="flex flex-col items-center justify-center text-[10px] leading-[12px] font-semibold cursor-pointer"
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: index * 0.03 }}
