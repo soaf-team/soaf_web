@@ -30,7 +30,9 @@ export const SoafList = () => {
 		);
 
 		await patchUserMutation.mutateAsync({
-			payload: status as UserPayloadType,
+			payload: {
+				status: status as UserPayloadType,
+			},
 		});
 	};
 

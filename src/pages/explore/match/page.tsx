@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconBack } from '@stackflow/plugin-basic-ui';
 import { useFlow } from '@/stackflow';
-import { Button, PageLayout } from '@/components';
+import { Button, LoadingSpinner, PageLayout } from '@/components';
 import { MatchedUserItem } from '../_components';
 import { DialogOverlay } from '@/components/overlay';
 import { MatchingUser } from '@/types';
@@ -20,11 +20,20 @@ const MatchedUserPage = ({
 	const { replace } = useFlow();
 	const { similarUser } = useSimilarUserQuery(diaryId);
 
+	const [isLoading, setIsLoading] = useState(false);
 	const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
 	const handleSelect = (id: string) => {
 		setSelectedUser((prev) => (prev === id ? null : id));
 	};
+
+	// TODO: 매칭 경험을 위해 setTimeout추가 이후 제거 필요
+	useEffect(() => {
+		setIsLoading(true);
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 4000);
+	}, []);
 
 	return (
 		<PageLayout
@@ -34,6 +43,11 @@ const MatchedUserPage = ({
 			}}
 			className="overflow-y-auto"
 		>
+			{isLoading && (
+				<div className="fixed flex justify-center items-center w-full h-full top-0 left-0 bg-black/80 z-[100]">
+					<LoadingSpinner />
+				</div>
+			)}
 			<div className="flex flex-col justify-center items-center gap-[8px]">
 				<p className="head4b">매칭된 유저 목록</p>
 

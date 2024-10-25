@@ -6,8 +6,12 @@ import { cn, formatDateTime } from '@/utils';
 
 export const ChatList = () => {
 	const { friendList } = useFriendListQuery();
-	const { chatList } = useChatListStore();
+	const { chatList: _chatList } = useChatListStore();
 	const { push } = useFlow();
+
+	const chatList = _chatList.filter((chat) =>
+		friendList.find((friend) => friend.friend._id === chat.friendId),
+	);
 
 	return (
 		<div className="flex flex-col pb-2 overflow-y-auto">
