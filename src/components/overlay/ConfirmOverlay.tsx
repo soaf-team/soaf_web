@@ -47,7 +47,7 @@ export const ConfirmOverlay = ({
 					/>
 					<motion.div
 						className={cn(
-							'fixed bottom-0 left-0 right-0 z-[9999]',
+							'fixed bottom-0 left-0 lg:left-[calc(50%-220px)] lg:-translate-x-1/2 right-0 z-[9999]',
 							'flex flex-col',
 							'pt-2 px-[18px] pb-2 max-w-window',
 							'rounded-t-[28px] bg-white shadow-shadow1',
