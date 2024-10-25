@@ -1,5 +1,5 @@
 import { EMOTIONS } from '@/constants';
-import { usePressEffect, useRippleEffect } from '@/hooks';
+import { useCheckWebview, usePressEffect } from '@/hooks';
 import { EmotionKey } from '@/types';
 import { cn } from '@/utils';
 import { useRef } from 'react';
@@ -16,6 +16,7 @@ export const EmotionButton = ({
 	onClick,
 	...props
 }: EmotionButtonProps) => {
+	const isWebView = useCheckWebview();
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const { handlePressEnd, handlePressStart, getPressStyle } = usePressEffect({
 		duration: 100,
@@ -47,10 +48,10 @@ export const EmotionButton = ({
 				colorStyle,
 			])}
 			onClick={() => onClick?.(emotion)}
-			onMouseDown={onPressStart}
-			onMouseUp={onPressEnd}
-			onTouchStart={onPressStart}
-			onTouchEnd={onPressEnd}
+			onMouseDown={isWebView ? undefined : onPressStart}
+			onMouseUp={isWebView ? undefined : onPressEnd}
+			onTouchStart={isWebView ? onPressStart : undefined}
+			onTouchEnd={isWebView ? onPressEnd : undefined}
 			style={getPressStyle(emotion)}
 		>
 			<span className="z-10">{EMOTIONS[emotion].label}</span>

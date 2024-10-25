@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/utils';
-import { usePressEffect, useRippleEffect } from '@/hooks';
+import { useCheckWebview, usePressEffect, useRippleEffect } from '@/hooks';
 
 const buttonVariants = cva(
 	`inline-flex items-center justify-center whitespace-nowrap rounded-[16px] 
@@ -36,6 +36,7 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	({ className, variant, size, children, disabled, ...props }, ref) => {
+		const isWebView = useCheckWebview();
 		const buttonRef = React.useRef<HTMLButtonElement>(null);
 		const { rippleProps, startRipple, stopRipple } = useRippleEffect({});
 		const { handlePressStart, handlePressEnd, getPressStyle } = usePressEffect(
@@ -67,10 +68,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 				)}
 				style={getPressStyle('button')}
 				ref={buttonRef}
-				onMouseDown={onPressStart}
-				onMouseUp={onPressEnd}
-				onTouchStart={onPressStart}
-				onTouchEnd={onPressEnd}
+				onMouseDown={isWebView ? undefined : onPressStart}
+				onMouseUp={isWebView ? undefined : onPressEnd}
+				onTouchStart={isWebView ? onPressStart : undefined}
+				onTouchEnd={isWebView ? onPressEnd : undefined}
 				{...props}
 			>
 				{children}
