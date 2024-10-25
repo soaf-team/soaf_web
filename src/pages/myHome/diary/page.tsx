@@ -12,9 +12,9 @@ import { DiaryFilter } from './_components/DiaryFilter';
 import { YearMonthSelect } from '@/components/YearMonthSelect';
 import { DiaryList } from '@/components/DiaryList';
 import { ActivityComponentType } from '@stackflow/react';
-import { Diary } from '@/types';
+import { DiaryType } from '@/types';
 
-const formatDiaryByPrivacy = (diaries: Diary[], isPrivate: boolean) => {
+const formatDiaryByPrivacy = (diaries: DiaryType[], isPrivate: boolean) => {
 	return diaries.filter((diary) => diary.isPublic === isPrivate);
 };
 
