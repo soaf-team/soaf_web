@@ -12,7 +12,7 @@ export const TabButton = ({ children, active = false, ...props }: Props) => {
 			type="button"
 			className={`flex items-center justify-center 
         relative p-[16px] w-full label2
-        border-b border-gray200
+        border-b border-gray300/20
         ${active ? 'text-black' : 'text-gray200'} 
       `}
 		>
