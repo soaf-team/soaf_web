@@ -3,7 +3,7 @@ import drag from '@/assets/icons/my-home/move.svg';
 
 import Draggable, { DraggableData } from 'react-draggable';
 import { cn } from '@/utils';
-import { InteriorType } from '@/types';
+import { InteriorType, Position } from '@/types';
 import {
 	BooksIcon,
 	MovieIcon,
@@ -17,13 +17,12 @@ import {
 } from '@/assets';
 
 interface InteriorProps extends React.HTMLAttributes<HTMLDivElement> {
-	src: string;
 	name: string;
 	type: InteriorType;
 	isEdit: boolean;
 	isDraggable: { [key: string]: boolean };
-	position: { x: number; y: number };
-	initialPosition?: { x: number; y: number };
+	position: Position;
+	initialPosition?: Position;
 	handleDrag: (data: DraggableData) => void;
 	onItemClick: () => void;
 }
@@ -42,9 +41,7 @@ const images: { [key: string]: string } = {
 
 export const Interior = (props: InteriorProps) => {
 	const {
-		// src,
 		name,
-		type,
 		isEdit,
 		isDraggable,
 		className,
@@ -52,6 +49,7 @@ export const Interior = (props: InteriorProps) => {
 		initialPosition,
 		handleDrag,
 		onItemClick,
+		type,
 		...rest
 	} = props;
 

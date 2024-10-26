@@ -2,7 +2,12 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
 import { CheckButton, PageLayout, XButton } from '@/components';
-import { useInteriorItems } from '@/hooks';
+import {
+	useInteriorItems,
+	useWindowDimensions,
+	useInteriorPositionMutations,
+	PositionPayloadType,
+} from '@/hooks';
 import { useBottomTabStore } from '@/store';
 import { cn } from '@/utils';
 import {
@@ -13,13 +18,38 @@ import {
 	UpButton,
 	BottomActionButtons,
 } from './_components';
+import { Interior, Position } from '@/types';
+import {
+	getPercentageToPosition,
+	getPositionToPercentage,
+} from '../utils/position';
 
 const isAfter6PM = dayjs().hour() >= 18;
 const backgroundClass = isAfter6PM ? 'bg-[#BECFDC]' : 'bg-[#D3E6F4]';
 
+// 위치 데이터를 백엔드에 전달할 형식으로 변환
+const convertToPositionPayload = (
+	positions: { [key: string]: Position },
+	interiorItems: Interior[],
+	dimensions: { width: number; height: number },
+): PositionPayloadType => {
+	const items = interiorItems.map((item) => ({
+		name: item.name,
+		x: getPositionToPercentage(positions[item.name], dimensions).x,
+		y: getPositionToPercentage(positions[item.name], dimensions).y,
+		visible: item.visible,
+	}));
+
+	return {
+		items,
+	};
+};
+
 const MyHomeMainPage = () => {
 	const { interiorItems } = useInteriorItems();
+	const { updatePositionMutation } = useInteriorPositionMutations();
 	const { isOpen, handleClose } = useBottomTabStore();
+	const { width, height } = useWindowDimensions();
 
 	const [isEdit, setIsEdit] = useState(false);
 	const [isDraggable, setIsDraggable] = useState<{ [key: string]: boolean }>(
@@ -28,12 +58,12 @@ const MyHomeMainPage = () => {
 
 	// 인테리어 요소들의 초기 위치 (불변)
 	const [initialPositions, setInitialPositions] = useState<{
-		[key: string]: { x: number; y: number };
+		[key: string]: Position;
 	}>({});
 
 	// 인테리어 요소들의 위치 (가변)
 	const [positions, setPositions] = useState<{
-		[key: string]: { x: number; y: number };
+		[key: string]: Position;
 	}>({});
 
 	const handleCancelEdit = () => {
@@ -49,14 +79,27 @@ const MyHomeMainPage = () => {
 
 	const handleSaveEdit = () => {
 		setIsEdit(false);
+
+		const payload = convertToPositionPayload(
+			positions,
+			interiorItems.data.items,
+			{
+				width,
+				height,
+			},
+		);
+		updatePositionMutation.mutate({
+			payload,
+		});
+
 		setIsDraggable({});
 	};
 
 	useEffect(() => {
-		if (interiorItems.length > 0) {
+		if (interiorItems.data.items.length > 0) {
 			// 각 아이템들의 초기 draggable 상태 설정
 			setIsDraggable(
-				interiorItems.reduce(
+				interiorItems.data.items.reduce(
 					(acc, item) => {
 						acc[item.name] = false;
 						return acc;
@@ -66,12 +109,18 @@ const MyHomeMainPage = () => {
 			);
 
 			// 서버에서 받아온 인테리어 아이템 데이터의 위치를 초기 위치로 설정
-			const initialPositions = interiorItems.reduce(
+			const initialPositions = interiorItems.data.items.reduce(
 				(acc, item) => {
-					acc[item.name] = item.position;
+					acc[item.name] = getPercentageToPosition(
+						{ x: item.x, y: item.y },
+						{
+							width,
+							height,
+						},
+					);
 					return acc;
 				},
-				{} as { [key: string]: { x: number; y: number } },
+				{} as { [key: string]: Position },
 			);
 
 			setInitialPositions(initialPositions);
@@ -95,7 +144,7 @@ const MyHomeMainPage = () => {
 			containerClassName={backgroundClass}
 		>
 			<InteriorItems
-				interiorItems={interiorItems}
+				interiorItems={interiorItems.data.items}
 				isEdit={isEdit}
 				isAfter6PM={isAfter6PM}
 				isDraggable={isDraggable}
@@ -111,7 +160,9 @@ const MyHomeMainPage = () => {
 			/>
 			{!isEdit && !isOpen && <UpButton />}
 
-			{isEdit && <BottomActionButtons interiorItems={interiorItems} />}
+			{isEdit && (
+				<BottomActionButtons interiorItems={interiorItems.data.items} />
+			)}
 		</PageLayout>
 	);
 };

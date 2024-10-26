@@ -1,3 +1,8 @@
+export interface Position {
+	x: number;
+	y: number;
+}
+
 export type InteriorType = 'interior' | 'hobby';
 
 export type InteriorName =
@@ -9,13 +14,14 @@ export type InteriorName =
 	| 'sofa'
 	| 'windowDay'
 	| 'windowNight'
-	| 'youtube';
+	| 'youtube'
+	| 'empty';
 
 export interface Interior {
-	id: number;
-	name: InteriorName;
-	src: string;
 	type: InteriorType;
-	position: { x: number; y: number };
-	isVisible: boolean;
+	_id: string;
+	name: InteriorName;
+	x: number;
+	y: number;
+	visible: boolean;
 }
