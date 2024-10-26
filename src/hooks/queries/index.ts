@@ -1,4 +1,3 @@
-export * from './useFilteredDiaryQuery';
 export * from './explore';
 export * from './myHome';
 export * from './user';
