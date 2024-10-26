@@ -4,42 +4,40 @@ import { Interior as InteriorData, InteriorName, Position } from '@/types';
 import { Interior } from './Interior';
 
 interface Props {
-	interiorItems: InteriorData[];
 	isEdit: boolean;
-	isAfter6PM: boolean;
 	isDraggable: { [key: string]: boolean };
 	setIsDraggable: React.Dispatch<
 		React.SetStateAction<{ [key: string]: boolean }>
 	>;
-	positions: {
-		[key: string]: Position;
-	};
+	items: InteriorData[];
 	initialPositions: {
 		[key: string]: Position;
 	};
-	setPositions: React.Dispatch<
+	setItems: React.Dispatch<
 		React.SetStateAction<{
-			[key: string]: Position;
+			[key: string]: InteriorData;
 		}>
 	>;
 }
 
 export const InteriorItems = ({
-	interiorItems,
 	isEdit,
-	isAfter6PM,
 	isDraggable,
 	setIsDraggable,
-	positions,
+	items,
 	initialPositions,
-	setPositions,
+	setItems,
 }: Props) => {
 	const { push } = useFlow();
 
 	const handleOnDrag = (name: string, data: DraggableData) => {
-		setPositions((prevPositions) => ({
-			...prevPositions,
-			[name]: { x: data.x, y: data.y },
+		setItems((prevItems) => ({
+			...prevItems,
+			[name]: {
+				...prevItems[name],
+				x: data.x,
+				y: data.y,
+			},
 		}));
 	};
 
@@ -78,24 +76,33 @@ export const InteriorItems = ({
 		handleHobbyItemClick(name);
 	};
 
+	const handleDelete = (name: string) => {
+		setItems((prevItems) => ({
+			...prevItems,
+			[name]: { ...prevItems[name], visible: false },
+		}));
+	};
+
 	return (
 		<>
-			{interiorItems.map((item) => {
-				return (
-					<Interior
-						key={item.name}
-						type={item.type}
-						name={item.name}
-						isEdit={isEdit}
-						isDraggable={isDraggable}
-						position={positions[item.name]}
-						initialPosition={initialPositions[item.name]}
-						className={CLASS_NAMES[item.name]}
-						handleDrag={(data) => handleOnDrag(item.name, data)}
-						onItemClick={() => handleItemClick(item.name, isEdit)}
-					/>
-				);
-			})}
+			{items
+				.filter((item) => item.visible)
+				.map((item) => {
+					return (
+						<Interior
+							key={item.name}
+							{...item}
+							isEdit={isEdit}
+							isDraggable={isDraggable}
+							position={{ x: item.x, y: item.y }}
+							initialPosition={initialPositions[item.name]}
+							className={CLASS_NAMES[item.name]}
+							onDrag={(data) => handleOnDrag(item.name, data)}
+							onItemClick={() => handleItemClick(item.name, isEdit)}
+							onDelete={() => handleDelete(item.name)}
+						/>
+					);
+				})}
 		</>
 	);
 };

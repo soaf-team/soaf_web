@@ -16,15 +16,17 @@ import {
 	YoutubeIcon,
 } from '@/assets';
 
-interface InteriorProps extends React.HTMLAttributes<HTMLDivElement> {
+interface InteriorProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onDrag'> {
 	name: string;
 	type: InteriorType;
 	isEdit: boolean;
 	isDraggable: { [key: string]: boolean };
 	position: Position;
 	initialPosition?: Position;
-	handleDrag: (data: DraggableData) => void;
+	onDrag: (data: DraggableData) => void;
 	onItemClick: () => void;
+	onDelete: () => void;
 }
 
 const images: { [key: string]: string } = {
@@ -47,8 +49,9 @@ export const Interior = (props: InteriorProps) => {
 		className,
 		position,
 		initialPosition,
-		handleDrag,
+		onDrag,
 		onItemClick,
+		onDelete,
 		type,
 		...rest
 	} = props;
@@ -59,7 +62,7 @@ export const Interior = (props: InteriorProps) => {
 		<div
 			{...rest}
 			className={cn(
-				'relative z-10',
+				'relative z-50',
 				isEdit &&
 					isDraggable[name] === true &&
 					'border-solid border-2 border-gray300',
@@ -69,7 +72,10 @@ export const Interior = (props: InteriorProps) => {
 		>
 			<img src={imageSrc} alt={name} className="full_img_contain" />
 			{isEdit && isDraggable[name] === true && type === 'hobby' && (
-				<button className="absolute -top-3 -right-3 flex space-x-1 w-[24px] h-[24px] z-20">
+				<button
+					onClick={onDelete}
+					className="absolute -top-3 -right-3 flex space-x-1 w-[24px] h-[24px] z-20"
+				>
 					<img src={remove} alt="remove" className="full_img_cover" />
 				</button>
 			)}
@@ -88,7 +94,7 @@ export const Interior = (props: InteriorProps) => {
 			handle=".handle"
 			bounds="body"
 			disabled={!isEdit && !isDraggable}
-			onStop={(_, data) => handleDrag(data)}
+			onStop={(_, data) => onDrag(data)}
 		>
 			{content}
 		</Draggable>
