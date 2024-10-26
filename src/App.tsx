@@ -8,12 +8,21 @@ if (import.meta.env.MODE === 'production') {
 }
 
 function App() {
+	const params = new URLSearchParams(window.location.search);
+	const paramsObj: Record<string, string> = {};
+	Array.from(params.entries()).forEach(([key, value]) => {
+		paramsObj[key] = value;
+	});
+	if (paramsObj.top) {
+		localStorage.setItem('topSafeArea', paramsObj.top);
+	}
+
 	useAppBridge();
 
 	return (
 		<AsyncBoundary>
 			<ProviderGroup>
-				<div className="relative w-full mx-auto max-w-window shadow-shadow1">
+				<div className="relative w-full mx-auto max-w-window">
 					<Stack />
 				</div>
 			</ProviderGroup>

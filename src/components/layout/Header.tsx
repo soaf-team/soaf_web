@@ -13,7 +13,7 @@ export const Header = (props: HeaderProps) => {
 	return (
 		<div
 			className={cn([
-				'fixed top-0 left-0 right-0 flex items-center justify-center h-[56px] bg-white z-50',
+				'sticky top-0 left-0 right-0 flex items-center justify-center h-[56px] bg-white z-50',
 				className,
 			])}
 		>

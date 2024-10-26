@@ -89,9 +89,10 @@ const MyHomeMainPage = () => {
 				) : (
 					<HeaderActionButtons onBrushClick={handleStartEdit} />
 				),
-				headerClass: 'bg-transparent',
+				headerClass: backgroundClass,
 			}}
-			className={cn(['relative', backgroundClass])}
+			className="relative"
+			containerClassName={backgroundClass}
 		>
 			<InteriorItems
 				interiorItems={interiorItems}
