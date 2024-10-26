@@ -88,7 +88,7 @@ export const Interior = (props: InteriorProps) => {
 			handle=".handle"
 			bounds="body"
 			disabled={!isEdit && !isDraggable}
-			onDrag={(_, data) => handleDrag(data)}
+			onStop={(_, data) => handleDrag(data)}
 		>
 			{content}
 		</Draggable>
