@@ -85,13 +85,7 @@ export const InteriorItems = ({
 					<Interior
 						key={item.name}
 						type={item.type}
-						name={
-							item.name.includes('window')
-								? isAfter6PM
-									? 'windowNight'
-									: 'windowDay'
-								: (item.name as InteriorName)
-						}
+						name={item.name}
 						isEdit={isEdit}
 						isDraggable={isDraggable}
 						position={positions[item.name]}

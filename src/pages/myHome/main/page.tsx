@@ -144,7 +144,9 @@ const MyHomeMainPage = () => {
 			containerClassName={backgroundClass}
 		>
 			<InteriorItems
-				interiorItems={interiorItems.data.items}
+				interiorItems={interiorItems.data.items.filter((item) =>
+					isAfter6PM ? item.name !== 'windowDay' : item.name !== 'windowNight',
+				)}
 				isEdit={isEdit}
 				isAfter6PM={isAfter6PM}
 				isDraggable={isDraggable}
