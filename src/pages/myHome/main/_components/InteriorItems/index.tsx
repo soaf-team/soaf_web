@@ -1,57 +1,45 @@
-import { useDebounce } from '@/hooks';
 import { useFlow } from '@/stackflow';
 import { DraggableData } from 'react-draggable';
-import { Interior as InteriorData, InteriorName } from '@/types';
+import { Interior as InteriorData, InteriorName, Position } from '@/types';
 import { Interior } from './Interior';
-import {
-	getPercentageToPosition,
-	getPositionToPercentage,
-} from '@/pages/myHome/utils/position';
-import { useWindowDimensions } from '@/hooks';
-import { cn } from '@/utils';
 
 interface Props {
-	interiorItems: InteriorData[];
 	isEdit: boolean;
-	isAfter6PM: boolean;
 	isDraggable: { [key: string]: boolean };
 	setIsDraggable: React.Dispatch<
 		React.SetStateAction<{ [key: string]: boolean }>
 	>;
-	positions: {
-		[key: string]: { x: number; y: number };
-	};
+	items: InteriorData[];
 	initialPositions: {
-		[key: string]: { x: number; y: number };
+		[key: string]: Position;
 	};
-	setPositions: React.Dispatch<
+	setItems: React.Dispatch<
 		React.SetStateAction<{
-			[key: string]: { x: number; y: number };
+			[key: string]: InteriorData;
 		}>
 	>;
 }
 
 export const InteriorItems = ({
-	interiorItems,
 	isEdit,
-	isAfter6PM,
 	isDraggable,
 	setIsDraggable,
-	positions,
+	items,
 	initialPositions,
-	setPositions,
+	setItems,
 }: Props) => {
 	const { push } = useFlow();
-	const windowDimensions = useWindowDimensions();
-	const { debounced: handleOnDrag } = useDebounce(
-		(name: string, data: DraggableData) => {
-			setPositions((prevPositions) => ({
-				...prevPositions,
-				[name]: { x: data.x, y: data.y },
-			}));
-		},
-		100,
-	);
+
+	const handleOnDrag = (name: string, data: DraggableData) => {
+		setItems((prevItems) => ({
+			...prevItems,
+			[name]: {
+				...prevItems[name],
+				x: data.x,
+				y: data.y,
+			},
+		}));
+	};
 
 	const handleDraggable = (name: string) => {
 		setIsDraggable((prev) => ({
@@ -88,36 +76,33 @@ export const InteriorItems = ({
 		handleHobbyItemClick(name);
 	};
 
+	const handleDelete = (name: string) => {
+		setItems((prevItems) => ({
+			...prevItems,
+			[name]: { ...prevItems[name], visible: false },
+		}));
+	};
+
 	return (
 		<>
-			{interiorItems.map((item) => {
-				const positionPercent = getPositionToPercentage(
-					positions[item.name],
-					windowDimensions,
-				);
-
-				return (
-					<Interior
-						key={item.id}
-						name={
-							item.name.includes('window')
-								? isAfter6PM
-									? 'windowNight'
-									: 'windowDay'
-								: (item.name as InteriorName)
-						}
-						src={item.src}
-						type={item.type}
-						isEdit={isEdit}
-						isDraggable={isDraggable}
-						position={positions[item.name]}
-						initialPosition={initialPositions[item.name]}
-						className={cn(CLASS_NAMES[item.name], positionPercent)}
-						handleDrag={(data) => handleOnDrag(item.name, data)}
-						onItemClick={() => handleItemClick(item.name, isEdit)}
-					/>
-				);
-			})}
+			{items
+				.filter((item) => item.visible)
+				.map((item) => {
+					return (
+						<Interior
+							key={item.name}
+							{...item}
+							isEdit={isEdit}
+							isDraggable={isDraggable}
+							position={{ x: item.x, y: item.y }}
+							initialPosition={initialPositions[item.name]}
+							className={CLASS_NAMES[item.name]}
+							onDrag={(data) => handleOnDrag(item.name, data)}
+							onItemClick={() => handleItemClick(item.name, isEdit)}
+							onDelete={() => handleDelete(item.name)}
+						/>
+					);
+				})}
 		</>
 	);
 };
@@ -132,4 +117,5 @@ const CLASS_NAMES: Record<InteriorName, string> = {
 	windowNight: 'absolute w-1/4',
 	windowDay: 'absolute w-1/4',
 	youtube: 'absolute w-[15%]',
+	empty: '',
 } as const;

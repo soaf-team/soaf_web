@@ -1,6 +1,8 @@
+import { Position } from '@/types';
+
 // 픽셀 좌표를 퍼센트 좌표로 변환
 export const getPositionToPercentage = (
-	position: { x: number; y: number },
+	position: Position,
 	windowDimensions: { width: number; height: number },
 ) => {
 	return {
@@ -11,7 +13,7 @@ export const getPositionToPercentage = (
 
 // 퍼센트 좌표를 픽셀 좌표로 변환
 export const getPercentageToPosition = (
-	percentage: { x: number; y: number },
+	percentage: Position,
 	windowDimensions: { width: number; height: number },
 ) => {
 	return {
