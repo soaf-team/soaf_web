@@ -6,6 +6,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 const getSimilarUsers = async (diaryId: string) => {
 	const response = await axiosBase.get('diary/similar-users', {
 		params: {
+			limit: '8',
 			diaryId,
 		},
 	});
