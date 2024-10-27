@@ -10,6 +10,7 @@ import { YearMonthSelect } from '@/components/YearMonthSelect';
 import { BasicOverlay } from '@/components/overlay';
 import { SelectedDiaryOverlay } from './_components';
 import { PublicDiaryList } from './_components/PublicDiaryList';
+import { cn } from '@/utils';
 
 const PAGE_TITLE = '소울프렌드 탐색';
 const PAGE_DESCRIPTION =
@@ -69,7 +70,7 @@ const SoafExplorePage = () => {
 
 	return (
 		<PageLayout className="flex-1">
-			<div className="flex flex-col justify-center items-center pt-[52px] flex-1">
+			<div className="relative flex flex-col justify-center items-center pt-[52px] flex-1">
 				<div className="flex flex-col items-center gap-[8px] mb-[22px]">
 					<p className="text-[20px] leading-[32px] font-bold">{PAGE_TITLE}</p>
 
@@ -80,10 +81,12 @@ const SoafExplorePage = () => {
 					</div>
 				</div>
 
-				<YearMonthSelect
-					currentDate={currentDate}
-					handleCurrentDate={setCurrentDate}
-				/>
+				<div className="sticky flex justify-center top-0 w-[calc(100%+36px)] pb-[16px] bg-white z-50">
+					<YearMonthSelect
+						currentDate={currentDate}
+						handleCurrentDate={setCurrentDate}
+					/>
+				</div>
 
 				<PublicDiaryList
 					publicDiaryList={publicDiaryList}
@@ -94,7 +97,12 @@ const SoafExplorePage = () => {
 					isError={isError}
 				/>
 
-				<div className="fixed bottom-[118px] left-[18px] right-[18px] z-50">
+				<div
+					className={cn(
+						'fixed bottom-[93px] left-0 right-0 z-50 px-[18px] pb-[25px] pt-[16px]',
+						'bg-gradient-to-t from-white to-transparent',
+					)}
+				>
 					<Button
 						variant="primary"
 						onClick={

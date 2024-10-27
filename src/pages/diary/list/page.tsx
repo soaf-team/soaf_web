@@ -15,11 +15,13 @@ const DiaryListPage: ActivityComponentType = () => {
 				},
 			}}
 		>
-			<div className="flex flex-col items-center gap-[22px]">
-				<YearMonthSelect
-					currentDate={currentDate}
-					handleCurrentDate={setCurrentDate}
-				/>
+			<div className="relative flex flex-col items-center gap-[6px]">
+				<div className="sticky flex justify-center top-0 w-full pb-[16px] bg-white z-50">
+					<YearMonthSelect
+						currentDate={currentDate}
+						handleCurrentDate={setCurrentDate}
+					/>
+				</div>
 				<AsyncBoundary>
 					<MyDiaryList currentDate={currentDate} />
 				</AsyncBoundary>
