@@ -79,7 +79,7 @@ export const FriendList = () => {
 									<div />
 								)}
 								<div className="flex items-center gap-4">
-									<MyHomeButton userId={friend._id} />
+									<MyHomeButton userId={friend._id} userName={friend.name} />
 									<img
 										src={AnnotationPlus}
 										alt="start-chat"

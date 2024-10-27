@@ -1,13 +1,19 @@
 import { MyHomeIcon } from '@/assets';
 import { useFlow } from '@/stackflow';
 
-export const MyHomeButton = ({ userId }: { userId: string }) => {
+export const MyHomeButton = ({
+	userId,
+	userName,
+}: {
+	userId: string;
+	userName: string;
+}) => {
 	const { push } = useFlow();
 
 	return (
 		<button
 			onClick={() => {
-				push('MyHomeMainPage', { src: userId, alt: 'image' });
+				push('MyHomeMainPage', { userId, userName });
 			}}
 		>
 			<img src={MyHomeIcon} alt="my-home" width={24} height={24} />

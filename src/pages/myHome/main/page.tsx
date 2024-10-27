@@ -1,15 +1,15 @@
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
-import { CheckButton, PageLayout, XButton } from '@/components';
+import { BackButton, CheckButton, PageLayout, XButton } from '@/components';
 import {
 	useInteriorItems,
 	useWindowDimensions,
 	useInteriorPositionMutations,
 	PositionPayloadType,
 } from '@/hooks';
+import { useGetSoafRequestStatus } from '../hooks/useGetSoafRequestStatus';
 import { useBottomTabStore } from '@/store';
-import { cn } from '@/utils';
 import {
 	HeaderActionButtons,
 	InteriorItems,
@@ -17,12 +17,14 @@ import {
 	DeskAndChair,
 	UpButton,
 	BottomActionButtons,
+	SoafStatusBadge,
 } from './_components';
 import { Interior, Position } from '@/types';
 import {
 	getPercentageToPosition,
 	getPositionToPercentage,
 } from '../utils/position';
+import { ActivityComponentType } from '@stackflow/react';
 
 const isAfter6PM = dayjs().hour() >= 18;
 const backgroundClass = isAfter6PM ? 'bg-[#BECFDC]' : 'bg-[#D3E6F4]';
@@ -44,12 +46,26 @@ const convertToPositionPayload = (
 	};
 };
 
-const MyHomeMainPage = () => {
-	const { interiorItems } = useInteriorItems();
+interface MyHomeProps {
+	userId: string;
+	userName: string;
+}
+
+const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
+	const { userId, userName } = params; // 상대방의 아이디와 닉네임
+
+	// api
+	const { interiorItems } = useInteriorItems(userId);
+	const { status, lastRequestDate } = useGetSoafRequestStatus(userId); // 소프 요청 status 상태 확인 용
+
+	// mutations
 	const { updatePositionMutation } = useInteriorPositionMutations();
+
+	// store
 	const { isOpen, handleClose } = useBottomTabStore();
 	const { width, height } = useWindowDimensions();
 
+	// state
 	const [isEdit, setIsEdit] = useState(false);
 	const [isDraggable, setIsDraggable] = useState<{ [key: string]: boolean }>(
 		{},
@@ -146,13 +162,27 @@ const MyHomeMainPage = () => {
 	return (
 		<PageLayout
 			header={{
-				title: isEdit ? <span className="head6b">방 꾸미기</span> : null,
+				title: isEdit ? (
+					<span className="head6b">방 꾸미기</span>
+				) : userId ? (
+					<span className="head6b">{userName}</span>
+				) : null,
 				leftSlot: {
-					component: isEdit ? <XButton onClick={handleCancelEdit} /> : null,
+					component: isEdit ? (
+						<XButton onClick={handleCancelEdit} />
+					) : userId ? (
+						<BackButton />
+					) : null,
 				},
 				rightSlot: {
 					component: isEdit ? (
 						<CheckButton onClick={handleSaveEdit} />
+					) : userId ? (
+						<SoafStatusBadge
+							receiverId={userId}
+							status={status}
+							date={lastRequestDate?.toDateString()}
+						/>
 					) : (
 						<HeaderActionButtons onBrushClick={handleStartEdit} />
 					),
@@ -163,6 +193,8 @@ const MyHomeMainPage = () => {
 			containerClassName={backgroundClass}
 		>
 			<InteriorItems
+				userId={userId}
+				userName={userName}
 				isEdit={isEdit}
 				isDraggable={isDraggable}
 				setIsDraggable={setIsDraggable}

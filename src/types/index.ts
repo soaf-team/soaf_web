@@ -8,3 +8,4 @@ export type * from './book';
 export type * from './youtube';
 export type * from './chat';
 export type * from './rating';
+export type * from './soaf';

@@ -10,6 +10,10 @@ import MainDayIcon from './main-day.svg';
 import MainNightIcon from './main-night.svg';
 import DiaryIcon from './diary.svg';
 import YoutubeIcon from './youtube.svg';
+import BooksOtherIcon from './books-other.svg';
+import MovieOtherIcon from './movie-other.svg';
+import MusicOtherIcon from './music-other.svg';
+import YoutubeOtherIcon from './youtube-other.svg';
 
 export {
 	BooksIcon,
@@ -24,4 +28,8 @@ export {
 	MainNightIcon,
 	DiaryIcon,
 	YoutubeIcon,
+	BooksOtherIcon,
+	MovieOtherIcon,
+	MusicOtherIcon,
+	YoutubeOtherIcon,
 };

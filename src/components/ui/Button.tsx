@@ -13,7 +13,7 @@ const buttonVariants = cva(
 				primary: 'bg-main_gradient text-white',
 				secondary: 'bg-gray50 text-black',
 				warn: 'bg-warn text-white',
-				ghost: 'bg-transparent tex-black',
+				ghost: 'bg-gray50 tex-black',
 			},
 			size: {
 				md: 'h-[52px] head6sb',

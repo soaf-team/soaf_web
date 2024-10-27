@@ -85,7 +85,12 @@ const MatchedUserPage = ({
 						<Button
 							disabled={selectedUser === null}
 							onClick={() =>
-								replace('MyHomeMainPage', { userId: selectedUser })
+								replace('MyHomeMainPage', {
+									userId: selectedUser,
+									userName: similarUser.find(
+										(user) => user.userId === selectedUser,
+									)?.userName,
+								})
 							}
 						>
 							방문하기

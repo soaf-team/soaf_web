@@ -4,3 +4,4 @@ export * from './userBlock';
 export * from './useReactionMutation';
 export * from './useMyHomeMutations';
 export * from './useInteriorPositionMutations';
+export * from './useSoafRequestMutations';

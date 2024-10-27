@@ -13,6 +13,7 @@ export const useUserProfileQuery = () => {
 	const { data: userProfile } = useSuspenseQuery<User>({
 		queryKey: [QUERY_KEY.userProfile],
 		queryFn: getUserProfile,
+		staleTime: Infinity,
 	});
 
 	return { userProfile };

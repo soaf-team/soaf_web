@@ -19,13 +19,15 @@ import { ReviewSection } from '../../_components';
 
 interface MyYoutubeDetailPageProps {
 	youtubeId: number;
+	userId: string;
+	userName: string;
 }
 
 const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 	params,
 }) => {
-	const { youtubeId } = params;
 	const { pop } = useFlow();
+	const { youtubeId, userId, userName } = params;
 	const { myYoutubeDetail, isFetching } = useMyYoutubeDetailQuery(youtubeId);
 	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
 		'youtube',
@@ -36,6 +38,8 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 
 	const [review, setReview] = useState(myYoutubeDetail?.data.review || '');
 	const [isEditing, setIsEditing] = useState(false);
+
+	const readOnly = !!(userId && !isEditing);
 
 	const handleUpdateSubmit = () => {
 		updateMyHomeMutation.mutate({
@@ -93,7 +97,11 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 								/>
 							),
 						},
-						title: <h1 className="head6b">나의 유튜브</h1>,
+						title: (
+							<h1 className="head6b">
+								{userId ? `${userName}님의` : '나의'} 유튜브
+							</h1>
+						),
 						rightSlot: {
 							component: isEditing ? (
 								<button
@@ -103,11 +111,11 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 								>
 									저장
 								</button>
-							) : (
+							) : !userId ? (
 								<PopoverTrigger ref={triggerRef}>
 									<DotVerticalButton />
 								</PopoverTrigger>
-							),
+							) : null,
 						},
 					}}
 				>
@@ -120,7 +128,7 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 								value={review}
 								placeholder="영상을 본 후 어떤 생각이 드셨나요?"
 								onChange={(value) => setReview(value)}
-								readOnly={!isEditing}
+								readOnly={readOnly}
 							/>
 						</div>
 					</div>

@@ -4,6 +4,8 @@ import { Interior as InteriorData, InteriorName, Position } from '@/types';
 import { Interior } from './Interior';
 
 interface Props {
+	userId: string;
+	userName: string;
 	isEdit: boolean;
 	isDraggable: { [key: string]: boolean };
 	setIsDraggable: React.Dispatch<
@@ -21,6 +23,8 @@ interface Props {
 }
 
 export const InteriorItems = ({
+	userId,
+	userName,
 	isEdit,
 	isDraggable,
 	setIsDraggable,
@@ -51,16 +55,28 @@ export const InteriorItems = ({
 	const handleHobbyItemClick = (name: string) => {
 		switch (name) {
 			case 'books':
-				push('MyBookPage', {});
+				push('MyBookPage', {
+					userId,
+					userName,
+				});
 				break;
 			case 'movie':
-				push('MyMoviePage', {});
+				push('MyMoviePage', {
+					userId,
+					userName,
+				});
 				break;
 			case 'music':
-				push('MyMusicPage', {});
+				push('MyMusicPage', {
+					userId,
+					userName,
+				});
 				break;
 			case 'youtube':
-				push('MyYoutubePage', {});
+				push('MyYoutubePage', {
+					userId,
+					userName,
+				});
 				break;
 			default:
 				break;

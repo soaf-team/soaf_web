@@ -8,7 +8,7 @@ interface Props {
 	type: 'search' | 'set' | 'detail';
 	onClick?: () => void;
 	onRatingChange?: (value: RatingType) => void;
-	isEditing?: boolean;
+	readonly?: boolean;
 }
 
 export const MovieItem = ({
@@ -16,7 +16,7 @@ export const MovieItem = ({
 	onClick,
 	movie,
 	onRatingChange,
-	isEditing,
+	readonly,
 }: Props) => {
 	const posterClass = cn({
 		'min-w-[92px] w-[92px] h-[134px] rounded-[8px]': type === 'search',
@@ -121,7 +121,7 @@ export const MovieItem = ({
 						<StarRating
 							size={24}
 							onChange={onRatingChange}
-							readonly={type === 'detail' && !isEditing}
+							readonly={type === 'detail' && readonly}
 							defaultValue={getRating()}
 						/>
 					)}
