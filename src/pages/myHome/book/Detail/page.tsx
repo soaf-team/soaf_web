@@ -16,6 +16,7 @@ import { BookItem } from '../_components/BookItem';
 import { overlay } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { ReviewSection } from '../../_components';
+import { BookContent, RatingType } from '@/types';
 
 interface MyBookDetailPageProps {
 	bookId: number;
@@ -38,12 +39,14 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 	const [detailData, setDetailData] = useState<{
 		review: string;
 		story: string;
+		rating: RatingType;
 	}>({
 		review: myBookDetail?.data.review || '',
 		story: myBookDetail?.data.content.story || '',
+		rating: myBookDetail?.data.content.rating || 0,
 	});
 
-	const handleDataChange = (key: string, value: string) => {
+	const handleDataChange = (key: string, value: string | RatingType) => {
 		setDetailData((prev) => ({ ...prev, [key]: value }));
 	};
 
@@ -51,6 +54,10 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 		updateMyHomeMutation.mutate({
 			userId: myBookDetail?.data.userId || '',
 			review: detailData.review,
+			content: {
+				story: detailData.story,
+				rating: detailData.rating,
+			} as BookContent,
 			category: 'book',
 		});
 
@@ -63,7 +70,10 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 				overlayKey="my-music-update-dialog"
 				title="수정을 취소할까요?"
 				description="수정한 내용은 저장되지 않아요"
-				resolve={() => setIsEditing(false)}
+				resolve={() => {
+					setIsEditing(false);
+					pop();
+				}}
 			/>,
 		);
 	};
@@ -88,6 +98,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 			setDetailData({
 				review: myBookDetail.data.review || '',
 				story: myBookDetail.data.content.story || '',
+				rating: myBookDetail.data.content.rating || 0,
 			});
 		}
 	}, [myBookDetail, isFetching]);
@@ -125,7 +136,12 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 					}}
 				>
 					<div className="flex flex-col gap-[16px]">
-						<BookItem type="detail" book={myBookDetail?.data} />
+						<BookItem
+							type="detail"
+							book={myBookDetail?.data}
+							isEditing={isEditing}
+							onRatingChange={(value) => handleDataChange('rating', value)}
+						/>
 
 						<div className="flex flex-col gap-[16px]">
 							<ReviewSection

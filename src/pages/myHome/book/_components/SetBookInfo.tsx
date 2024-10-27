@@ -115,7 +115,7 @@ export const SetBookInfo = ({ onPrevStep, bookId }: Props) => {
 				<ReviewSection
 					title="줄거리"
 					placeholder="어떤 내용의 책인지 간략하게 소개해주세요."
-					value={bookData.story}
+					value={book.story || bookData.story}
 					onChange={(value) => handleDataChange('story', value)}
 					maxLength={500}
 				/>

@@ -1,15 +1,23 @@
 import default_cover from '@/assets/icons/my-home/books-default.svg';
 import { StarRating } from '@/components';
-import { Document, MyBook } from '@/types';
+import { Document, MyBook, RatingType } from '@/types';
 import { cn } from '@/utils';
 
 interface Props {
 	type?: 'search' | 'set' | 'detail';
 	onClick?: () => void;
 	book: Document | MyBook;
+	isEditing?: boolean;
+	onRatingChange?: (rating: RatingType) => void;
 }
 
-export const BookItem = ({ type = 'search', onClick, book }: Props) => {
+export const BookItem = ({
+	type = 'search',
+	onClick,
+	book,
+	isEditing,
+	onRatingChange,
+}: Props) => {
 	const posterClass = cn({
 		'min-w-[92px] w-[92px] h-[134px] rounded-[8px]': type === 'search',
 		'min-w-[85px] w-[85px] h-[124px] rounded-[8px]': type === 'set',
@@ -103,8 +111,9 @@ export const BookItem = ({ type = 'search', onClick, book }: Props) => {
 					{type === 'detail' && (
 						<StarRating
 							size={24}
-							onChange={() => {}}
+							onChange={onRatingChange}
 							defaultValue={getRating()}
+							readonly={type === 'detail' && !isEditing}
 						/>
 					)}
 				</div>
