@@ -43,7 +43,9 @@ const MyBookPage: ActivityComponentType<Props> = ({ params }) => {
 					<h1 className="head6b">{userId ? `${userName}님의` : '나의'} 도서</h1>
 				),
 				rightSlot: {
-					component: <PlusButton onClick={handleOpenOverlay} />,
+					component: !userId ? (
+						<PlusButton onClick={handleOpenOverlay} />
+					) : null,
 				},
 			}}
 		>

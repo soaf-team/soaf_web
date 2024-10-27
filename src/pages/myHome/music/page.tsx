@@ -44,7 +44,9 @@ const MyMusicPage: ActivityComponentType<Props> = ({ params }) => {
 					<h1 className="head6b">{userId ? `${userName}님의` : '나의'} 음악</h1>
 				),
 				rightSlot: {
-					component: <PlusButton onClick={handleOpenOverlay} />,
+					component: !userId ? (
+						<PlusButton onClick={handleOpenOverlay} />
+					) : null,
 				},
 			}}
 		>

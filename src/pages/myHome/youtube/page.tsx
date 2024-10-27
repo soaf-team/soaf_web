@@ -45,7 +45,9 @@ const MyYoutubePage: ActivityComponentType<Props> = ({ params }) => {
 					</h1>
 				),
 				rightSlot: {
-					component: <PlusButton onClick={handleOpenOverlay} />,
+					component: !userId ? (
+						<PlusButton onClick={handleOpenOverlay} />
+					) : null,
 				},
 			}}
 		>
