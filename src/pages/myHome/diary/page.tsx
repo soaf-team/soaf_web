@@ -1,10 +1,4 @@
-import {
-	AsyncBoundary,
-	BackButton,
-	Button,
-	NonDataFallback,
-	PageLayout,
-} from '@/components';
+import { BackButton, Button, NonDataFallback, PageLayout } from '@/components';
 import { useMyDiaryListQuery } from '@/hooks';
 import { useFlow } from '@/stackflow';
 import { useState } from 'react';
@@ -68,9 +62,7 @@ const MyDiaryPage: ActivityComponentType = () => {
 						</div>
 					</>
 				) : (
-					<AsyncBoundary>
-						<DiaryList diariesByMonth={diaries} />
-					</AsyncBoundary>
+					<DiaryList diariesByMonth={diaries} />
 				)}
 			</div>
 		</PageLayout>
