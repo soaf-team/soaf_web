@@ -14,10 +14,15 @@ import {
 	WindowDayIcon,
 	WindowNightIcon,
 	YoutubeIcon,
+	BooksOtherIcon,
+	MovieOtherIcon,
+	MusicOtherIcon,
+	YoutubeOtherIcon,
 } from '@/assets';
 
 interface InteriorProps
 	extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onDrag'> {
+	userId: string;
 	name: string;
 	type: InteriorType;
 	isEdit: boolean;
@@ -41,8 +46,21 @@ const images: { [key: string]: string } = {
 	youtube: YoutubeIcon,
 };
 
+const otherUserImages: { [key: string]: string } = {
+	books: BooksOtherIcon,
+	movie: MovieOtherIcon,
+	music: MusicOtherIcon,
+	picture: PictureIcon,
+	plant: PlantIcon,
+	sofa: SofaIcon,
+	windowDay: WindowDayIcon,
+	windowNight: WindowNightIcon,
+	youtube: YoutubeOtherIcon,
+};
+
 export const Interior = (props: InteriorProps) => {
 	const {
+		userId,
 		name,
 		isEdit,
 		isDraggable,
@@ -56,7 +74,9 @@ export const Interior = (props: InteriorProps) => {
 		...rest
 	} = props;
 
-	const imageSrc = images[name as keyof typeof images];
+	const imageSrc = userId
+		? otherUserImages[name as keyof typeof otherUserImages]
+		: images[name as keyof typeof images];
 
 	const content = (
 		<div

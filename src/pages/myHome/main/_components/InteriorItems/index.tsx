@@ -4,6 +4,7 @@ import { Interior as InteriorData, InteriorName, Position } from '@/types';
 import { Interior } from './Interior';
 
 interface Props {
+	userId: string;
 	isEdit: boolean;
 	isDraggable: { [key: string]: boolean };
 	setIsDraggable: React.Dispatch<
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export const InteriorItems = ({
+	userId,
 	isEdit,
 	isDraggable,
 	setIsDraggable,
@@ -90,6 +92,7 @@ export const InteriorItems = ({
 				.map((item) => {
 					return (
 						<Interior
+							userId={userId}
 							key={item.name}
 							{...item}
 							isEdit={isEdit}
