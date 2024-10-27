@@ -38,7 +38,7 @@ export const DiaryCard = ({
 		>
 			<div className="flex flex-col justify-center items-center w-[40px] min-w-[40px] h-[40px] bg-gray50 px-[10px] py-[6px] rounded-lg">
 				<p className="text-[16px] text-gray400 font-black leading-[20px]">
-					{diary.date.split('.')[2]}
+					{dayjs(diary.date).format('DD')}
 				</p>
 				<p className="text-[10px] text-gray200 leading-[12px] font-semibold">
 					{dayjs(diary.date).format('ddd')}
