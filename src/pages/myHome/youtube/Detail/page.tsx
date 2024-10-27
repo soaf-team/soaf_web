@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMyYoutubeDetailQuery } from '@/hooks';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { ActivityComponentType } from '@stackflow/react';
 import {
 	BackButton,
@@ -27,7 +27,7 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 	const { youtubeId } = params;
 	const { pop } = useFlow();
 	const { myYoutubeDetail, isFetching } = useMyYoutubeDetailQuery(youtubeId);
-	const { updateMyHomeMutation, deleteMyHomeMutation } = myHomeMutations(
+	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
 		'youtube',
 		youtubeId,
 	);

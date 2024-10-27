@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMyBookDetailQuery } from '@/hooks';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { ActivityComponentType } from '@stackflow/react';
 import {
 	BackButton,
@@ -27,7 +27,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 	const { bookId } = params;
 	const { pop } = useFlow();
 	const { myBookDetail, isFetching } = useMyBookDetailQuery(bookId);
-	const { updateMyHomeMutation, deleteMyHomeMutation } = myHomeMutations(
+	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
 		'book',
 		bookId,
 	);

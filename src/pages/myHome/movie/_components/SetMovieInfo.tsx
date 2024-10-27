@@ -3,7 +3,7 @@ import { useMovieDetailQuery, useUserProfileQuery } from '@/hooks';
 import { MovieItem } from './MovieItem';
 import { BackButton, Header, StarRating } from '@/components';
 import { ReviewSection } from '../../_components';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { overlay } from '@/libs';
 import { MovieContent, RatingType } from '@/types';
 
@@ -59,7 +59,7 @@ export const SetMovieInfo = ({ onPrevStep, movieId }: Props) => {
 	});
 
 	const { userProfile } = useUserProfileQuery();
-	const { createMyHomeMutation } = myHomeMutations('movie');
+	const { createMyHomeMutation } = useMyHomeMutations('movie');
 
 	const handleDataChange = (
 		key: keyof typeof movieData,

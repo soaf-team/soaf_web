@@ -2,7 +2,7 @@ import { BackButton, Header } from '@/components';
 import { YoutubeItemProps, YoutubeItem } from './YoutubeItem';
 import { ReviewSection } from '../../_components';
 import { useUserProfileQuery } from '@/hooks';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { overlay } from '@/libs';
 import { useState } from 'react';
 import { MyYoutube } from '@/types';
@@ -14,7 +14,7 @@ interface Props {
 
 export const SetYoutubeInfo = ({ onPrevStep, youtubeInfo }: Props) => {
 	const { userProfile } = useUserProfileQuery();
-	const { createMyHomeMutation } = myHomeMutations('youtube');
+	const { createMyHomeMutation } = useMyHomeMutations('youtube');
 
 	const [review, setReview] = useState('');
 

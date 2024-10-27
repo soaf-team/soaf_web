@@ -66,7 +66,7 @@ const getQueryKeyByCategory = (
 	}
 };
 
-export const myHomeMutations = (
+export const useMyHomeMutations = (
 	category: MyHomePayloadCategory,
 	id?: number,
 ) => {
@@ -123,6 +123,7 @@ export const myHomeMutations = (
 			);
 		},
 		onSuccess: (_, variables) => {
+			console.log('variables', variables);
 			queryClient.invalidateQueries({
 				queryKey: [getQueryKeyByCategory(variables.category, 'detail')],
 			});

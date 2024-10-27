@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMyMusicDetailQuery } from '@/hooks';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { ActivityComponentType } from '@stackflow/react';
 import {
 	BackButton,
@@ -28,7 +28,7 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 	const { musicId } = params;
 	const { pop } = useFlow();
 	const { myMusicDetail, isFetching } = useMyMusicDetailQuery(musicId);
-	const { updateMyHomeMutation, deleteMyHomeMutation } = myHomeMutations(
+	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
 		'music',
 		musicId,
 	);

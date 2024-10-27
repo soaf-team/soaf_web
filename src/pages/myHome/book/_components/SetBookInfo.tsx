@@ -4,7 +4,7 @@ import { BackButton, Header, StarRating } from '@/components';
 import { ReviewSection } from '../../_components';
 import { useEffect, useState } from 'react';
 import { BookContent, RatingType } from '@/types';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { overlay } from '@/libs';
 
 interface Props {
@@ -17,7 +17,7 @@ export const SetBookInfo = ({ onPrevStep, bookId }: Props) => {
 		id: bookId.split(' ')[0] || bookId.split(' ')[1],
 	});
 	const { userProfile } = useUserProfileQuery();
-	const { createMyHomeMutation } = myHomeMutations('book');
+	const { createMyHomeMutation } = useMyHomeMutations('book');
 
 	const [book, setBook] = useState<Omit<BookContent, 'rating'>>({
 		imageUrl: '',
