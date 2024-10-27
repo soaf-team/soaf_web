@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import {
@@ -17,6 +17,7 @@ import {
 } from '@/assets';
 import { ReactionKeyType } from '@/types';
 import { QUOTES } from '@/constants/quotes';
+import { createPortal } from 'react-dom';
 
 type DiaryReactionProps = {
 	reactions: {
@@ -134,24 +135,28 @@ export const DiaryReaction = ({
 				)}
 			</div>
 
-			<AnimatePresence>
-				{isOpened && (
-					<ReactionCloud
-						isVisible={isOpened}
-						onCloudClose={() => setIsOpened(false)}
-						handleReactionClick={handleReactionClick}
-					/>
-				)}
-			</AnimatePresence>
+			<Portal>
+				<AnimatePresence mode="wait">
+					{isOpened && (
+						<ReactionCloud
+							onCloudClose={() => setIsOpened(false)}
+							handleReactionClick={handleReactionClick}
+						/>
+					)}
+				</AnimatePresence>
+			</Portal>
 		</div>
 	);
+};
+
+const Portal = ({ children }: PropsWithChildren) => {
+	return createPortal(children, document.body);
 };
 
 const ReactionCloud = ({
 	onCloudClose,
 	handleReactionClick,
 }: {
-	isVisible: boolean;
 	onCloudClose: () => void;
 	handleReactionClick: (reactionType: ReactionKeyType) => void;
 }) => {
@@ -177,6 +182,7 @@ const ReactionCloud = ({
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
+				transition={{ duration: 0.2 }}
 			/>
 			<motion.div
 				className="absolute flex bottom-[106px] left-[24px] m-auto w-[288px] h-[133px] z-[10000]"
