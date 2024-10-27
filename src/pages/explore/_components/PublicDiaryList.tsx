@@ -16,7 +16,7 @@ type DescriptionState = 'error' | 'noData' | 'noPublicData';
 
 type PublicDiaryListProps = {
 	publicDiaryList: (Omit<DiaryType, 'isPublic'> & { isPublic: true })[];
-	selectedIds: string[];
+	selectedId: string;
 	handleDiarySelect: (index: number) => void;
 	isNoAnyDiary: boolean;
 	isLoading: boolean;
@@ -25,7 +25,7 @@ type PublicDiaryListProps = {
 
 export const PublicDiaryList = ({
 	publicDiaryList,
-	selectedIds,
+	selectedId,
 	handleDiarySelect,
 	isNoAnyDiary,
 	isLoading,
@@ -53,7 +53,7 @@ export const PublicDiaryList = ({
 		<div className="flex flex-col flex-1 items-center gap-[12px] mt-[24px] w-full px-[2px]">
 			{isLoading
 				? Array.from({ length: 5 }).map((_, index) => (
-						<DiaryCardSkeleton key={index} isCheckable />
+						<DiaryCardSkeleton key={index} isCheckable shadow />
 					))
 				: publicDiaryList.map((diary: DiaryType, index: number) => {
 						return (
@@ -61,7 +61,7 @@ export const PublicDiaryList = ({
 								key={diary.id}
 								diary={diary}
 								isCheckable
-								isSelected={selectedIds.includes(diary.id)}
+								isSelected={selectedId === diary.id}
 								onClick={() => handleDiarySelect(index)}
 								className={
 									index === publicDiaryList.length - 1 ? 'mb-[100px]' : ''

@@ -1,4 +1,4 @@
-import { Button, NonDataFallback, PageLayout } from '@/components';
+import { Button, PageLayout } from '@/components';
 import { useMyDiaryListQuery, useToast } from '@/hooks';
 import { useFlow } from '@/stackflow';
 import { DiaryType } from '@/types';
@@ -32,17 +32,15 @@ const SoafExplorePage = () => {
 		(diary) => diary.isPublic,
 	) as (Omit<DiaryType, 'isPublic'> & { isPublic: true })[];
 
-	const [selectedIds, setSelectedIds] = useState<string[]>([]);
+	const [selectedId, setSelectedId] = useState<string>('');
 
 	const handleDiarySelect = (index: number) => {
 		const diaryId = currentUserDiaryList[index].id;
-		setSelectedIds((prev) => {
-			if (prev.includes(diaryId)) {
-				return prev.filter((id) => id !== diaryId);
-			} else {
-				return [...prev, diaryId];
-			}
-		});
+		if (selectedId === diaryId) {
+			setSelectedId('');
+		} else {
+			setSelectedId(diaryId);
+		}
 	};
 
 	const handleButtonClick = async (
@@ -96,7 +94,7 @@ const SoafExplorePage = () => {
 
 				<PublicDiaryList
 					publicDiaryList={publicDiaryList}
-					selectedIds={selectedIds}
+					selectedId={selectedId}
 					handleDiarySelect={handleDiarySelect}
 					isNoAnyDiary={currentUserDiaryList.length === 0}
 					isLoading={isLoading}
