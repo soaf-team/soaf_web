@@ -48,6 +48,7 @@ const ChatRoomPage = ({
 				},
 				title: nickname ?? '알수없음',
 				rightSlot: {
+					// @ts-expect-error
 					component: <MyHomeButton userId="1" />,
 				},
 			}}
