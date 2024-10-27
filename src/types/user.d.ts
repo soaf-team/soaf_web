@@ -1,7 +1,10 @@
 export interface User {
 	id: string;
 	name: string;
+	email: string;
 	percent: number;
+	alarm: boolean;
+	sns: string;
 	status: string | null;
 }
 
