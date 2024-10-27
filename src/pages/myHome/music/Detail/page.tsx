@@ -91,41 +91,45 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 			<Popover>
 				<PageLayout
 					header={{
-						leftSlot: (
-							<BackButton onClick={isEditing ? handleCancelClick : undefined} />
-						),
+						leftSlot: {
+							component: (
+								<BackButton
+									onClick={isEditing ? handleCancelClick : undefined}
+								/>
+							),
+						},
 						title: <h1 className="head6b">나의 음악</h1>,
-						rightSlot: isEditing ? (
-							<button
-								type="submit"
-								className="text-black label2"
-								onClick={handleUpdateSubmit}
-							>
-								저장
-							</button>
-						) : (
-							<PopoverTrigger ref={triggerRef}>
-								<DotVerticalButton />
-							</PopoverTrigger>
-						),
+						rightSlot: {
+							component: isEditing ? (
+								<button
+									type="submit"
+									className="text-black label2"
+									onClick={handleUpdateSubmit}
+								>
+									저장
+								</button>
+							) : (
+								<PopoverTrigger ref={triggerRef}>
+									<DotVerticalButton />
+								</PopoverTrigger>
+							),
+						},
 					}}
 				>
-					<div className="pt-[56px]">
-						<div className="flex flex-col gap-[16px]">
-							{isFetching ? (
-								<MusicItemSkeleton type="detail" />
-							) : (
-								<MusicItem type="detail" music={myMusicDetail?.data} />
-							)}
+					<div className="flex flex-col gap-[16px]">
+						{isFetching ? (
+							<MusicItemSkeleton type="detail" />
+						) : (
+							<MusicItem type="detail" music={myMusicDetail?.data} />
+						)}
 
-							<div className="flex flex-col gap-[16px]">
-								<ReviewSection
-									title="감상평"
-									value={review}
-									onChange={handleReviewChange}
-									readOnly={!isEditing}
-								/>
-							</div>
+						<div className="flex flex-col gap-[16px]">
+							<ReviewSection
+								title="감상평"
+								value={review}
+								onChange={handleReviewChange}
+								readOnly={!isEditing}
+							/>
 						</div>
 					</div>
 				</PageLayout>

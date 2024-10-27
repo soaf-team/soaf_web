@@ -55,12 +55,16 @@ const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 		<Popover>
 			<PageLayout
 				header={{
-					leftSlot: <BackButton />,
-					rightSlot: (
-						<PopoverTrigger ref={triggerRef}>
-							<DotVerticalButton onClick={() => {}} />
-						</PopoverTrigger>
-					),
+					leftSlot: {
+						component: <BackButton />,
+					},
+					rightSlot: {
+						component: (
+							<PopoverTrigger ref={triggerRef}>
+								<DotVerticalButton onClick={() => {}} />
+							</PopoverTrigger>
+						),
+					},
 				}}
 			>
 				<div className="flex flex-col justify-between h-full">

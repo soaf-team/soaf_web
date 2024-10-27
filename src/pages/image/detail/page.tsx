@@ -16,7 +16,9 @@ const ImageDetailPage: ActivityComponentType<ImageDetailPageParams> = ({
 	return (
 		<PageLayout
 			header={{
-				rightSlot: <XButton />,
+				rightSlot: {
+					component: <XButton />,
+				},
 			}}
 			className="px-0 flex flex-col items-center pb-[56px]"
 		>

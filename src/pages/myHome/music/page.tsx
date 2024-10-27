@@ -25,12 +25,16 @@ const MyMusicPage = () => {
 	return (
 		<PageLayout
 			header={{
-				leftSlot: <BackButton />,
+				leftSlot: {
+					component: <BackButton />,
+				},
 				title: <h1 className="head6b">나의 음악</h1>,
-				rightSlot: <PlusButton onClick={handleOpenOverlay} />,
+				rightSlot: {
+					component: <PlusButton onClick={handleOpenOverlay} />,
+				},
 			}}
 		>
-			<div className="flex flex-col pt-[56px]">
+			<div className="flex flex-col">
 				{isFetching ? (
 					<>
 						{[1, 2, 3, 4, 5].map((index) => (

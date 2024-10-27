@@ -40,7 +40,9 @@ const MyDiaryPage: ActivityComponentType = () => {
 		<PageLayout
 			header={{
 				title: <span className="head6b">나의 일기</span>,
-				leftSlot: <BackButton />,
+				leftSlot: {
+					component: <BackButton />,
+				},
 			}}
 		>
 			<div className="flex flex-col items-center gap-[22px]">

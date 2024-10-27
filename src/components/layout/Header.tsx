@@ -2,8 +2,14 @@ import { cn } from '@/utils';
 
 type HeaderProps = {
 	children: React.ReactNode;
-	leftSlot?: React.ReactNode;
-	rightSlot?: React.ReactNode;
+	leftSlot?: {
+		component?: React.ReactNode;
+		className?: string;
+	};
+	rightSlot?: {
+		component?: React.ReactNode;
+		className?: string;
+	};
 	className?: string;
 };
 
@@ -18,14 +24,24 @@ export const Header = (props: HeaderProps) => {
 			])}
 		>
 			{leftSlot && (
-				<div className="absolute left-[18px] top-1/2 translate-y-[-50%]">
-					{leftSlot}
+				<div
+					className={cn([
+						'absolute left-[18px] top-1/2 translate-y-[-50%]',
+						leftSlot.className,
+					])}
+				>
+					{leftSlot.component}
 				</div>
 			)}
 			{children}
 			{rightSlot && (
-				<div className="absolute right-[18px] top-1/2 translate-y-[-50%]">
-					{rightSlot}
+				<div
+					className={cn([
+						'absolute right-[18px] top-1/2 translate-y-[-50%]',
+						rightSlot.className,
+					])}
+				>
+					{rightSlot.component}
 				</div>
 			)}
 		</div>

@@ -99,46 +99,50 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 			<Popover>
 				<PageLayout
 					header={{
-						leftSlot: (
-							<BackButton onClick={isEditing ? handleCancelClick : undefined} />
-						),
+						leftSlot: {
+							component: (
+								<BackButton
+									onClick={isEditing ? handleCancelClick : undefined}
+								/>
+							),
+						},
 						title: <h1 className="head6b">나의 도서</h1>,
-						rightSlot: isEditing ? (
-							<button
-								type="submit"
-								className="text-black label2"
-								onClick={handleUpdateSubmit}
-							>
-								저장
-							</button>
-						) : (
-							<PopoverTrigger ref={triggerRef}>
-								<DotVerticalButton />
-							</PopoverTrigger>
-						),
+						rightSlot: {
+							component: isEditing ? (
+								<button
+									type="submit"
+									className="text-black label2"
+									onClick={handleUpdateSubmit}
+								>
+									저장
+								</button>
+							) : (
+								<PopoverTrigger ref={triggerRef}>
+									<DotVerticalButton />
+								</PopoverTrigger>
+							),
+						},
 					}}
 				>
-					<div className="pt-[56px]">
+					<div className="flex flex-col gap-[16px]">
+						<BookItem type="detail" book={myBookDetail?.data} />
+
 						<div className="flex flex-col gap-[16px]">
-							<BookItem type="detail" book={myBookDetail?.data} />
+							<ReviewSection
+								title="감상평"
+								value={detailData.review}
+								placeholder="책을 읽은 후 어떤 생각이 드셨나요?"
+								onChange={(value) => handleDataChange('review', value)}
+								readOnly={!isEditing}
+							/>
 
-							<div className="flex flex-col gap-[16px]">
-								<ReviewSection
-									title="감상평"
-									value={detailData.review}
-									placeholder="책을 읽은 후 어떤 생각이 드셨나요?"
-									onChange={(value) => handleDataChange('review', value)}
-									readOnly={!isEditing}
-								/>
-
-								<ReviewSection
-									title="줄거리"
-									placeholder="어떤 내용의 책인지 간략하게 소개해주세요."
-									value={detailData.story}
-									onChange={(value) => handleDataChange('story', value)}
-									readOnly={!isEditing}
-								/>
-							</div>
+							<ReviewSection
+								title="줄거리"
+								placeholder="어떤 내용의 책인지 간략하게 소개해주세요."
+								value={detailData.story}
+								onChange={(value) => handleDataChange('story', value)}
+								readOnly={!isEditing}
+							/>
 						</div>
 					</div>
 				</PageLayout>

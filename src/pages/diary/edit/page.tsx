@@ -74,12 +74,16 @@ const EditDiaryPage: ActivityComponentType<EditDiaryPageParams> = ({
 		<Dialog>
 			<PageLayout
 				header={{
-					leftSlot: <BackButton />,
-					rightSlot: (
-						<DialogTrigger>
-							<XButton onClick={() => {}} />
-						</DialogTrigger>
-					),
+					leftSlot: {
+						component: <BackButton />,
+					},
+					rightSlot: {
+						component: (
+							<DialogTrigger>
+								<XButton onClick={() => {}} />
+							</DialogTrigger>
+						),
+					},
 				}}
 			>
 				<DiaryForm

@@ -147,12 +147,16 @@ const MyHomeMainPage = () => {
 		<PageLayout
 			header={{
 				title: isEdit ? <span className="head6b">방 꾸미기</span> : null,
-				leftSlot: isEdit ? <XButton onClick={handleCancelEdit} /> : null,
-				rightSlot: isEdit ? (
-					<CheckButton onClick={handleSaveEdit} />
-				) : (
-					<HeaderActionButtons onBrushClick={handleStartEdit} />
-				),
+				leftSlot: {
+					component: isEdit ? <XButton onClick={handleCancelEdit} /> : null,
+				},
+				rightSlot: {
+					component: isEdit ? (
+						<CheckButton onClick={handleSaveEdit} />
+					) : (
+						<HeaderActionButtons onBrushClick={handleStartEdit} />
+					),
+				},
 				headerClass: backgroundClass,
 			}}
 			className="relative"

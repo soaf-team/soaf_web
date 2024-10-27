@@ -125,18 +125,24 @@ export const SetMovieInfo = ({ onPrevStep, movieId }: Props) => {
 	return (
 		<>
 			<Header
-				className="rounded-t-[28px] mt-[24px]"
-				leftSlot={<BackButton onClick={onPrevStep} />}
-				rightSlot={
-					<button type="submit" className="label2" onClick={handleSubmit}>
-						저장
-					</button>
-				}
+				className="rounded-t-[28px]"
+				leftSlot={{
+					component: <BackButton onClick={onPrevStep} />,
+					className: 'left-0',
+				}}
+				rightSlot={{
+					component: (
+						<button type="submit" className="label2" onClick={handleSubmit}>
+							저장
+						</button>
+					),
+					className: 'right-0',
+				}}
 			>
 				<h1 className="head6b">새로운 리뷰</h1>
 			</Header>
 
-			<div className="flex justify-center pt-[58px] pb-[16px]">
+			<div className="flex justify-center pb-[16px]">
 				<StarRating
 					size={40}
 					onChange={(value) => handleDataChange('rating', value)}

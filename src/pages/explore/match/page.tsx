@@ -38,8 +38,12 @@ const MatchedUserPage = ({
 	return (
 		<PageLayout
 			header={{
-				leftSlot: <LeftIcon />,
-				rightSlot: <RightIcon />,
+				leftSlot: {
+					component: <LeftIcon />,
+				},
+				rightSlot: {
+					component: <RightIcon />,
+				},
 			}}
 			className="overflow-y-auto"
 		>

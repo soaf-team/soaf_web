@@ -45,18 +45,24 @@ export const SetMusicInfo = ({ onPrevStep, music }: Props) => {
 	return (
 		<>
 			<Header
-				className="rounded-t-[28px] mt-[24px]"
-				leftSlot={<BackButton onClick={onPrevStep} />}
-				rightSlot={
-					<button type="submit" className="label2" onClick={handleSubmit}>
-						저장
-					</button>
-				}
+				className="rounded-t-[28px]"
+				leftSlot={{
+					component: <BackButton onClick={onPrevStep} />,
+					className: 'left-0',
+				}}
+				rightSlot={{
+					component: (
+						<button type="submit" className="label2" onClick={handleSubmit}>
+							저장
+						</button>
+					),
+					className: 'right-0',
+				}}
 			>
 				<h1 className="head6sb">나의 음악</h1>
 			</Header>
 
-			<div className="flex flex-col gap-[32px] pt-[58px]">
+			<div className="flex flex-col gap-[32px]">
 				<MusicItem type="detail" music={musicInfo} />
 
 				<ReviewSection

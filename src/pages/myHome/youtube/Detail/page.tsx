@@ -86,38 +86,42 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 			<Popover>
 				<PageLayout
 					header={{
-						leftSlot: (
-							<BackButton onClick={isEditing ? handleCancelClick : undefined} />
-						),
+						leftSlot: {
+							component: (
+								<BackButton
+									onClick={isEditing ? handleCancelClick : undefined}
+								/>
+							),
+						},
 						title: <h1 className="head6b">나의 유튜브</h1>,
-						rightSlot: isEditing ? (
-							<button
-								type="submit"
-								className="text-black label2"
-								onClick={handleUpdateSubmit}
-							>
-								저장
-							</button>
-						) : (
-							<PopoverTrigger ref={triggerRef}>
-								<DotVerticalButton />
-							</PopoverTrigger>
-						),
+						rightSlot: {
+							component: isEditing ? (
+								<button
+									type="submit"
+									className="text-black label2"
+									onClick={handleUpdateSubmit}
+								>
+									저장
+								</button>
+							) : (
+								<PopoverTrigger ref={triggerRef}>
+									<DotVerticalButton />
+								</PopoverTrigger>
+							),
+						},
 					}}
 				>
-					<div className="pt-[56px]">
-						<div className="flex flex-col gap-[16px]">
-							<YoutubeItem type="detail" youtube={myYoutubeDetail?.data} />
+					<div className="flex flex-col gap-[16px]">
+						<YoutubeItem type="detail" youtube={myYoutubeDetail?.data} />
 
-							<div className="flex flex-col gap-[16px]">
-								<ReviewSection
-									title="감상평"
-									value={review}
-									placeholder="영상을 본 후 어떤 생각이 드셨나요?"
-									onChange={(value) => setReview(value)}
-									readOnly={!isEditing}
-								/>
-							</div>
+						<div className="flex flex-col gap-[16px]">
+							<ReviewSection
+								title="감상평"
+								value={review}
+								placeholder="영상을 본 후 어떤 생각이 드셨나요?"
+								onChange={(value) => setReview(value)}
+								readOnly={!isEditing}
+							/>
 						</div>
 					</div>
 				</PageLayout>
