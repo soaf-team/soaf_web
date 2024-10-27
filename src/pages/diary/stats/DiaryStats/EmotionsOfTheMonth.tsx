@@ -10,11 +10,14 @@ type EmotionsOfTheMonthProps = {
 };
 
 export const EmotionsOfTheMonth = ({ data }: EmotionsOfTheMonthProps) => {
+	const total = Object.values(data).reduce((acc, curr) => acc + curr, 0);
+
 	return (
 		<DiaryStatsCard title="이 달의 감정">
 			<div className="flex flex-col gap-[16px] items-center">
-				{(Object.entries(data) as [EmotionKey, number][]).map(
-					([emotion, count]) => {
+				{(Object.entries(data) as [EmotionKey, number][])
+					.slice(0, 3)
+					.map(([emotion, count]) => {
 						return (
 							<div key={emotion} className="flex gap-[12px] w-full">
 								<img
@@ -25,7 +28,9 @@ export const EmotionsOfTheMonth = ({ data }: EmotionsOfTheMonthProps) => {
 								<div className="flex flex-col gap-[4px] flex-1 align-start">
 									<p className="label3">
 										{EMOTIONS[emotion].noun}{' '}
-										<span className="body3 text-gray200">{count}개 ()</span>
+										<span className="body3 text-gray200">
+											{count}개 ({Math.round((count / total) * 100)}%)
+										</span>
 									</p>
 									<div
 										className={cn([
@@ -36,8 +41,7 @@ export const EmotionsOfTheMonth = ({ data }: EmotionsOfTheMonthProps) => {
 								</div>
 							</div>
 						);
-					},
-				)}
+					})}
 			</div>
 		</DiaryStatsCard>
 	);

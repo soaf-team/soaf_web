@@ -8,6 +8,7 @@ export const QUERY_KEY = {
 
 	DIARY: 'diary',
 	DIARY_DETAIL: 'diaryDetail',
+	DIARY_STATS: 'diaryStats',
 	MY_DIARY: 'myDiary',
 	MY_DIARY_BY_MONTH: 'myDiaryByMonth',
 

@@ -8,10 +8,15 @@ type MoodDistributionProps = {
 	};
 };
 
+const getTotal = (data: { [key: string]: number }) => {
+	return Object.values(data).reduce((acc, curr) => acc + curr, 0);
+};
+
 export const MoodDistribution = ({ data }: MoodDistributionProps) => {
+	const total = getTotal(data);
 	const barChartData = Object.entries(data).map(([level, ratio], index) => ({
 		level,
-		ratio,
+		ratio: (ratio / total) * 100,
 		color: MOOD_RATING_COLORS[index],
 	}));
 

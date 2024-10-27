@@ -27,20 +27,32 @@ ChartJS.register(
 
 type MoodFlowProps = {
 	data: {
-		date: string;
-		rating: MoodRating;
+		date: number;
+		emotions: {
+			[key in MoodRating]: number;
+		};
 	}[];
+	currentMonth: number;
 };
 
-export const MoodFlow = ({ data }: MoodFlowProps) => {
-	const labelData = data.map((e) => e.date);
-	const moodData = data.map((e) => e.rating);
+export const MoodFlow = ({ data, currentMonth }: MoodFlowProps) => {
+	const labelData = data.map((e) => {
+		return `${currentMonth}-${e.date}`;
+	});
+	const moodData = data.map((e) => {
+		const value = Object.values(e.emotions).reduce(
+			(acc, curr) => acc + curr,
+			0,
+		);
+		return value === 0 ? null : value;
+	});
 
 	const chartData: ChartData<'line', number[], string> = {
 		labels: labelData,
 		datasets: [
 			{
 				label: 'Contributions',
+				// @ts-expect-error
 				data: moodData,
 				borderColor: 'rgba(87, 194, 255, 1)',
 				borderWidth: 2,
@@ -94,8 +106,8 @@ const CHART_OPTIONS: ChartOptions<'line'> = {
 				maxTicksLimit: 7,
 				callback: function (value, index, values) {
 					const dateLabel = this.getLabelForValue(value as number);
-					const currentMonth = dateLabel.split('-')[1].replace(/^0+/, '');
-					const currentDay = dateLabel.split('-')[2].replace(/^0+/, '');
+					const currentMonth = dateLabel.split('-')[0].replace(/^0+/, '');
+					const currentDay = dateLabel.split('-')[1].replace(/^0+/, '');
 					const isLastLabel = index === values.length - 1;
 
 					if (

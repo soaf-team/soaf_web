@@ -1,68 +1,36 @@
-import { MoodRating } from '@/types';
 import { MoodFlow } from './MoodFlow';
 import { MoodDistribution } from './MoodDistribution';
 import { EmotionsOfTheMonth } from './EmotionsOfTheMonth';
+import { useDiaryStatsQuery } from '@/hooks/queries/diary/useDiaryStatsQuery';
 
 type DiaryStatsProps = {
 	currentDate: Date;
 };
 
 export const DiaryStats = ({ currentDate }: DiaryStatsProps) => {
+	const { data } = useDiaryStatsQuery(
+		currentDate.getFullYear(),
+		currentDate.getMonth() + 1,
+	);
+
+	const totalCoreEmotions = Object.assign(
+		{ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+		data.totalCoreEmotions,
+	);
+
+	const sortedDetailedEmotionList = Object.entries(
+		data.totalDetailedEmotions,
+	).sort(([, countA], [, countB]) => countB - countA);
+	const sortedDetailedEmotions = Object.fromEntries(sortedDetailedEmotionList);
+
 	return (
 		<>
-			<MoodFlow data={MOOD_FLOW_DATA} />
-			<MoodDistribution data={MOOD_DISTRIBUTION_DATA} />
-			<EmotionsOfTheMonth data={EMOTIONS_OF_THE_MONTH_DATA} />
+			<MoodFlow
+				data={data.dailyEmotions}
+				currentMonth={currentDate.getMonth() + 1}
+			/>
+			<MoodDistribution data={totalCoreEmotions} />
+			<EmotionsOfTheMonth data={sortedDetailedEmotions} />
 		</>
 	);
 };
-
-const MOOD_DISTRIBUTION_DATA = {
-	'1': 18,
-	'2': 29,
-	'3': 6,
-	'4': 29,
-	'5': 18,
-};
-
-const EMOTIONS_OF_THE_MONTH_DATA = {
-	sad: 4,
-	excited: 3,
-	angry: 2,
-};
-
-const MOOD_FLOW_DATA: {
-	date: string;
-	rating: MoodRating;
-}[] = [
-	{ date: '2024-06-01', rating: 1 },
-	{ date: '2021-06-02', rating: 3 },
-	{ date: '2021-06-03', rating: 5 },
-	{ date: '2021-06-04', rating: 4 },
-	{ date: '2021-06-05', rating: 3 },
-	{ date: '2021-06-06', rating: 1 },
-	{ date: '2021-06-07', rating: 3 },
-	{ date: '2021-06-08', rating: 2 },
-	{ date: '2021-06-09', rating: 3 },
-	{ date: '2021-06-10', rating: 5 },
-	{ date: '2021-06-11', rating: 3 },
-	{ date: '2021-06-12', rating: 3 },
-	{ date: '2021-06-13', rating: 4 },
-	{ date: '2021-06-14', rating: 3 },
-	{ date: '2021-06-15', rating: 2 },
-	{ date: '2021-06-16', rating: 3 },
-	{ date: '2021-06-17', rating: 4 },
-	{ date: '2021-06-18', rating: 3 },
-	{ date: '2021-06-19', rating: 5 },
-	{ date: '2021-06-20', rating: 3 },
-	{ date: '2021-06-21', rating: 1 },
-	{ date: '2021-06-22', rating: 1 },
-	{ date: '2021-06-23', rating: 3 },
-	{ date: '2021-06-24', rating: 3 },
-	{ date: '2021-06-25', rating: 2 },
-	{ date: '2021-06-26', rating: 3 },
-	{ date: '2021-06-27', rating: 3 },
-	{ date: '2021-06-28', rating: 5 },
-	{ date: '2021-06-29', rating: 3 },
-	{ date: '2021-06-30', rating: 4 },
-];
