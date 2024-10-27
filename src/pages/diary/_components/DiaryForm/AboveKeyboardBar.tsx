@@ -27,8 +27,6 @@ export const AboveKeyboardBar = ({
 
 	const onImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files[0]) {
-			const img = event.target.files[0];
-
 			const newFiles = Array.from(event.target.files);
 			const validFiles = newFiles.filter(
 				(file) => file.size <= 5 * 1024 * 1024,

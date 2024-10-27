@@ -10,17 +10,11 @@ import {
 	PageLayout,
 	XButton,
 } from '@/components';
-import { DiaryForm } from '../_components/DiaryForm';
+import { DiaryForm } from '../../_components/DiaryForm';
 import { DiaryCancelConfirmDialog } from '../_components/DiaryCancelConfirmDialog';
 import { useDiaryMutations } from '@/hooks';
 
-type NewDiaryStep3Props = {
-	variant: 'new' | 'edit';
-};
-
-const NewDiaryStep3: ActivityComponentType<NewDiaryStep3Props> = ({
-	params,
-}) => {
+const NewDiaryStep3: ActivityComponentType = () => {
 	const { replace } = useFlow();
 	const { createDiaryMutation } = useDiaryMutations();
 	const {
@@ -32,6 +26,7 @@ const NewDiaryStep3: ActivityComponentType<NewDiaryStep3Props> = ({
 		togglePublic,
 		resetAllDiaryState,
 	} = useDiaryStore();
+	console.log(diary);
 	const isUnusualApproach =
 		diary.emotions.length === 0 || diary.rating === null || !diary.date;
 

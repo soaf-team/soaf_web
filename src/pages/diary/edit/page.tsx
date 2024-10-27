@@ -10,7 +10,7 @@ import {
 	PageLayout,
 	XButton,
 } from '@/components';
-import { DiaryForm } from '../write/_components/DiaryForm';
+import { DiaryForm } from '../_components/DiaryForm';
 import { DiaryCancelConfirmDialog } from '../write/_components/DiaryCancelConfirmDialog';
 import { useDiaryMutations } from '@/hooks';
 
