@@ -44,24 +44,17 @@ const SoafExplorePage = () => {
 	};
 
 	const handleButtonClick = async (
-		selectedIds: string[],
+		selectedId: string,
 		currentUserDiaryList: DiaryType[],
 	) => {
-		if (selectedIds.length === 0) {
+		if (!selectedId) {
 			await overlay.open(<AutomaticAISearchOverlay overlayKey="ai-search" />);
 			push('MatchedUserPage', {});
 			return;
 		}
 
-		if (selectedIds.length > 1) {
-			toast({
-				title: '일기는 1개만 선택 가능해요',
-			});
-			return;
-		}
-
 		const currentSelectedDiary = currentUserDiaryList.find(
-			(diary) => diary.id === selectedIds[0],
+			(diary) => diary.id === selectedId,
 		);
 
 		if (currentSelectedDiary) {
@@ -107,7 +100,7 @@ const SoafExplorePage = () => {
 						onClick={
 							currentUserDiaryList.length === 0
 								? () => {}
-								: () => handleButtonClick(selectedIds, currentUserDiaryList)
+								: () => handleButtonClick(selectedId, currentUserDiaryList)
 						}
 					>
 						{currentUserDiaryList.length === 0
