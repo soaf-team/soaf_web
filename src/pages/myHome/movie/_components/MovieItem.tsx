@@ -1,5 +1,5 @@
 import { StarRating } from '@/components';
-import { Movie, MovieDetail, MyMovie } from '@/types';
+import { Movie, MovieDetail, MyMovie, RatingType } from '@/types';
 import { cn } from '@/utils';
 import defaultPoster from '@/assets/icons/my-home/movie-default.svg';
 
@@ -7,9 +7,17 @@ interface Props {
 	movie: Movie | MovieDetail | MyMovie;
 	type: 'search' | 'set' | 'detail';
 	onClick?: () => void;
+	onRatingChange?: (value: RatingType) => void;
+	isEditing?: boolean;
 }
 
-export const MovieItem = ({ type = 'search', onClick, movie }: Props) => {
+export const MovieItem = ({
+	type = 'search',
+	onClick,
+	movie,
+	onRatingChange,
+	isEditing,
+}: Props) => {
 	const posterClass = cn({
 		'min-w-[92px] w-[92px] h-[134px] rounded-[8px]': type === 'search',
 		'w-[85px] h-[124px] rounded-[8px]': type === 'set',
@@ -112,7 +120,8 @@ export const MovieItem = ({ type = 'search', onClick, movie }: Props) => {
 					{type === 'detail' && (
 						<StarRating
 							size={24}
-							onChange={() => {}}
+							onChange={onRatingChange}
+							readonly={type === 'detail' && !isEditing}
 							defaultValue={getRating()}
 						/>
 					)}

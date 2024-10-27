@@ -16,6 +16,7 @@ import { MovieItem } from '../_components/MovieItem';
 import { overlay } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { ReviewSection } from '../../_components';
+import { MovieContent, RatingType } from '@/types';
 
 interface MyMovieDetailPageProps {
 	movieId: number;
@@ -39,13 +40,15 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 		review: string;
 		actors: string;
 		story: string;
+		rating: RatingType;
 	}>({
 		review: myMovieDetail?.data.review || '',
 		actors: myMovieDetail?.data.content.actors.join(', ') || '',
 		story: myMovieDetail?.data.content.story || '',
+		rating: myMovieDetail?.data.content.rating || 0,
 	});
 
-	const handleDataChange = (key: string, value: string) => {
+	const handleDataChange = (key: string, value: string | RatingType) => {
 		setDetailData((prev) => ({ ...prev, [key]: value }));
 	};
 
@@ -53,6 +56,11 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 		updateMyHomeMutation.mutate({
 			userId: myMovieDetail?.data.userId || '',
 			review: detailData.review,
+			content: {
+				rating: detailData.rating,
+				actors: detailData.actors.split(', '),
+				story: detailData.story,
+			} as MovieContent,
 			category: 'movie',
 		});
 
@@ -65,7 +73,10 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 				overlayKey="my-music-update-dialog"
 				title="수정을 취소할까요?"
 				description="수정한 내용은 저장되지 않아요"
-				resolve={() => setIsEditing(false)}
+				resolve={() => {
+					setIsEditing(false);
+					pop();
+				}}
 			/>,
 		);
 	};
@@ -91,6 +102,7 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 				review: myMovieDetail.data.review || '',
 				actors: myMovieDetail.data.content.actors.join(', ') || '',
 				story: myMovieDetail.data.content.story || '',
+				rating: myMovieDetail.data.content.rating || 0,
 			});
 		}
 	}, [myMovieDetail, isFetching]);
@@ -128,7 +140,12 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 					}}
 				>
 					<div className="flex flex-col gap-[16px]">
-						<MovieItem type="detail" movie={myMovieDetail?.data} />
+						<MovieItem
+							type="detail"
+							movie={myMovieDetail?.data}
+							isEditing={isEditing}
+							onRatingChange={(value) => handleDataChange('rating', value)}
+						/>
 
 						<div className="flex flex-col gap-[16px]">
 							<ReviewSection
