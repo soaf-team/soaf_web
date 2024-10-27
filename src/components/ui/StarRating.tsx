@@ -1,10 +1,11 @@
 import { EmptyStarIcon, FullStarIcon, HalfStarIcon } from '@/assets';
+import { RatingType } from '@/types';
 import { useState } from 'react';
 
 interface Props {
-	onChange: (value: number) => void;
+	onChange?: (value: RatingType) => void;
 	size?: number;
-	defaultValue?: number;
+	defaultValue?: RatingType;
 	readonly?: boolean;
 }
 
@@ -25,14 +26,14 @@ export const StarRating = ({
 	defaultValue,
 	readonly,
 }: Props) => {
-	const [rating, setRating] = useState<number | null>(defaultValue ?? null);
-	const [hover, setHover] = useState<number | null>(null);
+	const [rating, setRating] = useState<RatingType | null>(defaultValue ?? null);
+	const [hover, setHover] = useState<RatingType | null>(null);
 
-	const updateStarRating = (value: number) => {
+	const updateStarRating = (value: RatingType) => {
 		if (readonly) return;
 
 		setRating(value);
-		onChange(value);
+		onChange?.(value);
 	};
 
 	const handleStarClick = (
@@ -42,7 +43,7 @@ export const StarRating = ({
 		if (readonly) return;
 
 		const selectedValue = calculateStarValue(index, e);
-		updateStarRating(selectedValue);
+		updateStarRating(selectedValue as RatingType);
 	};
 
 	const handleMouseOver = (
@@ -52,7 +53,7 @@ export const StarRating = ({
 		if (readonly) return;
 
 		const hoverValue = calculateStarValue(index, e);
-		setHover(hoverValue);
+		setHover(hoverValue as RatingType);
 	};
 
 	const renderStar = (index: number) => {
