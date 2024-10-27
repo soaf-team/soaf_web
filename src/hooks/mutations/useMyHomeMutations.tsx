@@ -122,11 +122,15 @@ export const useMyHomeMutations = (
 				/>,
 			);
 		},
-		onSuccess: (_, variables) => {
-			console.log('variables', variables);
-			queryClient.invalidateQueries({
-				queryKey: [getQueryKeyByCategory(variables.category, 'detail')],
-			});
+		onSuccess: async (_, variables) => {
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: [getQueryKeyByCategory(variables.category, 'list')],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: [getQueryKeyByCategory(variables.category, 'detail')],
+				}),
+			]);
 			overlay.close();
 			toast({
 				title: getCategoryMessage(variables.category, '수정'),
