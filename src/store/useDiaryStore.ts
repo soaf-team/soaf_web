@@ -112,7 +112,7 @@ export const useDiaryStore = create<DiaryRatingStore>((set) => {
 			set((state) => ({
 				diary: {
 					...state.diary,
-					isPublic: state.diary.isPublic,
+					isPublic: !state.diary.isPublic,
 				},
 			})),
 		resetAllDiaryState: () =>
