@@ -1,4 +1,6 @@
+import { useFlow } from '@/stackflow';
 import { useGenericMutation } from './useGenericMutation';
+import { useToast } from '../useToast';
 
 export type UserPayloadType = {
 	name: string;
@@ -10,6 +12,35 @@ export type UserPayloadType = {
 type UserResponseType = {};
 
 export const userMutations = ({ onSuccess }: { onSuccess: () => void }) => {
+	const { replace } = useFlow();
+	const { toast } = useToast();
+
+	const logoutUserMutation = useGenericMutation<void, void, void>(
+		'/user/logout',
+		'POST',
+		{
+			onSuccess: () => {
+				replace('LoginPage', {});
+				toast({
+					title: '로그아웃 되었어요',
+				});
+			},
+		},
+	);
+
+	const deleteUserMutation = useGenericMutation<void, void, void>(
+		'/user/delete',
+		'DELETE',
+		{
+			onSuccess: () => {
+				replace('LoginPage', {});
+				toast({
+					title: '회원 탈퇴가 완료되었어요',
+				});
+			},
+		},
+	);
+
 	const patchUserMutation = useGenericMutation<
 		UserPayloadType,
 		void,
@@ -22,5 +53,5 @@ export const userMutations = ({ onSuccess }: { onSuccess: () => void }) => {
 		},
 	});
 
-	return { patchUserMutation };
+	return { patchUserMutation, logoutUserMutation, deleteUserMutation };
 };

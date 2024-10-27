@@ -4,7 +4,7 @@ import { cn } from '@/utils';
 
 interface CancelConfirmDialogProps extends OverlayProps {
 	title: string;
-	description: React.ReactNode;
+	description?: React.ReactNode;
 	cancelButtonText?: string;
 	confirmButtonText?: string;
 	className?: string;
@@ -51,7 +51,9 @@ export const CancelConfirmDialog = ({
 			>
 				<div className={cn('flex flex-col gap-[12px] text-left px-[8px]')}>
 					<div className="head5b">{title}</div>
-					<div className="label3 text-gray500">{description}</div>
+					{description && (
+						<div className="label3 text-gray500">{description}</div>
+					)}
 				</div>
 				<div
 					className={cn(
