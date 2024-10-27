@@ -3,7 +3,7 @@ import { MusicItem } from './MusicItem';
 import { BackButton, Header } from '@/components';
 import { ReviewSection } from '../../_components/ReviewSection';
 import { useState } from 'react';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { overlay } from '@/libs';
 
 interface Props {
@@ -19,7 +19,7 @@ export const SetMusicInfo = ({ onPrevStep, music }: Props) => {
 
 	const [review, setReview] = useState('');
 	const { userProfile } = useUserProfileQuery();
-	const { createMyHomeMutation } = myHomeMutations('music');
+	const { createMyHomeMutation } = useMyHomeMutations('music');
 
 	const handleReviewChange = (value: string) => {
 		setReview(value);

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMyMovieDetailQuery } from '@/hooks';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { ActivityComponentType } from '@stackflow/react';
 import {
 	BackButton,
@@ -27,7 +27,7 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 	const { movieId } = params;
 	const { pop } = useFlow();
 	const { myMovieDetail, isFetching } = useMyMovieDetailQuery(movieId);
-	const { updateMyHomeMutation, deleteMyHomeMutation } = myHomeMutations(
+	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
 		'movie',
 		movieId,
 	);
