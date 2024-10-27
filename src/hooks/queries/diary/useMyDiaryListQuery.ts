@@ -32,6 +32,8 @@ export const useMyDiaryListQuery = (
 			page: 1,
 			limit: 10,
 		},
+		isLoading,
+		isError,
 	} = useQuery<{
 		items: DiaryBackend[];
 	}>({
@@ -44,5 +46,5 @@ export const useMyDiaryListQuery = (
 		transformDiaryKey(diary),
 	);
 
-	return { currentUserDiaryList: transformedDiaryList };
+	return { currentUserDiaryList: transformedDiaryList, isLoading, isError };
 };
