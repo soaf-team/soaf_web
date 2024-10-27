@@ -107,9 +107,13 @@ export const DiaryCard = ({
 	);
 };
 
-export const DiaryCardSkeleton = ({ isCheckable = false }) => {
+export const DiaryCardSkeleton = ({ isCheckable = false, shadow = false }) => {
 	return (
-		<Card direction="row" shadow={false} className="relative w-full gap-[12px]">
+		<Card
+			direction="row"
+			shadow={shadow}
+			className="relative w-full gap-[12px]"
+		>
 			<div className="flex flex-col justify-center items-center w-[40px] min-w-[40px] h-[40px] bg-gray50 px-[10px] py-[6px] rounded-lg">
 				<Skeleton shape="text" className="w-[20px] h-[20px]" />
 				<Skeleton shape="text" className="w-[24px] h-[12px]" />
