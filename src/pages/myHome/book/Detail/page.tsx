@@ -162,7 +162,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 
 							<ReviewSection
 								title="줄거리"
-								placeholder="어떤 내용의 책인지 간략하게 소개해주세요."
+								placeholder="이 도서는 어떤 내용인가요?"
 								value={detailData.story}
 								onChange={(value) => handleDataChange('story', value)}
 								readOnly={readOnly}
