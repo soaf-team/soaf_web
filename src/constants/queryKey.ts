@@ -23,4 +23,6 @@ export const QUERY_KEY = {
 	MY_BOOK_DETAIL: 'myBookDetail',
 	MY_YOUTUBE_LIST: 'myYoutubeList',
 	MY_YOUTUBE_DETAIL: 'myYoutubeDetail',
+
+	SENT_SOAF_REQUEST_LIST: 'sentSoafRequestList',
 };
