@@ -14,6 +14,7 @@ import TrashIcon from './trash.svg';
 import WarningIcon from './warning.svg';
 import BanIcon from './ban.svg';
 import PlayIcon from './my-home/play.svg';
+import ChevronRightIcon from './chevron-right-gray.svg';
 
 export {
 	Plus,
@@ -32,6 +33,7 @@ export {
 	WarningIcon,
 	BanIcon,
 	PlayIcon,
+	ChevronRightIcon,
 };
 
 export * from './header';
@@ -41,3 +43,4 @@ export * from './shared';
 export * from './emoji';
 export * from './my-home';
 export * from './chat';
+export * from './api';
