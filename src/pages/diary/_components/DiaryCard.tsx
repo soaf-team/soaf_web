@@ -1,4 +1,5 @@
 import { Card, CheckBox, EmotionSticker } from '@/components';
+import { Skeleton } from '@/components/async/Skeleton';
 import { useFlow } from '@/stackflow';
 import { DiaryType } from '@/types';
 import { cn, removeHtmlTags } from '@/utils';
@@ -100,6 +101,59 @@ export const DiaryCard = ({
 							/>
 						</div>
 					)}
+				</div>
+			</div>
+		</Card>
+	);
+};
+
+export const DiaryCardSkeleton = ({ isCheckable = false }) => {
+	return (
+		<Card direction="row" shadow={false} className="relative w-full gap-[12px]">
+			<div className="flex flex-col justify-center items-center w-[40px] min-w-[40px] h-[40px] bg-gray50 px-[10px] py-[6px] rounded-lg">
+				<Skeleton shape="text" className="w-[20px] h-[20px]" />
+				<Skeleton shape="text" className="w-[24px] h-[12px]" />
+			</div>
+
+			<div className="flex flex-col w-full gap-[15px]">
+				<div className="flex items-center">
+					<div className="flex flex-col justify-start gap-[4px]">
+						<Skeleton shape="text" className="w-[200px] h-[22px]" />
+						<div className="flex h-[24px]">
+							{[...Array(3)].map((_, index) => (
+								<Skeleton
+									key={index}
+									shape="circle"
+									className="w-[16px] h-[16px]"
+									style={{
+										transform: `translateX(-${index * 5}px)`,
+										zIndex: 3 - index,
+									}}
+								/>
+							))}
+						</div>
+					</div>
+					{isCheckable && (
+						<div className="absolute top-[16px] right-[16px]">
+							<Skeleton
+								shape="rect"
+								className="w-[24px] h-[24px] rounded-[8px]"
+							/>
+						</div>
+					)}
+				</div>
+
+				<div className="w-full h-px bg-border" />
+
+				<div className="flex align-center gap-[17px]">
+					<div className="flex-1 flex flex-col gap-[6px]">
+						<Skeleton shape="text" className="w-full h-[20px]" />
+						<Skeleton shape="text" className="w-[90%] h-[20px]" />
+					</div>
+					<Skeleton
+						shape="rect"
+						className="w-[48px] min-w-[48px] h-[48px] rounded-[10px]"
+					/>
 				</div>
 			</div>
 		</Card>
