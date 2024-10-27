@@ -20,12 +20,14 @@ import { MusicItemSkeleton } from '../_components/MusicItemSkeleton';
 
 interface MyMusicDetailPageProps {
 	musicId: number;
+	userId: string;
+	userName: string;
 }
 
 const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 	params,
 }) => {
-	const { musicId } = params;
+	const { musicId, userId, userName } = params;
 	const { pop } = useFlow();
 	const { myMusicDetail, isFetching } = useMyMusicDetailQuery(musicId);
 	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
@@ -37,6 +39,8 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 
 	const [isEditing, setIsEditing] = useState(false);
 	const [review, setReview] = useState(myMusicDetail?.data.review || '');
+
+	const readOnly = !!(userId && !isEditing);
 
 	const handleReviewChange = (value: string) => {
 		setReview(value);
@@ -98,7 +102,11 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 								/>
 							),
 						},
-						title: <h1 className="head6b">나의 음악</h1>,
+						title: (
+							<h1 className="head6b">
+								{userId ? `${userName}님의` : '나의'} 음악
+							</h1>
+						),
 						rightSlot: {
 							component: isEditing ? (
 								<button
@@ -128,7 +136,7 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 								title="감상평"
 								value={review}
 								onChange={handleReviewChange}
-								readOnly={!isEditing}
+								readOnly={readOnly}
 							/>
 						</div>
 					</div>

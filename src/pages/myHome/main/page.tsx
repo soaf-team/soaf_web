@@ -194,6 +194,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 		>
 			<InteriorItems
 				userId={userId}
+				userName={userName}
 				isEdit={isEdit}
 				isDraggable={isDraggable}
 				setIsDraggable={setIsDraggable}

@@ -6,11 +6,21 @@ import { useUserProfileQuery, useMyMusicListQuery } from '@/hooks';
 import { MusicItem } from './_components/MusicItem';
 import { MusicItemSkeleton } from './_components/MusicItemSkeleton';
 import { useFlow } from '@/stackflow';
+import { ActivityComponentType } from '@stackflow/react';
 
-const MyMusicPage = () => {
+interface Props {
+	userId: string;
+	userName: string;
+}
+
+const MyMusicPage: ActivityComponentType<Props> = ({ params }) => {
 	const { push } = useFlow();
+
+	const { userId, userName } = params;
 	const { userProfile } = useUserProfileQuery();
-	const { myMusicList, isFetching } = useMyMusicListQuery(userProfile?.id);
+	const { myMusicList, isFetching } = useMyMusicListQuery(
+		userId || userProfile?.id,
+	);
 
 	const handleOpenOverlay = async () => {
 		await overlay.open(<MyHomeDrawer component={<RegisterMusicForm />} />);
@@ -19,6 +29,8 @@ const MyMusicPage = () => {
 	const handleClickMusicItem = (musicId: string) => {
 		push('MyMusicDetailPage', {
 			musicId,
+			userId,
+			userName,
 		});
 	};
 
@@ -28,7 +40,9 @@ const MyMusicPage = () => {
 				leftSlot: {
 					component: <BackButton />,
 				},
-				title: <h1 className="head6b">나의 음악</h1>,
+				title: (
+					<h1 className="head6b">{userId ? `${userName}님의` : '나의'} 음악</h1>
+				),
 				rightSlot: {
 					component: <PlusButton onClick={handleOpenOverlay} />,
 				},
@@ -43,8 +57,14 @@ const MyMusicPage = () => {
 					</>
 				) : myMusicList?.data.length === 0 ? (
 					<div className="flex flex-col gap-[8px] justify-center items-center body2m text-gray200 absolute_center w-full">
-						<p>좋아하는 음악을 추가해</p>
-						<p>나만의 취향 목록을 만들어보세요</p>
+						{userId ? (
+							<p>아직 등록된 음악 취향이 없어요</p>
+						) : (
+							<>
+								<p>좋아하는 음악을 추가해</p>
+								<p>나만의 취향 목록을 만들어보세요</p>
+							</>
+						)}
 					</div>
 				) : (
 					<div className="flex flex-col gap-[14px] items-center justify-center">

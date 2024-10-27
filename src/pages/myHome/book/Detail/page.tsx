@@ -20,12 +20,14 @@ import { BookContent, RatingType } from '@/types';
 
 interface MyBookDetailPageProps {
 	bookId: number;
+	userId: string;
+	userName: string;
 }
 
 const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 	params,
 }) => {
-	const { bookId } = params;
+	const { bookId, userId, userName } = params;
 	const { pop } = useFlow();
 	const { myBookDetail, isFetching } = useMyBookDetailQuery(bookId);
 	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
@@ -45,6 +47,8 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 		story: myBookDetail?.data.content.story || '',
 		rating: myBookDetail?.data.content.rating || 0,
 	});
+
+	const readOnly = !!(userId && !isEditing);
 
 	const handleDataChange = (key: string, value: string | RatingType) => {
 		setDetailData((prev) => ({ ...prev, [key]: value }));
@@ -117,7 +121,11 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 								/>
 							),
 						},
-						title: <h1 className="head6b">나의 도서</h1>,
+						title: (
+							<h1 className="head6b">
+								{userId ? `${userName}님의` : '나의'} 도서
+							</h1>
+						),
 						rightSlot: {
 							component: isEditing ? (
 								<button
@@ -127,11 +135,11 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 								>
 									저장
 								</button>
-							) : (
+							) : !userId ? (
 								<PopoverTrigger ref={triggerRef}>
 									<DotVerticalButton />
 								</PopoverTrigger>
-							),
+							) : null,
 						},
 					}}
 				>
@@ -139,7 +147,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 						<BookItem
 							type="detail"
 							book={myBookDetail?.data}
-							isEditing={isEditing}
+							readOnly={readOnly}
 							onRatingChange={(value) => handleDataChange('rating', value)}
 						/>
 
@@ -149,7 +157,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 								value={detailData.review}
 								placeholder="책을 읽은 후 어떤 생각이 드셨나요?"
 								onChange={(value) => handleDataChange('review', value)}
-								readOnly={!isEditing}
+								readOnly={readOnly}
 							/>
 
 							<ReviewSection
@@ -157,7 +165,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 								placeholder="어떤 내용의 책인지 간략하게 소개해주세요."
 								value={detailData.story}
 								onChange={(value) => handleDataChange('story', value)}
-								readOnly={!isEditing}
+								readOnly={readOnly}
 							/>
 						</div>
 					</div>

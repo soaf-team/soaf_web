@@ -5,11 +5,21 @@ import { overlay } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { useMyMoviesQuery, useUserProfileQuery } from '@/hooks';
 import { cn } from '@/utils';
+import { ActivityComponentType } from '@stackflow/react';
 
-const MyMoviePage = () => {
+interface Props {
+	userId: string;
+	userName: string;
+}
+
+const MyMoviePage: ActivityComponentType<Props> = ({ params }) => {
 	const { push } = useFlow();
+
+	const { userId, userName } = params;
 	const { userProfile } = useUserProfileQuery();
-	const { myMovieList, isFetching } = useMyMoviesQuery(userProfile?.id);
+	const { myMovieList, isFetching } = useMyMoviesQuery(
+		userId || userProfile?.id,
+	);
 
 	// TODO: fetching skeleton
 
@@ -20,6 +30,8 @@ const MyMoviePage = () => {
 	const handleClickMovieItem = (movieId: string) => {
 		push('MyMovieDetailPage', {
 			movieId,
+			userId,
+			userName,
 		});
 	};
 
@@ -29,7 +41,9 @@ const MyMoviePage = () => {
 				leftSlot: {
 					component: <BackButton />,
 				},
-				title: <h1 className="head6b">나의 영화</h1>,
+				title: (
+					<h1 className="head6b">{userId ? `${userName}님의` : '나의'} 영화</h1>
+				),
 				rightSlot: {
 					component: <PlusButton onClick={handleOpenOverlay} />,
 				},
@@ -43,8 +57,14 @@ const MyMoviePage = () => {
 			>
 				{myMovieList?.data.length === 0 ? (
 					<div className="flex flex-col gap-[8px] justify-center items-center h-full body2m text-gray200">
-						<p>좋아하는 영화를 추가해</p>
-						<p>나만의 취향 목록을 만들어보세요</p>
+						{userId ? (
+							<p>아직 등록된 영화 취향이 없어요</p>
+						) : (
+							<>
+								<p>좋아하는 영화를 추가해</p>
+								<p>나만의 취향 목록을 만들어보세요</p>
+							</>
+						)}
 					</div>
 				) : (
 					<div className="flex flex-col gap-[14px] items-center justify-center">

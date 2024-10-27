@@ -20,12 +20,14 @@ import { MovieContent, RatingType } from '@/types';
 
 interface MyMovieDetailPageProps {
 	movieId: number;
+	userId: string;
+	userName: string;
 }
 
 const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 	params,
 }) => {
-	const { movieId } = params;
+	const { movieId, userId, userName } = params;
 	const { pop } = useFlow();
 	const { myMovieDetail, isFetching } = useMyMovieDetailQuery(movieId);
 	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
@@ -47,6 +49,8 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 		story: myMovieDetail?.data.content.story || '',
 		rating: myMovieDetail?.data.content.rating || 0,
 	});
+
+	const readOnly = !!(userId && !isEditing);
 
 	const handleDataChange = (key: string, value: string | RatingType) => {
 		setDetailData((prev) => ({ ...prev, [key]: value }));
@@ -121,7 +125,11 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 								/>
 							),
 						},
-						title: <h1 className="head6b">나의 영화</h1>,
+						title: (
+							<h1 className="head6b">
+								{userId ? `${userName}님의` : '나의'} 영화
+							</h1>
+						),
 						rightSlot: {
 							component: isEditing ? (
 								<button
@@ -131,11 +139,11 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 								>
 									저장
 								</button>
-							) : (
+							) : !userId ? (
 								<PopoverTrigger ref={triggerRef}>
 									<DotVerticalButton />
 								</PopoverTrigger>
-							),
+							) : null,
 						},
 					}}
 				>
@@ -143,7 +151,7 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 						<MovieItem
 							type="detail"
 							movie={myMovieDetail?.data}
-							isEditing={isEditing}
+							readonly={readOnly}
 							onRatingChange={(value) => handleDataChange('rating', value)}
 						/>
 
@@ -153,21 +161,21 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 								value={detailData.review}
 								placeholder="영화를 본 후 어떤 생각이 드셨나요?"
 								onChange={(value) => handleDataChange('review', value)}
-								readOnly={!isEditing}
+								readOnly={readOnly}
 							/>
 
 							<ReviewSection
 								title="배우"
 								value={detailData.actors}
 								onChange={(value) => handleDataChange('actors', value)}
-								readOnly={!isEditing}
+								readOnly={readOnly}
 							/>
 
 							<ReviewSection
 								title="줄거리"
 								value={detailData.story}
 								onChange={(value) => handleDataChange('story', value)}
-								readOnly={!isEditing}
+								readOnly={readOnly}
 							/>
 						</div>
 					</div>

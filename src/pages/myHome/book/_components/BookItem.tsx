@@ -7,7 +7,7 @@ interface Props {
 	type?: 'search' | 'set' | 'detail';
 	onClick?: () => void;
 	book: Document | MyBook;
-	isEditing?: boolean;
+	readOnly?: boolean;
 	onRatingChange?: (rating: RatingType) => void;
 }
 
@@ -15,7 +15,7 @@ export const BookItem = ({
 	type = 'search',
 	onClick,
 	book,
-	isEditing,
+	readOnly,
 	onRatingChange,
 }: Props) => {
 	const posterClass = cn({
@@ -113,7 +113,7 @@ export const BookItem = ({
 							size={24}
 							onChange={onRatingChange}
 							defaultValue={getRating()}
-							readonly={type === 'detail' && !isEditing}
+							readonly={type === 'detail' && readOnly}
 						/>
 					)}
 				</div>
