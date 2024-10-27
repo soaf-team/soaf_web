@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMyBookDetailQuery } from '@/hooks';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { ActivityComponentType } from '@stackflow/react';
 import {
 	BackButton,
@@ -16,6 +16,7 @@ import { BookItem } from '../_components/BookItem';
 import { overlay } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { ReviewSection } from '../../_components';
+import { BookContent, RatingType } from '@/types';
 
 interface MyBookDetailPageProps {
 	bookId: number;
@@ -27,7 +28,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 	const { bookId } = params;
 	const { pop } = useFlow();
 	const { myBookDetail, isFetching } = useMyBookDetailQuery(bookId);
-	const { updateMyHomeMutation, deleteMyHomeMutation } = myHomeMutations(
+	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
 		'book',
 		bookId,
 	);
@@ -38,12 +39,14 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 	const [detailData, setDetailData] = useState<{
 		review: string;
 		story: string;
+		rating: RatingType;
 	}>({
 		review: myBookDetail?.data.review || '',
 		story: myBookDetail?.data.content.story || '',
+		rating: myBookDetail?.data.content.rating || 0,
 	});
 
-	const handleDataChange = (key: string, value: string) => {
+	const handleDataChange = (key: string, value: string | RatingType) => {
 		setDetailData((prev) => ({ ...prev, [key]: value }));
 	};
 
@@ -51,6 +54,10 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 		updateMyHomeMutation.mutate({
 			userId: myBookDetail?.data.userId || '',
 			review: detailData.review,
+			content: {
+				story: detailData.story,
+				rating: detailData.rating,
+			} as BookContent,
 			category: 'book',
 		});
 
@@ -63,7 +70,10 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 				overlayKey="my-music-update-dialog"
 				title="수정을 취소할까요?"
 				description="수정한 내용은 저장되지 않아요"
-				resolve={() => setIsEditing(false)}
+				resolve={() => {
+					setIsEditing(false);
+					pop();
+				}}
 			/>,
 		);
 	};
@@ -88,6 +98,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 			setDetailData({
 				review: myBookDetail.data.review || '',
 				story: myBookDetail.data.content.story || '',
+				rating: myBookDetail.data.content.rating || 0,
 			});
 		}
 	}, [myBookDetail, isFetching]);
@@ -99,46 +110,55 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 			<Popover>
 				<PageLayout
 					header={{
-						leftSlot: (
-							<BackButton onClick={isEditing ? handleCancelClick : undefined} />
-						),
+						leftSlot: {
+							component: (
+								<BackButton
+									onClick={isEditing ? handleCancelClick : undefined}
+								/>
+							),
+						},
 						title: <h1 className="head6b">나의 도서</h1>,
-						rightSlot: isEditing ? (
-							<button
-								type="submit"
-								className="text-black label2"
-								onClick={handleUpdateSubmit}
-							>
-								저장
-							</button>
-						) : (
-							<PopoverTrigger ref={triggerRef}>
-								<DotVerticalButton />
-							</PopoverTrigger>
-						),
+						rightSlot: {
+							component: isEditing ? (
+								<button
+									type="submit"
+									className="text-black label2"
+									onClick={handleUpdateSubmit}
+								>
+									저장
+								</button>
+							) : (
+								<PopoverTrigger ref={triggerRef}>
+									<DotVerticalButton />
+								</PopoverTrigger>
+							),
+						},
 					}}
 				>
-					<div className="pt-[56px]">
+					<div className="flex flex-col gap-[16px]">
+						<BookItem
+							type="detail"
+							book={myBookDetail?.data}
+							isEditing={isEditing}
+							onRatingChange={(value) => handleDataChange('rating', value)}
+						/>
+
 						<div className="flex flex-col gap-[16px]">
-							<BookItem type="detail" book={myBookDetail?.data} />
+							<ReviewSection
+								title="감상평"
+								value={detailData.review}
+								placeholder="책을 읽은 후 어떤 생각이 드셨나요?"
+								onChange={(value) => handleDataChange('review', value)}
+								readOnly={!isEditing}
+							/>
 
-							<div className="flex flex-col gap-[16px]">
-								<ReviewSection
-									title="감상평"
-									value={detailData.review}
-									placeholder="책을 읽은 후 어떤 생각이 드셨나요?"
-									onChange={(value) => handleDataChange('review', value)}
-									readOnly={!isEditing}
-								/>
-
-								<ReviewSection
-									title="줄거리"
-									placeholder="어떤 내용의 책인지 간략하게 소개해주세요."
-									value={detailData.story}
-									onChange={(value) => handleDataChange('story', value)}
-									readOnly={!isEditing}
-								/>
-							</div>
+							<ReviewSection
+								title="줄거리"
+								placeholder="어떤 내용의 책인지 간략하게 소개해주세요."
+								value={detailData.story}
+								onChange={(value) => handleDataChange('story', value)}
+								readOnly={!isEditing}
+							/>
 						</div>
 					</div>
 				</PageLayout>

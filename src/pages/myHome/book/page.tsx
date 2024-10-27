@@ -26,14 +26,18 @@ const MyBookPage = () => {
 	return (
 		<PageLayout
 			header={{
-				leftSlot: <BackButton />,
+				leftSlot: {
+					component: <BackButton />,
+				},
 				title: <h1 className="head6b">나의 도서</h1>,
-				rightSlot: <PlusButton onClick={handleOpenOverlay} />,
+				rightSlot: {
+					component: <PlusButton onClick={handleOpenOverlay} />,
+				},
 			}}
 		>
 			<div
 				className={cn(
-					'flex flex-col pt-[56px] h-full',
+					'flex flex-col h-full',
 					myBookList?.data.length === 0 && 'p-0',
 				)}
 			>

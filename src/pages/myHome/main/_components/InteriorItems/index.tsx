@@ -116,6 +116,6 @@ const CLASS_NAMES: Record<InteriorName, string> = {
 	sofa: 'absolute w-1/4',
 	windowNight: 'absolute w-1/4',
 	windowDay: 'absolute w-1/4',
-	youtube: 'absolute w-[15%]',
+	youtube: 'absolute w-1/5',
 	empty: '',
 } as const;

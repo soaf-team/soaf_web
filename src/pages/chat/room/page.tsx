@@ -43,13 +43,17 @@ const ChatRoomPage = ({
 		<PageLayout
 			className="relative"
 			header={{
-				leftSlot: <BackButton />,
+				leftSlot: {
+					component: <BackButton />,
+				},
 				title: nickname ?? '알수없음',
-				rightSlot: <MyHomeButton userId="1" />,
+				rightSlot: {
+					component: <MyHomeButton userId="1" />,
+				},
 			}}
 		>
 			<div ref={chatContainerRef} className="flex-grow overflow-y-auto">
-				<div className="min-h-full flex flex-col">
+				<div className="flex flex-col min-h-full">
 					{chatHistoryList.map((data, index, arr) => {
 						const { isMine, isFirst, isLast, isGap } = getMessageProps(
 							data,

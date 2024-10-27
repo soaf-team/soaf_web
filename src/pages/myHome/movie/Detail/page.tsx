@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMyMovieDetailQuery } from '@/hooks';
-import { myHomeMutations } from '@/hooks/mutations';
+import { useMyHomeMutations } from '@/hooks/mutations';
 import { ActivityComponentType } from '@stackflow/react';
 import {
 	BackButton,
@@ -16,6 +16,7 @@ import { MovieItem } from '../_components/MovieItem';
 import { overlay } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { ReviewSection } from '../../_components';
+import { MovieContent, RatingType } from '@/types';
 
 interface MyMovieDetailPageProps {
 	movieId: number;
@@ -27,7 +28,7 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 	const { movieId } = params;
 	const { pop } = useFlow();
 	const { myMovieDetail, isFetching } = useMyMovieDetailQuery(movieId);
-	const { updateMyHomeMutation, deleteMyHomeMutation } = myHomeMutations(
+	const { updateMyHomeMutation, deleteMyHomeMutation } = useMyHomeMutations(
 		'movie',
 		movieId,
 	);
@@ -39,13 +40,15 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 		review: string;
 		actors: string;
 		story: string;
+		rating: RatingType;
 	}>({
 		review: myMovieDetail?.data.review || '',
 		actors: myMovieDetail?.data.content.actors.join(', ') || '',
 		story: myMovieDetail?.data.content.story || '',
+		rating: myMovieDetail?.data.content.rating || 0,
 	});
 
-	const handleDataChange = (key: string, value: string) => {
+	const handleDataChange = (key: string, value: string | RatingType) => {
 		setDetailData((prev) => ({ ...prev, [key]: value }));
 	};
 
@@ -53,6 +56,11 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 		updateMyHomeMutation.mutate({
 			userId: myMovieDetail?.data.userId || '',
 			review: detailData.review,
+			content: {
+				rating: detailData.rating,
+				actors: detailData.actors.split(', '),
+				story: detailData.story,
+			} as MovieContent,
 			category: 'movie',
 		});
 
@@ -65,7 +73,10 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 				overlayKey="my-music-update-dialog"
 				title="수정을 취소할까요?"
 				description="수정한 내용은 저장되지 않아요"
-				resolve={() => setIsEditing(false)}
+				resolve={() => {
+					setIsEditing(false);
+					pop();
+				}}
 			/>,
 		);
 	};
@@ -91,6 +102,7 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 				review: myMovieDetail.data.review || '',
 				actors: myMovieDetail.data.content.actors.join(', ') || '',
 				story: myMovieDetail.data.content.story || '',
+				rating: myMovieDetail.data.content.rating || 0,
 			});
 		}
 	}, [myMovieDetail, isFetching]);
@@ -102,52 +114,61 @@ const MyMovieDetailPage: ActivityComponentType<MyMovieDetailPageProps> = ({
 			<Popover>
 				<PageLayout
 					header={{
-						leftSlot: (
-							<BackButton onClick={isEditing ? handleCancelClick : undefined} />
-						),
+						leftSlot: {
+							component: (
+								<BackButton
+									onClick={isEditing ? handleCancelClick : undefined}
+								/>
+							),
+						},
 						title: <h1 className="head6b">나의 영화</h1>,
-						rightSlot: isEditing ? (
-							<button
-								type="submit"
-								className="text-black label2"
-								onClick={handleUpdateSubmit}
-							>
-								저장
-							</button>
-						) : (
-							<PopoverTrigger ref={triggerRef}>
-								<DotVerticalButton />
-							</PopoverTrigger>
-						),
+						rightSlot: {
+							component: isEditing ? (
+								<button
+									type="submit"
+									className="text-black label2"
+									onClick={handleUpdateSubmit}
+								>
+									저장
+								</button>
+							) : (
+								<PopoverTrigger ref={triggerRef}>
+									<DotVerticalButton />
+								</PopoverTrigger>
+							),
+						},
 					}}
 				>
-					<div className="pt-[56px]">
+					<div className="flex flex-col gap-[16px]">
+						<MovieItem
+							type="detail"
+							movie={myMovieDetail?.data}
+							isEditing={isEditing}
+							onRatingChange={(value) => handleDataChange('rating', value)}
+						/>
+
 						<div className="flex flex-col gap-[16px]">
-							<MovieItem type="detail" movie={myMovieDetail?.data} />
+							<ReviewSection
+								title="감상평"
+								value={detailData.review}
+								placeholder="영화를 본 후 어떤 생각이 드셨나요?"
+								onChange={(value) => handleDataChange('review', value)}
+								readOnly={!isEditing}
+							/>
 
-							<div className="flex flex-col gap-[16px]">
-								<ReviewSection
-									title="감상평"
-									value={detailData.review}
-									placeholder="영화를 본 후 어떤 생각이 드셨나요?"
-									onChange={(value) => handleDataChange('review', value)}
-									readOnly={!isEditing}
-								/>
+							<ReviewSection
+								title="배우"
+								value={detailData.actors}
+								onChange={(value) => handleDataChange('actors', value)}
+								readOnly={!isEditing}
+							/>
 
-								<ReviewSection
-									title="배우"
-									value={detailData.actors}
-									onChange={(value) => handleDataChange('actors', value)}
-									readOnly={!isEditing}
-								/>
-
-								<ReviewSection
-									title="줄거리"
-									value={detailData.story}
-									onChange={(value) => handleDataChange('story', value)}
-									readOnly={!isEditing}
-								/>
-							</div>
+							<ReviewSection
+								title="줄거리"
+								value={detailData.story}
+								onChange={(value) => handleDataChange('story', value)}
+								readOnly={!isEditing}
+							/>
 						</div>
 					</div>
 				</PageLayout>

@@ -65,12 +65,16 @@ const NewDiaryStep3: ActivityComponentType = () => {
 		<Dialog>
 			<PageLayout
 				header={{
-					leftSlot: <BackButton />,
-					rightSlot: (
-						<DialogTrigger>
-							<XButton onClick={() => {}} />
-						</DialogTrigger>
-					),
+					leftSlot: {
+						component: <BackButton />,
+					},
+					rightSlot: {
+						component: (
+							<DialogTrigger>
+								<XButton onClick={() => {}} />
+							</DialogTrigger>
+						),
+					},
 				}}
 			>
 				<DiaryForm

@@ -59,7 +59,11 @@ const NewDiaryStep1: ActivityComponentType<NewDiaryStep1Props> = ({
 	return (
 		<Dialog>
 			<PageLayout
-				header={{ rightSlot: headerRightButton }}
+				header={{
+					rightSlot: {
+						component: headerRightButton,
+					},
+				}}
 				className="items-center"
 			>
 				<Step currentStep={1} totalStep={2} mainMessage={MAIN_MESSAGE} />

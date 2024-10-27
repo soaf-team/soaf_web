@@ -15,9 +15,11 @@ const DiaryCalendarPage: ActivityComponentType = () => {
 	return (
 		<PageLayout
 			header={{
-				rightSlot: (
-					<img src={ListIcon} alt="list" onClick={handleClickListButton} />
-				),
+				rightSlot: {
+					component: (
+						<img src={ListIcon} alt="list" onClick={handleClickListButton} />
+					),
+				},
 			}}
 		>
 			<MyDiaryCalendar />

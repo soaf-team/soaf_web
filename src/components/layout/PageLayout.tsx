@@ -8,8 +8,14 @@ type PageLayoutProps = {
 	children: React.ReactNode;
 	header?: {
 		title?: React.ReactNode;
-		leftSlot?: React.ReactNode;
-		rightSlot?: React.ReactNode;
+		leftSlot?: {
+			component?: React.ReactNode;
+			className?: string;
+		};
+		rightSlot?: {
+			component?: React.ReactNode;
+			className?: string;
+		};
 		headerClass?: string;
 	};
 	className?: string;
