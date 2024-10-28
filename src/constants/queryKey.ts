@@ -14,6 +14,8 @@ export const QUERY_KEY = {
 
 	FRIEND_LIST: 'friendList',
 
+	MY_HOME_DATA: 'myHomeData',
+	OTHER_USER_HOME_DATA: 'otherUserHomeData',
 	META_DIARY: 'metaDiary',
 	SIMILAR_USER: 'similarUser',
 	MY_MUSIC_LIST: 'myMusicList',
@@ -27,4 +29,5 @@ export const QUERY_KEY = {
 
 	BLOCK_USER_LIST: 'blockUserList',
 	SENT_SOAF_REQUEST_LIST: 'sentSoafRequestList',
+	VALIDATE_USER_NAME: 'validateUserName',
 };
