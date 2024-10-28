@@ -32,7 +32,7 @@ export const useUserBlockMutations = () => {
 
 	const deleteBlockUserMutation = useGenericMutation<
 		UserResponseType,
-		{ userId: string; userName: string },
+		{ userId: string; userName: string; isFriend: boolean },
 		void
 	>((params) => `/user/unblock/${params?.userId}`, 'DELETE', {
 		onSuccess: (_, params) => {
@@ -41,7 +41,9 @@ export const useUserBlockMutations = () => {
 			});
 
 			toast({
-				title: `${params?.userName}님을 차단해제했어요.`,
+				title: params?.isFriend
+					? `${params?.userName}님과 다시 소프가 되었어요`
+					: `${params?.userName}님을 차단 해제했어요`,
 			});
 		},
 	});

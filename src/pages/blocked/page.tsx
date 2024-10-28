@@ -1,4 +1,8 @@
-import { useBlockUserListQuery, useUserBlockMutations } from '@/hooks';
+import {
+	useBlockUserListQuery,
+	useSoafRequestMutations,
+	useUserBlockMutations,
+} from '@/hooks';
 import { BackButton, Divider, PageLayout } from '@/components';
 import { BlockedUserItem } from './_components/BlockedUserItem';
 
@@ -6,11 +10,12 @@ const BlockedPage = () => {
 	const { blockedUserList } = useBlockUserListQuery();
 	const { deleteBlockUserMutation } = useUserBlockMutations();
 
-	const handleUnBlock = (id: string, name: string) => {
+	const handleUnBlock = (id: string, name: string, isFriend: boolean) => {
 		deleteBlockUserMutation.mutate({
 			params: {
 				userId: id,
 				userName: name,
+				isFriend,
 			},
 		});
 	};
@@ -35,7 +40,9 @@ const BlockedPage = () => {
 							<BlockedUserItem
 								key={user.id}
 								userName={user.name}
-								onUnblock={() => handleUnBlock(user.id, user.name)}
+								onUnblock={() =>
+									handleUnBlock(user.id, user.name, user.isFriend)
+								}
 							/>
 							<Divider className="bg-gray100" />
 						</>
