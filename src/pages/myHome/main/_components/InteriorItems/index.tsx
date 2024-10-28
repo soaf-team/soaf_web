@@ -5,7 +5,7 @@ import { Interior } from './Interior';
 
 interface Props {
 	userId: string;
-	userName: string;
+	userName?: string;
 	isEdit: boolean;
 	isDraggable: { [key: string]: boolean };
 	setIsDraggable: React.Dispatch<

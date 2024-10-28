@@ -48,11 +48,10 @@ const convertToPositionPayload = (
 
 interface MyHomeProps {
 	userId: string;
-	userName: string;
 }
 
 const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
-	const { userId, userName } = params; // 상대방의 아이디와 닉네임
+	const { userId } = params; // 타유저 아이디
 
 	// api
 	const { myHomeData } = useMyHomeDataQuery();
@@ -167,7 +166,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 				title: isEdit ? (
 					<span className="head6b">방 꾸미기</span>
 				) : userId ? (
-					<span className="head6b">{userName}</span>
+					<span className="head6b">{otherUserHomeData?.data.user.name}</span>
 				) : null,
 				leftSlot: {
 					component: isEdit ? (
@@ -196,7 +195,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 		>
 			<InteriorItems
 				userId={userId}
-				userName={userName}
+				userName={otherUserHomeData?.data.user.name}
 				isEdit={isEdit}
 				isDraggable={isDraggable}
 				setIsDraggable={setIsDraggable}
