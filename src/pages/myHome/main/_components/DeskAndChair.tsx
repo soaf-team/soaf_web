@@ -5,12 +5,14 @@ import { cn } from '@/utils';
 interface Props {
 	className?: string;
 	isAfter6PM: boolean;
+	userId: string;
+	userName: string;
 }
 
 export const DeskAndChair = (props: Props) => {
 	const { push } = useFlow();
 
-	const { className, isAfter6PM } = props;
+	const { className, isAfter6PM, userId, userName } = props;
 
 	return (
 		<div className={cn('relative', className)}>
@@ -24,7 +26,7 @@ export const DeskAndChair = (props: Props) => {
 				src={DiaryIcon}
 				alt="diary"
 				className="absolute_center w-[36%] ml-[10px] mt-[5px]"
-				onClick={() => push('MyDiaryPage', {})}
+				onClick={() => push('MyDiaryPage', { userId, userName })}
 			/>
 		</div>
 	);

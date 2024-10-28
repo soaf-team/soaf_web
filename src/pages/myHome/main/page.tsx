@@ -207,6 +207,8 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 			/>
 			<Soaf className="z-10 w-1/2 absolute_center" />
 			<DeskAndChair
+				userId={userId}
+				userName={otherUserHomeData?.data.user.name || ''}
 				isAfter6PM={isAfter6PM}
 				className="absolute bottom-0 left-0 right-0 w-full max-w-window h-[63%] my-0 mx-auto"
 			/>
