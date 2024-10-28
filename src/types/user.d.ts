@@ -18,4 +18,5 @@ export interface BlockedUser {
 	id: string;
 	email: string;
 	name: string;
+	isFriend: boolean;
 }
