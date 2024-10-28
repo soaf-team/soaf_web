@@ -25,5 +25,6 @@ export const QUERY_KEY = {
 	MY_YOUTUBE_LIST: 'myYoutubeList',
 	MY_YOUTUBE_DETAIL: 'myYoutubeDetail',
 
+	BLOCK_USER_LIST: 'blockUserList',
 	SENT_SOAF_REQUEST_LIST: 'sentSoafRequestList',
 };

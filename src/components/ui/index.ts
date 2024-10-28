@@ -8,3 +8,4 @@ export * from './TextArea';
 export * from './Divider';
 export * from './StarRating';
 export * from './TabButton';
+export * from './Switch';

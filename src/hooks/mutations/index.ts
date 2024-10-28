@@ -1,6 +1,6 @@
 export * from './useDiaryMutations';
 export * from './userMutation';
-export * from './userBlock';
+export * from './useUserBlockMutations';
 export * from './useReactionMutation';
 export * from './useMyHomeMutations';
 export * from './useInteriorPositionMutations';
