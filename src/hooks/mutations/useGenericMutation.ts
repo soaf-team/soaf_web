@@ -57,7 +57,7 @@ export function useGenericMutation<
 	TContext = unknown,
 >(
 	urlOrFunction: string | UrlFunction<TParams>,
-	method: 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'POST',
+	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'POST',
 	options?: MutationOptions<TData, TParams, TPayload, TContext>,
 ): UseMutationResult<
 	ApiResponse<TData>,
