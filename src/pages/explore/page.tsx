@@ -107,7 +107,9 @@ const SoafExplorePage = () => {
 						variant="primary"
 						onClick={
 							currentUserDiaryList.length === 0
-								? () => {}
+								? () => {
+										push('DiaryCalendarPage', {});
+									}
 								: () => handleButtonClick(selectedId, currentUserDiaryList)
 						}
 					>
