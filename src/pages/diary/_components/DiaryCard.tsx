@@ -12,6 +12,7 @@ interface Props {
 	shadow?: boolean;
 	onClick?: () => void;
 	className?: string;
+	isFriend?: boolean;
 }
 
 export const DiaryCard = ({
@@ -21,6 +22,7 @@ export const DiaryCard = ({
 	shadow,
 	onClick,
 	className,
+	isFriend = false,
 }: Props) => {
 	const { push } = useFlow();
 
@@ -85,7 +87,7 @@ export const DiaryCard = ({
 					onClick={(e) => {
 						e.stopPropagation();
 						isCheckable
-							? push('DiaryDetailPage', { diaryId: diary.id })
+							? push('DiaryDetailPage', { diaryId: diary.id, isFriend })
 							: onClick?.();
 					}}
 				>

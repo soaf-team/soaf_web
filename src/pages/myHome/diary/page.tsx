@@ -111,7 +111,7 @@ const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 						)}
 					</>
 				) : (
-					<DiaryList diariesByMonth={diaryList} />
+					<DiaryList diariesByMonth={diaryList} isFriend={!!userId} />
 				)}
 			</div>
 		</PageLayout>
