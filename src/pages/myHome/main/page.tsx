@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 
 import { BackButton, CheckButton, PageLayout, XButton } from '@/components';
 import {
-	useInteriorItems,
+	useMyHomeDataQuery,
+	useOtherUserHomeDataQuery,
 	useWindowDimensions,
 	useInteriorPositionMutations,
 	PositionPayloadType,
 } from '@/hooks';
-import { useGetSoafRequestStatus } from '../hooks/useGetSoafRequestStatus';
 import { useBottomTabStore } from '@/store';
 import {
 	HeaderActionButtons,
@@ -19,7 +19,7 @@ import {
 	BottomActionButtons,
 	SoafStatusBadge,
 } from './_components';
-import { Interior, Position } from '@/types';
+import { Interior, Position, SoafStatus } from '@/types';
 import {
 	getPercentageToPosition,
 	getPositionToPercentage,
@@ -48,15 +48,16 @@ const convertToPositionPayload = (
 
 interface MyHomeProps {
 	userId: string;
-	userName: string;
 }
 
 const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
-	const { userId, userName } = params; // 상대방의 아이디와 닉네임
+	const { userId } = params; // 타유저 아이디
 
 	// api
-	const { interiorItems } = useInteriorItems(userId);
-	const { status, lastRequestDate } = useGetSoafRequestStatus(userId); // 소프 요청 status 상태 확인 용
+	const { myHomeData } = useMyHomeDataQuery();
+	const { otherUserHomeData } = useOtherUserHomeDataQuery(userId || '');
+
+	const myHome = userId ? otherUserHomeData?.data : myHomeData.data;
 
 	// mutations
 	const { updatePositionMutation } = useInteriorPositionMutations();
@@ -116,10 +117,10 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 	};
 
 	useEffect(() => {
-		if (interiorItems.data.items.length > 0) {
+		if (myHome?.items && myHome.items.length > 0) {
 			// 각 아이템들의 초기 draggable 상태 설정
 			setIsDraggable(
-				interiorItems.data.items.reduce(
+				myHome.items.reduce(
 					(acc, item) => {
 						acc[item.name] = false;
 						return acc;
@@ -129,7 +130,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 			);
 
 			// 서버에서 받아온 인테리어 아이템을 초기 positions와 items 상태로 설정
-			const initialPositionsMap = interiorItems.data.items.reduce(
+			const initialPositionsMap = myHome.items.reduce(
 				(acc, item) => {
 					acc[item.name] = getPercentageToPosition(
 						{ x: item.x, y: item.y },
@@ -140,7 +141,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 				{} as { [key: string]: Position },
 			);
 
-			const itemsMap = interiorItems.data.items.reduce(
+			const itemsMap = myHome.items.reduce(
 				(acc, item) => {
 					acc[item.name] = {
 						...item,
@@ -157,7 +158,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 			setInitialPositions(initialPositionsMap);
 			setItems(itemsMap);
 		}
-	}, [interiorItems]);
+	}, [myHome]);
 
 	return (
 		<PageLayout
@@ -165,7 +166,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 				title: isEdit ? (
 					<span className="head6b">방 꾸미기</span>
 				) : userId ? (
-					<span className="head6b">{userName}</span>
+					<span className="head6b">{otherUserHomeData?.data.user.name}</span>
 				) : null,
 				leftSlot: {
 					component: isEdit ? (
@@ -180,8 +181,8 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 					) : userId ? (
 						<SoafStatusBadge
 							receiverId={userId}
-							status={status}
-							date={lastRequestDate?.toDateString()}
+							status={otherUserHomeData?.data.friendshipStatus as SoafStatus}
+							date={otherUserHomeData?.data.remainingDays}
 						/>
 					) : (
 						<HeaderActionButtons onBrushClick={handleStartEdit} />
@@ -194,7 +195,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 		>
 			<InteriorItems
 				userId={userId}
-				userName={userName}
+				userName={otherUserHomeData?.data.user.name}
 				isEdit={isEdit}
 				isDraggable={isDraggable}
 				setIsDraggable={setIsDraggable}
@@ -206,6 +207,8 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 			/>
 			<Soaf className="z-10 w-1/2 absolute_center" />
 			<DeskAndChair
+				userId={userId}
+				userName={otherUserHomeData?.data.user.name || ''}
 				isAfter6PM={isAfter6PM}
 				className="absolute bottom-0 left-0 right-0 w-full max-w-window h-[63%] my-0 mx-auto"
 			/>

@@ -2,6 +2,10 @@ import { useFlow } from '@/stackflow';
 import { useGenericMutation } from './useGenericMutation';
 import { useToast } from '../useToast';
 
+interface ApiResponse<T> {
+	data: T;
+}
+
 export type UserPayloadType = {
 	name: string;
 	alarm: boolean;
@@ -14,6 +18,16 @@ type UserResponseType = {};
 export const userMutations = ({ onSuccess }: { onSuccess: () => void }) => {
 	const { replace } = useFlow();
 	const { toast } = useToast();
+
+	const validateUserNameMutation = useGenericMutation<
+		ApiResponse<boolean>,
+		{ name: string },
+		void
+	>((params) => `/user/check-name/${params?.name}`, 'GET', {
+		onSuccess: (data) => {
+			return data.data;
+		},
+	});
 
 	const logoutUserMutation = useGenericMutation<void, void, void>(
 		'/user/logout',
@@ -53,5 +67,10 @@ export const userMutations = ({ onSuccess }: { onSuccess: () => void }) => {
 		},
 	});
 
-	return { patchUserMutation, logoutUserMutation, deleteUserMutation };
+	return {
+		patchUserMutation,
+		logoutUserMutation,
+		deleteUserMutation,
+		validateUserNameMutation,
+	};
 };

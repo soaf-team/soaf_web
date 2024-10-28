@@ -17,11 +17,13 @@ const HALF_VISIBLE_ITEMS = 3;
 type YearMonthSelectProps = {
 	currentDate: Date;
 	handleCurrentDate: (newDate: Date) => void;
+	className?: string;
 };
 
 export const YearMonthSelect = ({
 	currentDate,
 	handleCurrentDate,
+	className,
 }: YearMonthSelectProps) => {
 	const scrollContainerRef = useRef<HTMLDivElement>(null);
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -63,6 +65,7 @@ export const YearMonthSelect = ({
 				onClick={() => {
 					setTimeout(() => setIsDrawerOpen(true), 100);
 				}}
+				className={className}
 			>
 				<div className="flex items-center gap-[4px]">
 					<h2 className="label1sb">

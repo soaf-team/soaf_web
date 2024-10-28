@@ -7,6 +7,7 @@ type DiaryListProps = {
 	isCheckable?: boolean;
 	shadow?: boolean;
 	handleDiarySelect?: (index: number) => void;
+	isFriend?: boolean;
 };
 
 export const DiaryList = ({
@@ -15,6 +16,7 @@ export const DiaryList = ({
 	isCheckable,
 	shadow,
 	handleDiarySelect,
+	isFriend = false,
 }: DiaryListProps) => {
 	const _handleDiarySelect = (index: number) => {
 		if (!handleDiarySelect) return;
@@ -29,6 +31,7 @@ export const DiaryList = ({
 					key={diary.id}
 					diary={diary}
 					isCheckable={isCheckable}
+					isFriend={isFriend}
 					shadow={shadow}
 					isSelected={
 						isSelected === undefined ? false : isSelected.includes(diary)

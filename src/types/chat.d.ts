@@ -31,3 +31,5 @@ export type FriendType = {
 	updatedAt: string;
 	friend: Friend;
 };
+
+export type SoafStatus = 'soaf' | 'rejected' | 'pending' | 'notSoaf';

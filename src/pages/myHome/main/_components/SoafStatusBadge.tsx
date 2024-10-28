@@ -4,19 +4,20 @@ import { cn } from '@/utils';
 import { useToast, useSoafRequestMutations } from '@/hooks';
 import { overlay } from '@/libs';
 import { SoafRequestDialogOverlay } from './SoafRequestDialogOverlay';
+import { SoafStatus } from '@/types';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-	status: 'soaf' | 'rejected' | 'pending' | 'normal';
-	date?: string;
+	status: SoafStatus;
+	date?: number;
 	receiverId: string;
 }
 
-const getStatusMessage = (status: Props['status'], date?: string) => {
+const getStatusMessage = (status: Props['status'], date?: number) => {
 	switch (status) {
 		case 'soaf':
 			return '소울프렌드';
 		case 'rejected':
-			return `D-${dayjs(date).diff(dayjs(), 'day')}`;
+			return `D-${date}`;
 		case 'pending':
 			return '소프 대기';
 		default:
@@ -95,7 +96,7 @@ export const SoafStatusBadge = ({
 				className,
 			])}
 		>
-			{getStatusMessage(status)}
+			{getStatusMessage(status, date)}
 		</button>
 	);
 };

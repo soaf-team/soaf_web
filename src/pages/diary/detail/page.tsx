@@ -18,16 +18,17 @@ import { ReactionKeyType } from '@/types';
 
 type DiaryDetailPageParams = {
 	diaryId: string;
+	isFriend?: boolean;
 };
 
 const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 	params,
 }) => {
-	const diaryId = params.diaryId;
+	const { diaryId, isFriend } = params;
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const { push } = useFlow();
 	const { setDiary } = useDiaryStore();
-	const { diary, isLoading, isError } = useDiaryDetailQuery(diaryId);
+	const { diary, isLoading } = useDiaryDetailQuery(diaryId);
 	const { userProfile } = useUserProfileQuery();
 
 	const { deleteDiaryMutation } = useDiaryMutations();
@@ -59,7 +60,7 @@ const DiaryDetailPage: ActivityComponentType<DiaryDetailPageParams> = ({
 						component: <BackButton />,
 					},
 					rightSlot: {
-						component: (
+						component: !isFriend && (
 							<PopoverTrigger ref={triggerRef}>
 								<DotVerticalButton onClick={() => {}} />
 							</PopoverTrigger>

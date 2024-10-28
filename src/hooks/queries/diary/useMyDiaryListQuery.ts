@@ -24,6 +24,7 @@ export const useMyDiaryListQuery = (
 	year: number,
 	month: number,
 	isPublic?: boolean,
+	userId?: string,
 ) => {
 	const {
 		data = {
@@ -39,6 +40,7 @@ export const useMyDiaryListQuery = (
 	}>({
 		queryKey: [QUERY_KEY.currentUserDiaryList, year, month, isPublic],
 		queryFn: () => getMyDiaryList(year, month, isPublic),
+		enabled: !!userId, // 타유저 일기 조회 시 쿼리 비활성화
 	});
 
 	const currentUserDiaryList = data.items;
