@@ -7,7 +7,7 @@ import { BanDialogOverlay } from './BanDialogOverlay';
 import { QUERY_KEY } from '@/constants';
 import { chatSocketManager, overlay } from '@/libs';
 import { useFriendListQuery, useToast } from '@/hooks';
-import { userBlockMutations } from '@/hooks/mutations';
+import { useUserBlockMutations } from '@/hooks/mutations';
 import { cn } from '@/utils';
 import { AnnotationPlus, BanIcon } from '@/assets';
 
@@ -18,13 +18,7 @@ export const FriendList = () => {
 
 	const { toast } = useToast();
 	const { friendList } = useFriendListQuery();
-	const { postBlockUserMutation } = userBlockMutations({
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: [QUERY_KEY.FRIEND_LIST],
-			});
-		},
-	});
+	const { postBlockUserMutation } = useUserBlockMutations();
 
 	const handleBanButtonClick = async (userName: string, userId: string) => {
 		await overlay.open(<BanDialogOverlay userName={userName} />);

@@ -13,3 +13,9 @@ export type MatchingUser = {
 	userId: string;
 	userName: string;
 };
+
+export interface BlockedUser {
+	id: string;
+	email: string;
+	name: string;
+}
