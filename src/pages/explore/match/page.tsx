@@ -87,9 +87,6 @@ const MatchedUserPage = ({
 							onClick={() =>
 								replace('MyHomeMainPage', {
 									userId: selectedUser,
-									userName: similarUser.find(
-										(user) => user.userId === selectedUser,
-									)?.userName,
 								})
 							}
 						>

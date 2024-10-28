@@ -52,7 +52,7 @@ export const DiaryContent = ({
 				</div>
 				<div
 					dangerouslySetInnerHTML={{ __html: diary.content }}
-					className="body2 "
+					className="body2 whitespace-pre-wrap"
 				/>
 			</div>
 		</div>
