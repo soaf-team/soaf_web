@@ -31,4 +31,5 @@ export const QUERY_KEY = {
 	BLOCK_USER_LIST: 'blockUserList',
 	SENT_SOAF_REQUEST_LIST: 'sentSoafRequestList',
 	VALIDATE_USER_NAME: 'validateUserName',
+	NOTIFICATION_LIST: 'notificationList',
 };
