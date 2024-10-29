@@ -6,10 +6,12 @@ import { chatSocketManager, socketManager } from '@/libs';
 import { useFlow } from '@/stackflow';
 import { MessageType, ChatType } from '@/types';
 import { useChatListStore, useCurrentChatStore } from '@/store';
+import { axiosBase } from '@/apis';
 
 const TOKEN = import.meta.env.VITE_API_TOKEN;
 
 const ChatMainPage = () => {
+	const access_token = axiosBase.defaults.headers['x-access-token'];
 	const [selectedMenu, setSelectedMenu] = useState<'소프 목록' | '친구 목록'>(
 		'소프 목록',
 	);
@@ -19,7 +21,7 @@ const ChatMainPage = () => {
 	const { push } = useFlow();
 
 	useEffect(() => {
-		socketManager.setToken(TOKEN);
+		socketManager.setToken(access_token as string);
 		socketManager.connect();
 		chatSocketManager.connectForPage('ChatList');
 
