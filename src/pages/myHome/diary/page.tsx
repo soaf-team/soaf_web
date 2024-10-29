@@ -58,7 +58,7 @@ const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 	};
 
 	const handleClickWriteDiaryButton = () => {
-		push('NewDiaryStep1', {});
+		push('DiaryCalendarPage', {});
 	};
 
 	return (
