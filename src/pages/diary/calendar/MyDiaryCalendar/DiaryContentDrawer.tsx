@@ -18,29 +18,12 @@ export const DiaryContentDrawer = ({ diary }: DiaryContentDrawerProps) => {
 	const rounded = shouldDisappear ? 'rounded-none' : 'rounded-[28px]';
 
 	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						ref.current?.click();
-					}
-				});
-			},
-			{ threshold: 1.0 },
-		);
-
 		const currentRef = ref.current;
 
 		if (currentRef) {
-			observer.observe(currentRef);
+			currentRef?.click();
 		}
-
-		return () => {
-			if (currentRef) {
-				observer.unobserve(currentRef);
-			}
-		};
-	}, [diary, ref]);
+	}, [ref.current]);
 
 	const handleClick = ({ animate }: { animate?: boolean }) => {
 		push('DiaryDetailPage', { diaryId: diary.id }, { animate });
@@ -61,6 +44,7 @@ export const DiaryContentDrawer = ({ diary }: DiaryContentDrawerProps) => {
 					<DiaryContent diary={diary} />
 				</DrawerClose>
 				<DrawerClose
+					className="absolute bottom-0 left-0 right-0 h-[15vh]"
 					ref={ref}
 					onClick={() => handleClick({ animate: false })}
 				/>
