@@ -39,7 +39,7 @@ export const PublicDiaryList = ({
 
 	if (!isLoading && publicDiaryList.length === 0) {
 		return (
-			<div className="w-full flex-1">
+			<div className="w-full flex-1 flex items-center justify-center pb-[93px]">
 				<NonDataFallback>
 					<p className="whitespace-pre-line text-center">
 						{STATE_DESCRIPTION[descriptionState]}
