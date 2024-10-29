@@ -1,5 +1,5 @@
 import { BackButton, Card, PageLayout, Spacing } from '@/components';
-import { SoafRejectOverlay, SoafRequestNotifyOverlay } from './_component';
+import { SoafRejectOverlay, SoafRequestNotifyOverlay } from './_components';
 import {
 	NotifyType,
 	useNotificationListQuery,
@@ -65,7 +65,7 @@ const NotificationPage = () => {
 									handleRequestSoaf(notify);
 								}}
 							>
-								<div className="flex justify-between items-center">
+								<div className="flex items-center justify-between">
 									<h4>{notify.senderName}님의 소프신청</h4>
 									<p className="text-[14px] text-gray600">
 										{formatDateTime(notify.lastRequestDate)}
@@ -81,7 +81,7 @@ const NotificationPage = () => {
 				</>
 			) : (
 				<div className="relative h-screen">
-					<p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray300 font-medium">
+					<p className="absolute font-medium -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-gray300">
 						알림이 없어요
 					</p>
 				</div>

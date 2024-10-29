@@ -51,7 +51,7 @@ export const SoafRequestNotifyOverlay = ({
 				)}
 			>
 				<div className="relative flex items-center justify-between">
-					<h3 className="absolute text-center transform -translate-x-1/2 label1sb left-1/2">
+					<h3 className="absolute w-full text-center transform -translate-x-1/2 label1sb left-1/2">
 						{header.title}
 					</h3>
 					{header.rightSlot && (
@@ -60,7 +60,7 @@ export const SoafRequestNotifyOverlay = ({
 				</div>
 
 				<div className="flex flex-col items-end gap-[2px] p-3 w-full h-[144px] text-[14px] border border-solid  border-gray100 rounded-[8px]">
-					<p className="flex-1 w-full leading-normal outline-none whitespace-pre-line">
+					<p className="flex-1 w-full leading-normal whitespace-pre-line outline-none">
 						{requestText}
 					</p>
 				</div>
