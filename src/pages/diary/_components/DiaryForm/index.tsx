@@ -133,6 +133,7 @@ const TitleInput = forwardRef(
 	(props: TitleInputProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
 		const { diary, handleTitleChange, ...rest } = props;
 		const initialTitle = `${diary.emotions.map((emotion) => EMOTIONS[emotion].label).join(', ')} 하루`;
+		const prevTitleRef = useRef(diary.title);
 
 		const adjustHeight = () => {
 			const textarea = (ref as any)?.current;
@@ -142,23 +143,42 @@ const TitleInput = forwardRef(
 		};
 
 		useEffect(() => {
-			adjustHeight();
-			handleTitleChange(initialTitle);
+			if (diary.title === '') {
+				handleTitleChange(initialTitle);
+			}
+			requestAnimationFrame(() => {
+				adjustHeight();
+			});
 		}, []);
+
+		useEffect(() => {
+			if (prevTitleRef.current !== diary.title) {
+				requestAnimationFrame(() => {
+					adjustHeight();
+				});
+				prevTitleRef.current = diary.title;
+			}
+		}, [diary.title]);
 
 		return (
 			<textarea
 				{...rest}
 				ref={ref}
 				value={diary.title}
-				className="focus:outline-none w-full caret-primary resize-none"
+				className="focus:outline-none w-full caret-primary resize-none overflow-hidden"
+				rows={1}
 				onChange={(e) => {
-					adjustHeight();
 					handleTitleChange(e.target.value);
+					adjustHeight();
 				}}
-				onBlur={
-					diary.title === '' ? () => handleTitleChange(initialTitle) : undefined
-				}
+				onBlur={() => {
+					if (diary.title.trim() === '') {
+						handleTitleChange(initialTitle);
+						requestAnimationFrame(() => {
+							adjustHeight();
+						});
+					}
+				}}
 			/>
 		);
 	},
