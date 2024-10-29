@@ -34,5 +34,19 @@ export const useDiaryStatsQuery = (year: number, month: number) => {
 		queryFn: () => getDiaryStats(year, month),
 	});
 
-	return { data };
+	const filledCoreEmotions = Object.assign(
+		{ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+		data.totalCoreEmotions,
+	);
+
+	const sortedDetailedEmotionList = Object.entries(
+		data.totalDetailedEmotions,
+	).sort(([, countA], [, countB]) => countB - countA);
+	const sortedDetailedEmotions = Object.fromEntries(sortedDetailedEmotionList);
+
+	return {
+		totalDetailedEmotions: sortedDetailedEmotions,
+		totalCoreEmotions: filledCoreEmotions,
+		dailyEmotions: data.dailyEmotions,
+	};
 };
