@@ -40,11 +40,13 @@ export const MoodFlow = ({ data, currentMonth }: MoodFlowProps) => {
 		return `${currentMonth}-${e.date}`;
 	});
 	const moodData = data.map((e) => {
-		const value = Object.values(e.emotions).reduce(
-			(acc, curr) => acc + curr,
-			0,
-		);
-		return value === 0 ? null : value;
+		let data = null;
+		Object.entries(e.emotions).forEach(([key, value]) => {
+			if (value) {
+				data = key;
+			}
+		});
+		return data || null;
 	});
 
 	const chartData: ChartData<'line', number[], string> = {
