@@ -29,7 +29,7 @@ export const MyDiaryList = ({ currentDate }: MyDiaryListProps) => {
 	if (currentUserDiaryList.length === 0) {
 		return (
 			<>
-				<div className="w-full absolute_center">
+				<div className="w-full absolute_center pb-[10vh]">
 					<NonDataFallback>
 						<p className="text-center whitespace-pre-line">
 							{NO_DIARY_MESSAGE}

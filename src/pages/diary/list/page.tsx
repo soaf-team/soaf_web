@@ -15,7 +15,7 @@ const DiaryListPage: ActivityComponentType = () => {
 				},
 			}}
 		>
-			<div className="relative flex flex-col items-center gap-[6px]">
+			<div className="relative flex flex-col items-center gap-[6px] flex-1">
 				<div className="sticky flex justify-center top-0 w-full pb-[16px] bg-white z-50">
 					<YearMonthSelect
 						currentDate={currentDate}
