@@ -26,7 +26,10 @@ export const MoodDistribution = ({ data }: MoodDistributionProps) => {
 				<div className="flex gap-[12px]">
 					{MOOD_RATINGS.map((level, index) => {
 						return (
-							<div key={index} className="flex flex-col gap-[8px] w-[42px]">
+							<div
+								key={index}
+								className="flex flex-col gap-[8px] w-[42px] justify-center items-center"
+							>
 								<img
 									key={index}
 									src={level}
@@ -34,7 +37,7 @@ export const MoodDistribution = ({ data }: MoodDistributionProps) => {
 									className="w-[36px] h-[36px]"
 								/>
 								<span className="label4eb text-gray300">
-									{data[index + 1]}%
+									{((data[index + 1] / total) * 100).toFixed()}%
 								</span>
 							</div>
 						);
