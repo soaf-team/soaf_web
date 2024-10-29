@@ -22,7 +22,6 @@ const OVERLAY_DESCRIPTION =
 
 const SoafExplorePage = () => {
 	const { push } = useFlow();
-	const { toast } = useToast();
 	const [currentDate, setCurrentDate] = useState(new Date());
 
 	const { currentUserDiaryList, isLoading, isError } = useMyDiaryListQuery(
