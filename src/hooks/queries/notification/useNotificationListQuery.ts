@@ -8,16 +8,27 @@ interface ApiResponse<T> {
 	data: T;
 }
 
+export type NotifyType = {
+	_id: string;
+	lastRequestDate: string;
+	message: string;
+	senderId: string;
+	senderName: string;
+	status: 'empty' | 'rejected' | 'pending' | 'accept';
+};
+
 const getNotificationList = async () => {
 	const res = await axiosBase.get('/friend/requests/received');
 	return res.data;
 };
 
 export const useNotificationListQuery = () => {
-	const { data: notificationList } = useSuspenseQuery({
+	const { data } = useSuspenseQuery<ApiResponse<NotifyType[]>>({
 		queryKey: [QUERY_KEY.NOTIFICATION_LIST],
 		queryFn: getNotificationList,
 	});
+
+	const notificationList = data.data;
 
 	return { notificationList };
 };
