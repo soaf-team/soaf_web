@@ -19,7 +19,6 @@ interface SoafRequestDialogProps extends OverlayProps {
 		className?: string;
 	};
 	className?: string;
-	text: string;
 	onTextChange?: (text: string) => void;
 	isReceiver?: boolean;
 	onReject?: () => void;
@@ -33,7 +32,6 @@ export const SoafRequestDialogOverlay = ({
 	resolve,
 	overlayKey,
 	className,
-	text,
 	onTextChange,
 	isReceiver = false,
 	onReject,
