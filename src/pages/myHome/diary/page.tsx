@@ -20,7 +20,7 @@ interface Props {
 
 const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 	const { userId, userName } = params; // 타유저 정보
-	const { push } = useFlow();
+	const { replace } = useFlow();
 
 	const [pageState, setPageState] = useState<DiaryPageState>({
 		currentDate: new Date(),
@@ -58,7 +58,7 @@ const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 	};
 
 	const handleClickWriteDiaryButton = () => {
-		push('DiaryCalendarPage', {});
+		replace('DiaryCalendarPage', {});
 	};
 
 	return (

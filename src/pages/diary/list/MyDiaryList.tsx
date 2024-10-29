@@ -20,10 +20,10 @@ export const MyDiaryList = ({ currentDate }: MyDiaryListProps) => {
 
 	const { currentUserDiaryList } = useMyDiaryListQuery(year, month);
 
-	const { push } = useFlow();
+	const { replace } = useFlow();
 
 	const handleClickWriteDiaryButton = () => {
-		push('NewDiaryStep1', {});
+		replace('DiaryCalendarPage', {});
 	};
 
 	if (currentUserDiaryList.length === 0) {

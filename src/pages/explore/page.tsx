@@ -21,7 +21,7 @@ const OVERLAY_DESCRIPTION =
 	'일기를 고르지 않으면\n소프 AI가 자동으로 찾아줘요\n소프를 탐색할까요?';
 
 const SoafExplorePage = () => {
-	const { push } = useFlow();
+	const { replace, push } = useFlow();
 	const [currentDate, setCurrentDate] = useState(new Date());
 
 	const { currentUserDiaryList, isLoading, isError } = useMyDiaryListQuery(
@@ -107,7 +107,7 @@ const SoafExplorePage = () => {
 						onClick={
 							currentUserDiaryList.length === 0
 								? () => {
-										push('DiaryCalendarPage', {});
+										replace('DiaryCalendarPage', {});
 									}
 								: () => handleButtonClick(selectedId, currentUserDiaryList)
 						}
