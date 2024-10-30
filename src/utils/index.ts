@@ -7,3 +7,4 @@ export * from './log';
 export * from './extractTokensFromCookies';
 export * from './sendMessageToApp';
 export * from './convertImage';
+export * from './throttle';
