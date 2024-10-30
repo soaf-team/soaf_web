@@ -14,11 +14,14 @@ export const useSoafRequestMutations = () => {
 		SoafRequestPayloadType
 	>('/friend/request', 'POST', {
 		onSuccess: () => {
+			toast({
+				title: '두 분의 소중한 인연을 응원합니다.',
+			});
 			queryClient.invalidateQueries({
 				queryKey: [QUERY_KEY.SENT_SOAF_REQUEST_LIST],
 			});
-			toast({
-				title: '두 분의 소중한 인연을 응원합니다.',
+			queryClient.invalidateQueries({
+				queryKey: [QUERY_KEY.OTHER_USER_HOME_DATA],
 			});
 		},
 		onError: () => {
