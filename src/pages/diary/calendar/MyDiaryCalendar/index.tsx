@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useFlow } from '@/stackflow';
+import dayjs from 'dayjs';
 
 import { cn, getDateStatus } from '@/utils';
 import { DiaryType } from '@/types';
@@ -92,7 +93,11 @@ export const MyDiaryCalendar = () => {
 								<div
 									key={index}
 									onClick={() =>
-										handleDateClick(diaryAtDate, isFuture, day.toISOString())
+										handleDateClick(
+											diaryAtDate,
+											isFuture,
+											dayjs(day).format('YYYY-MM-DD'),
+										)
 									}
 									className={cn([
 										'flex items-center justify-center relative h-[40px] w-[40px] rounded-full',
