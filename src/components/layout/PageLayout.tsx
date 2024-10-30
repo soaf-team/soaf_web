@@ -59,7 +59,7 @@ export const PageLayout = ({
 				) : null}
 				<main
 					className={cn([
-						'flex flex-col px-[18px] flex-1 overflow-auto',
+						'flex flex-col px-[18px] flex-1 overflow-y-auto',
 						className,
 					])}
 				>
