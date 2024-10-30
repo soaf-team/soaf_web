@@ -59,7 +59,14 @@ const Input = (props: InputProps, ref: React.Ref<HTMLInputElement>) => {
 				className="outline-none shadow-none border-none appearance-none bg-transparent flex-1 placeholder:text-gray300"
 			/>
 			{isResetButton && (
-				<ResetButton visible={isValue} onClick={() => onChange('')} />
+				<ResetButton
+					visible={isValue}
+					onClick={() => {
+						onChange('');
+						//@ts-ignore
+						ref?.current.focus();
+					}}
+				/>
 			)}
 			{rightSlot != null ? rightSlot : null}
 		</div>
