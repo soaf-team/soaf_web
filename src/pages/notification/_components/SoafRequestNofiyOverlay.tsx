@@ -1,43 +1,26 @@
 import { Button } from '@/components';
 import { overlay, OverlayProps } from '@/libs';
 import { cn } from '@/utils';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
-interface SoafRequestDialogProps extends OverlayProps {
+interface SoafRequestNotifyProps extends OverlayProps {
 	header: {
 		title: string;
 		rightSlot?: ReactNode;
 	};
-	leftButton?: {
-		text?: string;
-		onClick?: () => void;
-		className?: string;
-	};
-	rightButton?: {
-		text?: string;
-		onClick?: () => void;
-		className?: string;
-	};
+	requestText: string;
 	className?: string;
-	onTextChange?: (text: string) => void;
 	isReceiver?: boolean;
-	onReject?: () => void;
 }
 
-export const SoafRequestDialogOverlay = ({
+export const SoafRequestNotifyOverlay = ({
 	header,
-	leftButton,
-	rightButton,
 	reject,
 	resolve,
+	requestText,
 	overlayKey,
 	className,
-	onTextChange,
-	isReceiver = false,
-	onReject,
-}: SoafRequestDialogProps) => {
-	const [localText, setLocalText] = useState('');
-
+}: SoafRequestNotifyProps) => {
 	const handleClose = () => {
 		overlay.remove(overlayKey);
 	};
@@ -47,15 +30,9 @@ export const SoafRequestDialogOverlay = ({
 		handleClose();
 	};
 
-	const handleResolve = () => {
+	const handleResolve = (localText: string) => {
 		resolve?.(localText);
 		handleClose();
-	};
-
-	const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		const newValue = e.target.value;
-		setLocalText(newValue);
-		onTextChange?.(newValue);
 	};
 
 	return (
@@ -74,7 +51,7 @@ export const SoafRequestDialogOverlay = ({
 				)}
 			>
 				<div className="relative flex items-center justify-between">
-					<h3 className="absolute text-center transform -translate-x-1/2 label1sb left-1/2">
+					<h3 className="absolute w-full text-center transform -translate-x-1/2 label1sb left-1/2">
 						{header.title}
 					</h3>
 					{header.rightSlot && (
@@ -83,15 +60,8 @@ export const SoafRequestDialogOverlay = ({
 				</div>
 
 				<div className="flex flex-col items-end gap-[2px] p-3 w-full h-[144px] text-[14px] border border-solid  border-gray100 rounded-[8px]">
-					<textarea
-						className="flex-1 w-full font-medium leading-normal outline-none placeholder:whitespace-pre-line"
-						placeholder={`정성스런 메세지와 함께 신청하면\n상대방이 수락할 가능성이 높아져요!`}
-						value={localText}
-						maxLength={200}
-						onChange={handleTextChange}
-					/>
-					<p className="font-medium">
-						<span className="text-gray300">{localText.length} / </span>200
+					<p className="flex-1 w-full leading-normal whitespace-pre-line outline-none">
+						{requestText}
 					</p>
 				</div>
 
@@ -106,33 +76,32 @@ export const SoafRequestDialogOverlay = ({
 								<Button
 									size="sm"
 									variant="ghost"
-									onClick={handleReject}
-									className={cn(leftButton?.className)}
+									onClick={() => {
+										handleResolve('reject');
+									}}
 								>
-									{leftButton?.text}
+									거절할래요
 								</Button>
 							</div>
 							<div className="flex-1">
 								<Button
 									size="sm"
-									onClick={handleResolve}
-									variant="primary"
-									className={cn(rightButton?.className)}
+									onClick={() => {
+										handleResolve('accept');
+									}}
+									className="bg-primary"
 								>
-									{rightButton?.text}
+									네, 소프 맺을래요
 								</Button>
 							</div>
 						</div>
 					</div>
-
-					{isReceiver && (
-						<button
-							className="text-[14px] text-gray500 font-medium underline"
-							onClick={onReject}
-						>
-							아직 모르겠어요, 더 고민해볼래요
-						</button>
-					)}
+					<button
+						className="text-[14px] text-gray500 font-medium underline"
+						onClick={handleReject}
+					>
+						아직 모르겠어요, 더 고민해볼래요
+					</button>
 				</div>
 			</dialog>
 		</>

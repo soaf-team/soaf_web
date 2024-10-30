@@ -5,3 +5,5 @@ export * from './useReactionMutation';
 export * from './useMyHomeMutations';
 export * from './useInteriorPositionMutations';
 export * from './useSoafRequestMutations';
+export * from './useSoafAcceptMutation';
+export * from './useSoafRejectMutation';
