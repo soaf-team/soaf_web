@@ -33,39 +33,55 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 				'flex items-center',
 				'pt-2 pb-7',
 				'bg-white z-10',
+				'min-w-0',
+				'w-full',
 			)}
 			onSubmit={handleSubmit}
 		>
-			<button type="button" onClick={() => openCamera(roomId)}>
-				<img src={CameraIcon} alt="camera" />
-			</button>
-			<Spacing direction="horizontal" size={14} />
-			<button type="button" onClick={() => openAlbum(roomId)}>
-				<img src={AlbumIcon} alt="album" />
-			</button>
-			<Spacing direction="horizontal" size={10} />
-			<div
-				className={cn(
-					'flex justify-between gap-2 items-center flex-1',
-					'px-4 py-[10px]',
-					'rounded-[24px] bg-gray50 text-gray200 caret-primary',
-				)}
-			>
-				<input
-					className="flex-1 h-6 bg-transparent outline-none"
-					type="text"
-					placeholder="메시지를 입력주세요"
-					value={message}
-					onKeyDown={(e) => {
-						if (e.key === 'Enter') {
-							e.preventDefault();
-						}
-					}}
-					onChange={(e) => setMessage(e.target.value)}
-				/>
-				<button className={cn(!message && 'hidden')} type="submit">
-					<img src={sendIcon} alt="send" />
+			<div className="flex items-center w-full min-w-0">
+				<button
+					type="button"
+					className="w-6 h-6 flex-shrink-0"
+					onClick={() => openCamera(roomId)}
+				>
+					<img src={CameraIcon} alt="camera" className="w-full h-full" />
 				</button>
+				<Spacing direction="horizontal" size={14} />
+				<button
+					type="button"
+					className="w-6 h-6 flex-shrink-0"
+					onClick={() => openAlbum(roomId)}
+				>
+					<img src={AlbumIcon} alt="album" className="w-full h-full" />
+				</button>
+				<Spacing direction="horizontal" size={10} />
+				<div
+					className={cn(
+						'flex justify-between gap-2 items-center flex-1',
+						'px-4 py-[10px]',
+						'rounded-[24px] bg-gray50 text-gray200 caret-primary',
+						'min-w-0', // 추가
+					)}
+				>
+					<input
+						className="flex-1 h-6 bg-transparent outline-none min-w-0" // min-w-0 추가
+						type="text"
+						placeholder="메시지를 입력주세요"
+						value={message}
+						onKeyDown={(e) => {
+							if (e.key === 'Enter') {
+								e.preventDefault();
+							}
+						}}
+						onChange={(e) => setMessage(e.target.value)}
+					/>
+					<button
+						className={cn(!message && 'hidden', 'flex-shrink-0')}
+						type="submit"
+					>
+						<img src={sendIcon} alt="send" />
+					</button>
+				</div>
 			</div>
 		</form>
 	);
