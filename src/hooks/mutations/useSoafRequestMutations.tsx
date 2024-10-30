@@ -28,5 +28,20 @@ export const useSoafRequestMutations = () => {
 		},
 	});
 
-	return { createSoafRequestMutation };
+	const deleteSoafRequestMutation = useGenericMutation<
+		void,
+		{ requestId: string },
+		void
+	>((params) => `/friend/request/${params?.requestId}`, 'DELETE', {
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: [QUERY_KEY.NOTIFICATION_LIST],
+			});
+			toast({
+				title: '알림이 삭제되었어요',
+			});
+		},
+	});
+
+	return { createSoafRequestMutation, deleteSoafRequestMutation };
 };
