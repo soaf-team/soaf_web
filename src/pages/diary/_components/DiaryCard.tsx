@@ -34,7 +34,7 @@ export const DiaryCard = ({
 			onClick={() => {
 				isCheckable
 					? onClick?.()
-					: push('DiaryDetailPage', { diaryId: diary.id });
+					: push('DiaryDetailPage', { diaryId: diary.id, isFriend });
 			}}
 			className={cn(['relative w-full gap-[12px] cursor-pointer ', className])}
 		>
@@ -82,15 +82,7 @@ export const DiaryCard = ({
 					)}
 				</div>
 				<div className="w-full h-px bg-border" />
-				<div
-					className="flex align-center gap-[17px]"
-					onClick={(e) => {
-						e.stopPropagation();
-						isCheckable
-							? push('DiaryDetailPage', { diaryId: diary.id, isFriend })
-							: onClick?.();
-					}}
-				>
+				<div className="flex align-center gap-[17px]">
 					<p className="flex-1 overflow-hidden body4 line-clamp-3 overflow-ellipsis">
 						{removeHtmlTags(diary.content)}
 					</p>
