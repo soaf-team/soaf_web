@@ -51,11 +51,11 @@ export const SoafRequestNotifyOverlay = ({
 				)}
 			>
 				<div className="relative flex items-center justify-between">
-					<h3 className="absolute w-full text-center transform -translate-x-1/2 label1sb left-1/2">
+					<h3 className="absolute text-center transform -translate-x-1/2 label1sb left-1/2 pointer-events-none">
 						{header.title}
 					</h3>
 					{header.rightSlot && (
-						<div className="ml-auto">{header.rightSlot}</div>
+						<div className="ml-auto z-10">{header.rightSlot}</div>
 					)}
 				</div>
 

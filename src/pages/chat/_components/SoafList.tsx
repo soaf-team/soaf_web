@@ -24,9 +24,9 @@ export const SoafList = () => {
 		},
 	});
 
-	const handleStatusMessageChange = async () => {
+	const handleStatusMessageChange = async (userStatus: string | null) => {
 		const status = await overlay.open(
-			<StatusMessageOverlay overlayKey="status" />,
+			<StatusMessageOverlay overlayKey="status" userStatus={userStatus} />,
 		);
 
 		await patchUserMutation.mutateAsync({
@@ -40,7 +40,9 @@ export const SoafList = () => {
 		<div className="flex flex-col">
 			<MyProfile
 				userProfile={userProfile}
-				handleStatusMessageChange={handleStatusMessageChange}
+				handleStatusMessageChange={() => {
+					handleStatusMessageChange(userProfile.status);
+				}}
 			/>
 			<div className="w-full h-[10px] bg-gray50/50" />
 			<FriendList />
