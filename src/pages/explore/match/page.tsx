@@ -36,66 +36,69 @@ const MatchedUserPage = ({
 	}, []);
 
 	return (
-		<PageLayout
-			header={{
-				leftSlot: {
-					component: <LeftIcon />,
-				},
-				rightSlot: {
-					component: <RightIcon />,
-				},
-			}}
-			className="overflow-y-auto"
-		>
-			{isLoading ? (
-				<div className="fixed flex justify-center items-center w-full h-full top-0 left-0 bg-black/80 z-[100]">
+		<>
+			{isLoading && (
+				<div className="fixed flex justify-center items-center w-full h-full top-0 left-0 bg-black/80 z-[999]">
 					<LoadingSpinner />
 				</div>
-			) : (
-				<>
-					<div className="flex flex-col justify-center items-center gap-[8px]">
-						<p className="head4b">매칭된 유저 목록</p>
-
-						<div className="flex flex-col body3 mb-[12px]">
-							<p>원하는 유저를 선택하여</p>
-							<p>취향을 탐색하고 소프를 맺어 소통해보세요!</p>
-						</div>
-
-						<div className="flex flex-col justify-center items-center gap-[12px] w-[95%] mb-[150px]">
-							{similarUser
-								.sort((a: MatchingUser, b: MatchingUser) =>
-									a.score > b.score ? -1 : a.score < b.score ? 1 : 0,
-								)
-								.slice(0, 7)
-								.map((user: MatchingUser, index: number) => (
-									<MatchedUserItem
-										key={user.userId}
-										name={user.userName}
-										percent={user.score}
-										onClick={() => handleSelect(user.userId)}
-										isSelected={selectedUser === user.userId}
-										className={
-											index === similarUser.length - 1 ? 'mb-[120px]' : ''
-										}
-									/>
-								))}
-						</div>
-					</div>
-					<div className="fixed_bottom_button">
-						<Button
-							disabled={selectedUser === null}
-							onClick={() =>
-								replace('MyHomeMainPage', {
-									userId: selectedUser,
-								})
-							}
-						>
-							방문하기
-						</Button>
-					</div>
-				</>
 			)}
-		</PageLayout>
+			<PageLayout
+				header={{
+					leftSlot: {
+						component: <LeftIcon />,
+					},
+					rightSlot: {
+						component: <RightIcon />,
+					},
+				}}
+				className="overflow-y-auto"
+			>
+				{!isLoading && (
+					<>
+						<div className="flex flex-col justify-center items-center gap-[8px]">
+							<p className="head4b">매칭된 유저 목록</p>
+
+							<div className="flex flex-col body3 mb-[12px]">
+								<p>원하는 유저를 선택하여</p>
+								<p>취향을 탐색하고 소프를 맺어 소통해보세요!</p>
+							</div>
+
+							<div className="flex flex-col justify-center items-center gap-[12px] w-[95%] mb-[150px]">
+								{similarUser
+									.sort((a: MatchingUser, b: MatchingUser) =>
+										a.score > b.score ? -1 : a.score < b.score ? 1 : 0,
+									)
+									.slice(0, 7)
+									.map((user: MatchingUser, index: number) => (
+										<MatchedUserItem
+											key={user.userId}
+											name={user.userName}
+											percent={user.score}
+											onClick={() => handleSelect(user.userId)}
+											isSelected={selectedUser === user.userId}
+											className={
+												index === similarUser.length - 1 ? 'mb-[120px]' : ''
+											}
+										/>
+									))}
+							</div>
+						</div>
+						<div className="fixed_bottom_button">
+							<Button
+								disabled={selectedUser === null}
+								onClick={() =>
+									replace('MyHomeMainPage', {
+										userId: selectedUser,
+									})
+								}
+							>
+								방문하기
+							</Button>
+						</div>
+					</>
+				)}
+			</PageLayout>
+		</>
 	);
 };
 
