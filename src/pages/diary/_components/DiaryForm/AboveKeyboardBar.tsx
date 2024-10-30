@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { DiaryFormType, PhotoType, useDiaryStore } from '@/store';
-import { useKeyboardHeight } from '@/hooks';
+import { toast, useKeyboardHeight } from '@/hooks';
 import { Lock, Photo, UnLock } from '@/assets';
 
 type AboveKeyboardBarProps = {
@@ -33,7 +33,9 @@ export const AboveKeyboardBar = ({
 			);
 
 			if (validFiles.length !== newFiles.length) {
-				console.warn('Some files exceeded the 5MB limit and were excluded.');
+				toast({
+					title: '5MB 이하의 사진만 첨부할 수 있습니다.',
+				});
 			}
 
 			const newPhotos = validFiles.map((file) => ({
