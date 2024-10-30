@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { DiaryType } from '@/types';
 import { EmotionSticker } from '@/components/emotion';
 import { Image } from '@/components/ui';
+import { Lock, Unlock } from '@/assets';
 
 type DiaryContentProps = {
 	diary: DiaryType;
@@ -26,7 +27,15 @@ export const DiaryContent = ({
 			<EmotionSticker emotion={diary.emotions[0]} className="mb-[10px]" />
 			<div className="flex flex-col text-left">
 				<span className="head3 mb-[16px] gap-[4px]">
-					<span>{monthDay}</span> <span className="text-gray300">{week}</span>
+					<div className="flex gap-[4px] items-center">
+						<span>{monthDay}</span>
+						<span className="text-gray300">{week}</span>
+						<img
+							src={diary.isPublic ? Unlock : Lock}
+							alt={diary.isPublic ? 'unlock' : 'lock'}
+							className="w-[16px] h-[16px]"
+						/>
+					</div>
 					<h1>{diary.title}</h1>
 				</span>
 				<div className="flex gap-[8px] mb-[16px]">
