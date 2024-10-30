@@ -93,7 +93,7 @@ export const useDiaryMutations = () => {
 		},
 		onSuccess: (response) => {
 			const { _id } = response.data;
-			pop(1);
+			pop(2);
 			invalidateDiaryQueries(_id);
 			overlay.open(
 				<LoadingDotScreen
