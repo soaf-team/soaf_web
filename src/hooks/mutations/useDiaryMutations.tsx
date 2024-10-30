@@ -101,6 +101,7 @@ export const useDiaryMutations = () => {
 					message="일기를 수정이 완료됐어요!"
 				/>,
 			);
+			resetAllDiaryState();
 		},
 		onError: (error) => {
 			overlay.open(
@@ -122,7 +123,7 @@ export const useDiaryMutations = () => {
 		'DELETE',
 		{
 			onSuccess: () => {
-				pop(1);
+				pop(2);
 				toast({
 					title: '일기가 삭제되었어요',
 				});
