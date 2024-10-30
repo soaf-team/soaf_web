@@ -11,6 +11,7 @@ type EmotionsOfTheMonthProps = {
 
 export const EmotionsOfTheMonth = ({ data }: EmotionsOfTheMonthProps) => {
 	const total = Object.values(data).reduce((acc, curr) => acc + curr, 0);
+	const mostEmotion = Object.values(data).sort((a, b) => b - a)[0];
 
 	return (
 		<DiaryStatsCard title="이 달의 감정">
@@ -39,9 +40,12 @@ export const EmotionsOfTheMonth = ({ data }: EmotionsOfTheMonthProps) => {
 										</p>
 										<div
 											className={cn([
-												'w-full h-[4px] rounded-full',
+												'h-[4px] rounded-full',
 												EMOTIONS[emotion].color,
 											])}
+											style={{
+												width: `${(count / mostEmotion) * 100}%`,
+											}}
 										/>
 									</div>
 								</div>
