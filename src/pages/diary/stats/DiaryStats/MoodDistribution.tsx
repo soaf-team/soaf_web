@@ -37,7 +37,7 @@ export const MoodDistribution = ({ data }: MoodDistributionProps) => {
 									className="w-[36px] h-[36px]"
 								/>
 								<span className="label4eb text-gray300">
-									{((data[index + 1] / total) * 100).toFixed()}%
+									{((data[index + 1] / (total || 1)) * 100).toFixed()}%
 								</span>
 							</div>
 						);
