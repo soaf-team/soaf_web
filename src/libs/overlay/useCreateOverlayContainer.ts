@@ -9,6 +9,7 @@ export const useCreateOverlayContainer = () => {
 		}
 		const modalEl = document.createElement('div');
 		modalEl.id = OVERLAY_ID;
+		modalEl.style.zIndex = '10000';
 		document.body.append(modalEl);
 
 		return () => {
