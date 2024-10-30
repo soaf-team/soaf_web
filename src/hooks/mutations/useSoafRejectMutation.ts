@@ -15,7 +15,7 @@ export const useSoafRejectMutation = () => {
 		void,
 		SoafRequestParams,
 		void
-	>((params) => `/diary/reaction/${params?.requestId}/reject`, 'PATCH', {
+	>((params) => `/friend/request/${params?.requestId}/reject`, 'PATCH', {
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: [QUERY_KEY.NOTIFICATION_LIST],

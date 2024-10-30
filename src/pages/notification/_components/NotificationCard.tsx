@@ -60,7 +60,11 @@ export const NotificationCard = ({
 							{formatDateTime(notification.lastRequestDate)}
 						</p>
 					</div>
-					<p className="mt-2 text-sm text-gray300">{notification.message}</p>
+					<p className="mt-2 text-sm text-gray300">
+						{notification.message.length > 60
+							? `${notification.message.slice(0, 60)}...`
+							: notification.message}
+					</p>
 				</div>
 
 				{/* 버튼 영역 */}

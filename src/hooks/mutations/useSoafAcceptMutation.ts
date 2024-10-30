@@ -16,13 +16,16 @@ export const useSoafAcceptMutation = () => {
 		void,
 		SoafRequestParams,
 		void
-	>((params) => `/diary/reaction/${params?.requestId}/accept`, 'PATCH', {
+	>((params) => `/friend/request/${params?.requestId}/accept`, 'PATCH', {
 		onSuccess: (_, params) => {
+			toast({
+				title: `${params?.senderName}님과 소프를 맺었어요`,
+			});
 			queryClient.invalidateQueries({
 				queryKey: [QUERY_KEY.NOTIFICATION_LIST],
 			});
-			toast({
-				title: `${params?.senderName}님과 소프를 맺었어요`,
+			queryClient.invalidateQueries({
+				queryKey: [QUERY_KEY.FRIEND_LIST],
 			});
 		},
 		onError: () => {
