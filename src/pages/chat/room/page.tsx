@@ -6,6 +6,7 @@ import { MessageInput, SpeechBubble } from './_components';
 import { MyHomeButton } from '../_components';
 import { chatSocketManager } from '@/libs';
 import { useCurrentChatStore } from '@/store';
+import { useFlow } from '@/stackflow';
 import { useFriendListQuery, useUserProfileQuery } from '@/hooks';
 import { User, MessageType } from '@/types';
 
@@ -17,9 +18,10 @@ const ChatRoomPage = ({
 	const { roomId, friendId } = params;
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 
+	const { pop } = useFlow();
 	const { userProfile } = useUserProfileQuery();
 	const { friendList } = useFriendListQuery();
-	const { chatHistoryList } = useCurrentChatStore();
+	const { chatHistoryList, setChatHistoryList } = useCurrentChatStore();
 
 	const nickname = friendList.find((friend) => friend.friend._id === friendId)
 		?.friend.name;
@@ -44,7 +46,14 @@ const ChatRoomPage = ({
 			className="relative"
 			header={{
 				leftSlot: {
-					component: <BackButton />,
+					component: (
+						<BackButton
+							onClick={() => {
+								setChatHistoryList([]);
+								pop();
+							}}
+						/>
+					),
 				},
 				title: nickname ?? '알수없음',
 				rightSlot: {
