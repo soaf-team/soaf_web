@@ -38,7 +38,7 @@ const SettingPage: ActivityComponentType = () => {
 		>
 			<UserNameSection userName={userProfile.name} />
 
-			<div className="mx-[-20px]">
+			<div className="mx-[-20px] w-[calc(100%+40px)]">
 				<Divider className="h-2.5 bg-gray50" />
 			</div>
 
