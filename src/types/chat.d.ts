@@ -32,4 +32,4 @@ export type FriendType = {
 	friend: Friend;
 };
 
-export type SoafStatus = 'soaf' | 'rejected' | 'pending' | 'notSoaf';
+export type SoafStatus = 'accepted' | 'rejected' | 'pending' | 'empty';

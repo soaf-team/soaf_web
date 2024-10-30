@@ -14,7 +14,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const getStatusMessage = (status: Props['status'], date?: number) => {
 	switch (status) {
-		case 'soaf':
+		case 'accepted':
 			return '소울프렌드';
 		case 'rejected':
 			return `D-${date}`;
@@ -67,7 +67,7 @@ export const SoafStatusBadge = ({
 
 	const handleButtonClick = () => {
 		switch (status) {
-			case 'soaf':
+			case 'accepted':
 				toast({
 					title: '두 분의 소중한 인연을 응원합니다',
 				});
