@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useQueryClient } from '@tanstack/react-query';
 
 import { MyHomeButton } from './MyHomeButton';
 import { BanDialogOverlay } from './BanDialogOverlay';
-import { QUERY_KEY } from '@/constants';
 import { chatSocketManager, overlay } from '@/libs';
 import { useFriendListQuery, useToast } from '@/hooks';
 import { useUserBlockMutations } from '@/hooks/mutations';
-import { cn } from '@/utils';
+import { cn, throttle } from '@/utils';
 import { AnnotationPlus, BanIcon } from '@/assets';
 
-export const FriendList = () => {
-	const queryClient = useQueryClient();
+const throttledEmit = throttle((participants: string[]) => {
+	chatSocketManager.emit('initializeChat', { participants });
+}, 3000);
 
+export const FriendList = () => {
 	const [isDraggingId, setIsDraggingId] = useState<string | null>(null);
 
 	const { toast } = useToast();
@@ -31,6 +31,10 @@ export const FriendList = () => {
 			title: `${userName}님이 차단되었어요`,
 		});
 	};
+
+	const handleChatInit = useCallback((friendId: string) => {
+		throttledEmit([friendId]);
+	}, []);
 
 	return (
 		<article className="flex flex-col px-[18px] py-2">
@@ -79,11 +83,7 @@ export const FriendList = () => {
 										alt="start-chat"
 										width={24}
 										height={24}
-										onClick={() => {
-											chatSocketManager.emit('initializeChat', {
-												participants: [friend._id],
-											});
-										}}
+										onClick={() => handleChatInit(friend._id)}
 									/>
 									{isDraggingId === friend._id && (
 										<img

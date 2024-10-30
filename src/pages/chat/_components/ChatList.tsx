@@ -40,9 +40,7 @@ export const ChatList = () => {
 							<div className={LIST_CON_STYLE}>
 								<p>{friend?.friend.name ?? '알수없음'}</p>
 								<p className="text-sm text-gray300 font-medium">
-									{chat.lastMessage?.content[0].includes('base64')
-										? '사진'
-										: `${chat.lastMessage?.content[0].slice(0, 14)}...`}
+									{content(chat.lastMessage?.content[0])}
 								</p>
 							</div>
 							<div className={cn(LIST_CON_STYLE, 'items-end')}>
@@ -67,6 +65,22 @@ export const ChatList = () => {
 			</ul>
 		</div>
 	);
+};
+
+const content = (content: string | undefined) => {
+	if (!content) {
+		return '';
+	}
+
+	if (content.includes('base64')) {
+		return '사진';
+	}
+
+	if (content.length > 15) {
+		return `${content.slice(0, 15)}...`;
+	} else {
+		return content;
+	}
 };
 
 const LIST_CON_STYLE = 'flex flex-col gap-2';
