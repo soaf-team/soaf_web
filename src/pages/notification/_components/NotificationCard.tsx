@@ -30,7 +30,7 @@ export const NotificationCard = ({
 			)}
 		>
 			<motion.div
-				className="flex w-full gap-2"
+				className="flex w-full gap-2 min-h-[86px]"
 				drag="x"
 				dragConstraints={{
 					left: -TOTAL_SLIDE_WIDTH,
@@ -38,6 +38,10 @@ export const NotificationCard = ({
 				}}
 				animate={{
 					x: isDragging ? -TOTAL_SLIDE_WIDTH : 0,
+				}}
+				transition={{
+					duration: 0.3,
+					ease: 'easeOut',
 				}}
 				onDragStart={() => setIsDragging(true)}
 				onDragEnd={(_, info) => {

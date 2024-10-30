@@ -23,6 +23,7 @@ import { overlay } from '@/libs';
 import { BanDialogOverlay } from '../chat/_components/BanDialogOverlay';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants';
+import { MyHomeButton } from '../chat/_components';
 
 const NotificationPage = () => {
 	const { toast } = useToast();
@@ -40,6 +41,12 @@ const NotificationPage = () => {
 				overlayKey="request-overlay"
 				header={{
 					title: `${notify.senderName}님의 소프신청`,
+					rightSlot: (
+						<MyHomeButton
+							userId={notify.senderId}
+							userName={notify.senderName}
+						/>
+					),
 				}}
 				requestText={notify.message}
 			/>,
