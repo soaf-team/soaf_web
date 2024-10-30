@@ -6,6 +6,7 @@ import {
 	PageLayout,
 } from '@/components';
 import { overlay } from '@/libs';
+import { sendMessageToApp } from '@/utils';
 
 const getSNSAccount = (sns: string) => {
 	if (sns === 'kakao') return '카카오 계정';
@@ -29,6 +30,9 @@ const AccountPage = () => {
 				cancelButtonText="아니요"
 				confirmButtonText="네, 로그아웃할래요"
 				resolve={() => {
+					sendMessageToApp({
+						type: 'LOGOUT',
+					});
 					logoutUserMutation.mutate({});
 				}}
 			/>,
@@ -50,6 +54,9 @@ const AccountPage = () => {
 				cancelButtonText="아니요"
 				confirmButtonText="네, 탈퇴할래요"
 				resolve={() => {
+					sendMessageToApp({
+						type: 'LOGOUT',
+					});
 					deleteUserMutation.mutate({});
 				}}
 			/>,
