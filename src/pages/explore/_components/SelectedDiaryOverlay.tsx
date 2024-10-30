@@ -69,7 +69,7 @@ export const SelectedDiaryOverlay = ({
 					</div>
 					<div className={cn('flex flex-col gap-4', 'p-4')}>
 						{diary.photos.length > 0 && (
-							<div className="overflow-x-scroll">
+							<div className="flex overflow-x-scroll gap-2">
 								{diary.photos.map((photo) => (
 									<div
 										key={photo}
