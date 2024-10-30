@@ -50,6 +50,9 @@ const FullscreenModal = ({
 		info: PanInfo,
 	) => void;
 }) => {
+	const topSafeArea = localStorage.getItem('topSafeArea');
+	const paddingTop = topSafeArea ? `${Number(topSafeArea) + 10}px` : undefined;
+
 	useEffect(() => {
 		if (isFullscreen) {
 			document.body.style.overflow = 'hidden';
@@ -71,9 +74,10 @@ const FullscreenModal = ({
 			className={cn('fixed inset-0 z-[9999]', 'flex flex-col', 'bg-white')}
 		>
 			<div
+				style={{ paddingTop }}
 				className={cn(
 					'flex justify-between items-center relative',
-					'py-[14px] px-[18px] w-full h-[52px]',
+					'pb-[14px] px-[18px] w-full h-[52px]',
 				)}
 			>
 				<div className="flex-1" />
