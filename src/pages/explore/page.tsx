@@ -34,8 +34,7 @@ const SoafExplorePage = () => {
 
 	const [selectedId, setSelectedId] = useState<string>('');
 
-	const handleDiarySelect = (index: number) => {
-		const diaryId = currentUserDiaryList[index].id;
+	const handleDiarySelect = (diaryId: string) => {
 		if (selectedId === diaryId) {
 			setSelectedId('');
 		} else {

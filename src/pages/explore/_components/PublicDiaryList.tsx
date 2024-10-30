@@ -17,7 +17,7 @@ type DescriptionState = 'error' | 'noData' | 'noPublicData';
 type PublicDiaryListProps = {
 	publicDiaryList: (Omit<DiaryType, 'isPublic'> & { isPublic: true })[];
 	selectedId: string;
-	handleDiarySelect: (index: number) => void;
+	handleDiarySelect: (diaryId: string) => void;
 	isNoAnyDiary: boolean;
 	isLoading: boolean;
 	isError: boolean;
@@ -62,7 +62,7 @@ export const PublicDiaryList = ({
 								diary={diary}
 								isCheckable
 								isSelected={selectedId === diary.id}
-								onClick={() => handleDiarySelect(index)}
+								onClick={() => handleDiarySelect(diary.id)}
 								className={
 									index === publicDiaryList.length - 1 ? 'mb-[100px]' : ''
 								}
