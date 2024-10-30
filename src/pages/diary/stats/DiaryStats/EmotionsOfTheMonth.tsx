@@ -16,7 +16,7 @@ export const EmotionsOfTheMonth = ({ data }: EmotionsOfTheMonthProps) => {
 		<DiaryStatsCard title="이 달의 감정">
 			<div className="flex flex-col gap-[16px] items-center">
 				{total === 0 ? (
-					<p className="body3 text-gray200">
+					<p className="body3 text-gray200 min-h-[50px]">
 						이 달에는 일기를 작성하지 않았어요.
 					</p>
 				) : (
