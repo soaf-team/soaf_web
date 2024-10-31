@@ -25,6 +25,7 @@ import {
 	getPositionToPercentage,
 } from '../utils/position';
 import { ActivityComponentType } from '@stackflow/react';
+import { cn } from '@/utils';
 
 const isAfter6PM = dayjs().hour() >= 18;
 const backgroundClass = isAfter6PM ? 'bg-[#BECFDC]' : 'bg-[#D3E6F4]';
@@ -191,7 +192,7 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 				headerClass: backgroundClass,
 			}}
 			className="relative"
-			containerClassName={backgroundClass}
+			containerClassName={cn(backgroundClass, '!pb-0')}
 		>
 			<InteriorItems
 				userId={userId}

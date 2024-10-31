@@ -7,6 +7,7 @@ import { chatSocketManager } from '@/libs';
 
 export const MessageInput = ({ roomId }: { roomId: string }) => {
 	const [message, setMessage] = useState('');
+	const [isFocused, setIsFocused] = useState(false);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -31,7 +32,8 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 			className={cn(
 				'sticky bottom-0 left-0 right-0',
 				'flex items-center',
-				'pt-2 pb-7',
+				'pt-2',
+				isFocused ? 'pb-0' : 'pb-7',
 				'bg-white z-10',
 				'min-w-0',
 				'w-full',
@@ -68,6 +70,8 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 						type="text"
 						placeholder="메시지를 입력주세요"
 						value={message}
+						onFocus={() => setIsFocused(true)}
+						onBlur={() => setIsFocused(false)}
 						onKeyDown={(e) => {
 							if (e.key === 'Enter') {
 								e.preventDefault();
