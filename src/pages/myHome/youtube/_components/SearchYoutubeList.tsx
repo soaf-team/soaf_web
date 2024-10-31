@@ -15,9 +15,7 @@ interface Props {
 export const SearchYoutubeList = ({ onNextStep, setYoutubeInfo }: Props) => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const { youtube } = useGetYoutubeQuery({
-		videoId: searchQuery.includes('v=')
-			? searchQuery.split('v=')[1].split('&')[0]
-			: '',
+		videoId: extractYoutubeVideoId(searchQuery),
 	});
 
 	const handleItemClick = (video: Youtube['items'][0]) => {
@@ -63,4 +61,29 @@ export const SearchYoutubeList = ({ onNextStep, setYoutubeInfo }: Props) => {
 			)}
 		</>
 	);
+};
+
+const extractYoutubeVideoId = (url: string): string | null => {
+	try {
+		const videoUrl = new URL(url);
+
+		// youtu.be 형식
+		if (videoUrl.hostname === 'youtu.be') {
+			const pathSegments = videoUrl.pathname.split('/');
+			return pathSegments[1]?.split('?')[0] || null;
+		}
+
+		// youtube.com 형식
+		if (
+			videoUrl.hostname === 'youtube.com' ||
+			videoUrl.hostname === 'www.youtube.com'
+		) {
+			const videoId = videoUrl.searchParams.get('v');
+			return videoId || null;
+		}
+
+		return null;
+	} catch {
+		return null;
+	}
 };

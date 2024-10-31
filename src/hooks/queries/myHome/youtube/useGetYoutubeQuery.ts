@@ -3,11 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Youtube } from '@/types';
 
 interface Props {
-	videoId: string;
+	videoId: string | null;
 }
 
 export const useGetYoutubeQuery = ({ videoId }: Props) => {
-	const fetchVideo = async (videoId: string) => {
+	const fetchVideo = async (videoId: string | null) => {
 		try {
 			const response = await axios.get(
 				`https://www.googleapis.com/youtube/v3/videos`,
