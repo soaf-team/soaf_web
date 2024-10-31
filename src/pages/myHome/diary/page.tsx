@@ -7,6 +7,7 @@ import { YearMonthSelect } from '@/components/YearMonthSelect';
 import { DiaryList } from '@/components/DiaryList';
 import { ActivityComponentType } from '@stackflow/react';
 import { cn } from '@/utils';
+import dayjs from 'dayjs';
 
 interface DiaryPageState {
 	currentDate: Date;
@@ -58,7 +59,9 @@ const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 	};
 
 	const handleClickWriteDiaryButton = () => {
-		replace('DiaryCalendarPage', {});
+		replace('DiaryCalendarPage', {
+			date: dayjs(pageState.currentDate).format('YYYY-MM-DD'),
+		});
 	};
 
 	return (

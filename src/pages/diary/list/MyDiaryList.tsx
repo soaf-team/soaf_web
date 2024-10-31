@@ -23,7 +23,9 @@ export const MyDiaryList = ({ currentDate }: MyDiaryListProps) => {
 	const { replace } = useFlow();
 
 	const handleClickWriteDiaryButton = () => {
-		replace('DiaryCalendarPage', {});
+		replace('DiaryCalendarPage', {
+			date: dayjs(currentDate).format('YYYY-MM-DD'),
+		});
 	};
 
 	if (currentUserDiaryList.length === 0) {

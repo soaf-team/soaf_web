@@ -12,10 +12,16 @@ import { Calendar } from '../../_components';
 import { DiaryContentDrawer } from './DiaryContentDrawer';
 import { YearMonthSelect } from '@/components/YearMonthSelect';
 
-export const MyDiaryCalendar = () => {
+type MyDiaryCalendarProps = {
+	date?: string;
+};
+
+export const MyDiaryCalendar = ({ date }: MyDiaryCalendarProps) => {
 	const { push } = useFlow();
 	const [selectedDiary, setSelectedDiary] = useState<DiaryType | null>(null);
-	const [currentDate, setCurrentDate] = useState(new Date());
+	const [currentDate, setCurrentDate] = useState(
+		date ? new Date(date) : new Date(),
+	);
 	const { currentUserDiaryList } = useMyDiaryListQuery(
 		currentDate.getFullYear(),
 		currentDate.getMonth() + 1,

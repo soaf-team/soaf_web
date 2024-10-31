@@ -106,7 +106,9 @@ const SoafExplorePage = () => {
 						onClick={
 							currentUserDiaryList.length === 0
 								? () => {
-										replace('DiaryCalendarPage', {});
+										replace('DiaryCalendarPage', {
+											date: dayjs(currentDate).format('YYYY-MM-DD'),
+										});
 									}
 								: () => handleButtonClick(selectedId, currentUserDiaryList)
 						}

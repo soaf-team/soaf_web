@@ -5,8 +5,15 @@ import { ListIcon } from '@/assets';
 import { PageLayout } from '@/components/layout';
 import { MyDiaryCalendar } from './MyDiaryCalendar';
 
-const DiaryCalendarPage: ActivityComponentType = () => {
+type DiaryCalendarPageParams = {
+	date?: string;
+};
+
+const DiaryCalendarPage: ActivityComponentType<DiaryCalendarPageParams> = ({
+	params,
+}) => {
 	const { push } = useFlow();
+	const { date } = params;
 
 	const handleClickListButton = () => {
 		push('DiaryListPage', {});
@@ -22,7 +29,7 @@ const DiaryCalendarPage: ActivityComponentType = () => {
 				},
 			}}
 		>
-			<MyDiaryCalendar />
+			<MyDiaryCalendar date={date} />
 		</PageLayout>
 	);
 };
