@@ -1,6 +1,5 @@
 import { SearchIcon } from '@/assets';
 import { Input } from '@/components';
-
 import { useState } from 'react';
 import { overlay } from '@/libs';
 
@@ -26,16 +25,32 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 		setIsSearch(value.length > 0);
 	};
 
-	const handleSearchSubmit = () => {
-		setSearchQuery(inputValue);
+	const handleSearchSubmit = (e?: React.FormEvent | React.MouseEvent) => {
+		e?.preventDefault();
+		e?.stopPropagation();
+
+		if (inputValue.trim()) {
+			setSearchQuery(inputValue);
+		}
 	};
 
-	const handleClose = () => {
+	const handleClose = (e: React.MouseEvent) => {
+		e.preventDefault();
 		overlay.close();
 	};
 
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			handleSearchSubmit();
+		}
+	};
+
 	return (
-		<div className="flex gap-[13px] min-w-0 w-full items-center sticky py-[20px] top-0 bg-white">
+		<form
+			onSubmit={handleSearchSubmit}
+			className="flex gap-[13px] min-w-0 w-full items-center sticky py-[20px] top-0 bg-white"
+		>
 			<Input
 				variant="box"
 				leftSlot={<img src={SearchIcon} alt="search" width={24} height={24} />}
@@ -44,6 +59,7 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 				onChange={handleInputChange}
 				isResetButton={true}
 				className="flex-1"
+				onKeyDown={handleKeyDown}
 			/>
 			{isSearch === false ? (
 				<button type="button" className="label2" onClick={handleClose}>
@@ -54,6 +70,6 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 					검색
 				</button>
 			)}
-		</div>
+		</form>
 	);
 };

@@ -70,11 +70,20 @@ const NotificationPage = () => {
 		}
 	};
 
-	const handleBanButtonClick = async (userName: string, userId: string) => {
+	const handleBanButtonClick = async (
+		notifyId: string,
+		userName: string,
+		userId: string,
+	) => {
 		await overlay.open(<BanDialogOverlay userName={userName} />);
 		await postBlockUserMutation.mutateAsync({
 			payload: {
 				userToBlockId: userId,
+			},
+		});
+		await createSoafRejectMutation.mutateAsync({
+			params: {
+				requestId: notifyId,
 			},
 		});
 		await queryClient.invalidateQueries({
@@ -132,7 +141,11 @@ const NotificationPage = () => {
 								key={notify._id}
 								notification={notify}
 								onBlock={() =>
-									handleBanButtonClick(notify.senderName, notify.senderId)
+									handleBanButtonClick(
+										notify._id,
+										notify.senderName,
+										notify.senderId,
+									)
 								}
 								onDelete={() =>
 									handleDeleteNotification(notify._id, notify.senderName)

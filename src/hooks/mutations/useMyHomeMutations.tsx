@@ -25,7 +25,7 @@ const getCategoryMessage = (
 		case 'movie':
 			return `영화가 ${actionWord}`;
 		case 'book':
-			return `책이 ${actionWord}`;
+			return `도서가 ${actionWord}`;
 		case 'youtube':
 			return `유튜브 영상이 ${actionWord}`;
 		default:

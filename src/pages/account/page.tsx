@@ -46,7 +46,7 @@ const AccountPage = () => {
 				title="서비스를 탈퇴하시겠어요?"
 				description={
 					<>
-						<span>탈퇴 시 작성하긴 일기와, 취향, 채팅 내용이</span>
+						<span>탈퇴 시 작성하신 일기와, 취향, 채팅 내용이</span>
 						<br />
 						<span>모두 삭제되며 복구가 불가능해요.</span>
 					</>
@@ -55,7 +55,7 @@ const AccountPage = () => {
 				confirmButtonText="네, 탈퇴할래요"
 				resolve={() => {
 					sendMessageToApp({
-						type: 'LOGOUT',
+						type: 'SIGN_OUT',
 					});
 					deleteUserMutation.mutate({});
 				}}

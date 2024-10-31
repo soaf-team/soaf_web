@@ -74,14 +74,20 @@ const MyMusicPage: ActivityComponentType<Props> = ({ params }) => {
 							총 {myMusicList?.data.length}곡의 음악
 						</p>
 
-						{myMusicList?.data.map((music) => (
-							<MusicItem
-								key={music._id}
-								type="list"
-								music={music}
-								onClick={() => handleClickMusicItem(music._id)}
-							/>
-						))}
+						{myMusicList?.data
+							.sort(
+								(a, b) =>
+									new Date(b.createdAt).getTime() -
+									new Date(a.createdAt).getTime(),
+							)
+							.map((music) => (
+								<MusicItem
+									key={music._id}
+									type="list"
+									music={music}
+									onClick={() => handleClickMusicItem(music._id)}
+								/>
+							))}
 					</div>
 				)}
 			</div>

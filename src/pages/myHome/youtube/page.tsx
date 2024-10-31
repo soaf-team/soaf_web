@@ -74,14 +74,20 @@ const MyYoutubePage: ActivityComponentType<Props> = ({ params }) => {
 							총 {myYoutubeList?.data.length}개의 영상
 						</p>
 
-						{myYoutubeList?.data.map((youtube) => (
-							<YoutubeItem
-								key={youtube._id}
-								type="list"
-								youtube={youtube}
-								onClick={() => handleClickYoutubeItem(youtube._id)}
-							/>
-						))}
+						{myYoutubeList?.data
+							.sort(
+								(a, b) =>
+									new Date(b.createdAt).getTime() -
+									new Date(a.createdAt).getTime(),
+							)
+							.map((youtube) => (
+								<YoutubeItem
+									key={youtube._id}
+									type="list"
+									youtube={youtube}
+									onClick={() => handleClickYoutubeItem(youtube._id)}
+								/>
+							))}
 					</div>
 				)}
 			</div>

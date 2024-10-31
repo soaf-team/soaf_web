@@ -86,16 +86,24 @@ const MyHomeMainPage: ActivityComponentType<MyHomeProps> = ({ params }) => {
 	const handleCancelEdit = () => {
 		setIsEdit(false);
 		setIsDraggable({});
-		setItems((prev) => ({
-			...prev,
-			...Object.keys(initialPositions).reduce(
-				(acc, key) => {
-					acc[key] = { ...prev[key], ...initialPositions[key] };
+
+		if (myHome?.items) {
+			const restoredItems = myHome.items.reduce(
+				(acc, item) => {
+					acc[item.name] = {
+						...item,
+						...getPercentageToPosition(
+							{ x: item.x, y: item.y },
+							{ width, height },
+						),
+					};
 					return acc;
 				},
 				{} as { [key: string]: Interior },
-			),
-		}));
+			);
+
+			setItems(restoredItems);
+		}
 	};
 
 	const handleStartEdit = () => {

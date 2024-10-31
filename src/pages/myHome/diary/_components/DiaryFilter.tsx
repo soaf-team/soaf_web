@@ -1,17 +1,17 @@
 import { TabButton } from '@/components';
 
 interface Props {
-	isPrivate: boolean;
-	onFilterChange: (isPrivate: boolean) => void;
+	isPublic: boolean;
+	onFilterChange: (isPublic: boolean) => void;
 }
 
-export const DiaryFilter = ({ isPrivate, onFilterChange }: Props) => {
+export const DiaryFilter = ({ isPublic, onFilterChange }: Props) => {
 	return (
 		<div className="flex w-full">
-			<TabButton active={!isPrivate} onClick={() => onFilterChange(false)}>
+			<TabButton active={isPublic} onClick={() => onFilterChange(true)}>
 				공개
 			</TabButton>
-			<TabButton active={isPrivate} onClick={() => onFilterChange(true)}>
+			<TabButton active={!isPublic} onClick={() => onFilterChange(false)}>
 				비공개
 			</TabButton>
 		</div>

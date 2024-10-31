@@ -75,13 +75,19 @@ const MyMoviePage: ActivityComponentType<Props> = ({ params }) => {
 						</p>
 
 						<div className="grid w-full grid-cols-3 gap-2">
-							{myMovieList?.data.map((movie) => (
-								<MyItem
-									key={movie._id}
-									item={movie}
-									onClick={() => handleClickMovieItem(movie._id)}
-								/>
-							))}
+							{myMovieList?.data
+								.sort(
+									(a, b) =>
+										new Date(b.createdAt).getTime() -
+										new Date(a.createdAt).getTime(),
+								)
+								.map((movie) => (
+									<MyItem
+										key={movie._id}
+										item={movie}
+										onClick={() => handleClickMovieItem(movie._id)}
+									/>
+								))}
 						</div>
 					</div>
 				)}
