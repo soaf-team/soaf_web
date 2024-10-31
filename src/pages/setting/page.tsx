@@ -35,31 +35,30 @@ const SettingPage: ActivityComponentType = () => {
 					component: <BackButton />,
 				},
 			}}
+			className="!px-0 pb-[10px]"
 		>
-			<UserNameSection userName={userProfile.name} />
-
-			<div className="mx-[-20px] w-[calc(100%+40px)]">
-				<Divider className="h-2.5 bg-gray50" />
+			<div className="px-5">
+				<UserNameSection userName={userProfile.name} />
 			</div>
+			<div className="w-full h-[10px] flex-shrink-0 bg-border" />
 
-			<div className="w-full flex items-center justify-between py-[22px]">
-				<span className="text-black">알림 설정</span>
-				<Switch
-					defaultChecked={true}
-					onCheckedChange={handleNotificationChange}
-					checked={isNotificationOn}
-				/>
-			</div>
-
-			<Divider className="bg-gray50" />
-
-			<MenuList items={MENU_ITEMS1} />
-			<Divider className="bg-gray50" />
-			<MenuList items={MENU_ITEMS2} />
-
-			<div className="w-full flex items-center justify-between py-[22px]">
-				<span className="text-black">앱 버전 정보</span>
-				<span className="label2 text-gray400">최신버전</span>
+			<div className="px-5">
+				<div className="w-full flex items-center justify-between py-[22px]">
+					<span className="text-black">알림 설정</span>
+					<Switch
+						defaultChecked={true}
+						onCheckedChange={handleNotificationChange}
+						checked={isNotificationOn}
+					/>
+				</div>
+				<Divider />
+				<MenuList items={MENU_ITEMS1} />
+				<Divider />
+				<MenuList items={MENU_ITEMS2} />
+				<div className="w-full flex items-center justify-between py-[22px]">
+					<span className="text-black">앱 버전 정보</span>
+					<span className="label2 text-gray400">최신버전</span>
+				</div>
 			</div>
 		</PageLayout>
 	);
