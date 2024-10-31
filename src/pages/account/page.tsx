@@ -55,7 +55,7 @@ const AccountPage = () => {
 				confirmButtonText="네, 탈퇴할래요"
 				resolve={() => {
 					sendMessageToApp({
-						type: 'LOGOUT',
+						type: 'SIGN_OUT',
 					});
 					deleteUserMutation.mutate({});
 				}}
