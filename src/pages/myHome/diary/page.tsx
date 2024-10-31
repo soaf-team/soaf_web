@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 
 interface DiaryPageState {
 	currentDate: Date;
-	isPrivate: boolean;
+	isPublic: boolean;
 }
 
 interface Props {
@@ -25,13 +25,13 @@ const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 
 	const [pageState, setPageState] = useState<DiaryPageState>({
 		currentDate: new Date(),
-		isPrivate: false,
+		isPublic: false,
 	});
 
 	const { currentUserDiaryList } = useMyDiaryListQuery(
 		pageState.currentDate.getFullYear(),
 		pageState.currentDate.getMonth() + 1,
-		pageState.isPrivate,
+		pageState.isPublic,
 	);
 
 	const { data: friendDiaryList } = useFriendDiaryListQuery(
@@ -44,10 +44,10 @@ const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 		? friendDiaryList?.items || []
 		: currentUserDiaryList || [];
 
-	const handleFilterChange = (isPrivate: boolean) => {
+	const handleFilterChange = (isPublic: boolean) => {
 		setPageState((prev) => ({
 			...prev,
-			isPrivate,
+			isPublic,
 		}));
 	};
 
@@ -78,7 +78,7 @@ const MyDiaryPage: ActivityComponentType<Props> = ({ params }) => {
 			<div className="flex flex-col items-center gap-[22px]">
 				{!userId && (
 					<DiaryFilter
-						isPrivate={pageState.isPrivate}
+						isPublic={pageState.isPublic}
 						onFilterChange={handleFilterChange}
 					/>
 				)}
