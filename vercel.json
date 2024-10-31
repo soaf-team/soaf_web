@@ -6,6 +6,12 @@
 		},
 		{
 			"source": "/api/lastfm/:path*",
+			"has": [
+				{
+					"type": "query",
+					"key": "method"
+				}
+			],
 			"destination": "http://ws.audioscrobbler.com/2.0/:path*"
 		},
 		{

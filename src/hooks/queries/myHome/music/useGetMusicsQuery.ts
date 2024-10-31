@@ -11,7 +11,7 @@ export const useGetMusicsQuery = ({ value }: { value: string }) => {
 		pageParam: number;
 	}) => {
 		try {
-			const response = await axios.get('/api/lastfm/', {
+			const response = await axios.get('/api/lastfm', {
 				params: {
 					method: 'album.search',
 					format: 'json',
