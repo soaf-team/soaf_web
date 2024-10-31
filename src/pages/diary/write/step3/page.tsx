@@ -12,7 +12,7 @@ import {
 } from '@/components';
 import { DiaryForm } from '../../_components/DiaryForm';
 import { DiaryCancelConfirmDialog } from '../_components/DiaryCancelConfirmDialog';
-import { useDiaryMutations } from '@/hooks';
+import { toast, useDiaryMutations } from '@/hooks';
 
 const NewDiaryStep3: ActivityComponentType = () => {
 	const { replace } = useFlow();
@@ -29,8 +29,20 @@ const NewDiaryStep3: ActivityComponentType = () => {
 	const isUnusualApproach =
 		diary.emotions.length === 0 || diary.rating === null || !diary.date;
 
+	const isInvalid =
+		!diary.rating ||
+		!diary.date ||
+		!diary.title ||
+		!diary.content ||
+		!diary.emotions;
+
 	const handleSaveDiaryButtonClick = async () => {
-		if (!diary.rating) return;
+		if (isInvalid) {
+			toast({
+				title: '모든 항목을 입력해주세요.',
+			});
+			return;
+		}
 
 		const formData = new FormData();
 		formData.append('title', diary.title);
