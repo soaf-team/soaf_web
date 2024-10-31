@@ -6,4 +6,18 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
 	base: '/',
 	plugins: [react(), tsconfigPaths()],
+	server: {
+		proxy: {
+			'/api/lastfm': {
+				target: 'http://ws.audioscrobbler.com/2.0',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api\/lastfm/, ''),
+			},
+			'/proxy-storage': {
+				target: 'https://contest82-image.kr.object.ncloudstorage.com',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/proxy-storage/, ''),
+			},
+		},
+	},
 });

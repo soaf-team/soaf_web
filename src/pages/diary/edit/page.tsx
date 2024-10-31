@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { ActivityComponentType } from '@stackflow/react';
 
 import { useFlow } from '@/stackflow';
-import { useDiaryStore } from '@/store';
+import { PhotoType, useDiaryStore } from '@/store';
 import {
 	BackButton,
 	Dialog,
@@ -45,6 +45,21 @@ const EditDiaryPage: ActivityComponentType<EditDiaryPageParams> = ({
 		return `/proxy-storage/${path}`;
 	};
 
+	async function processPhotoInOrder(photo: PhotoType, index: number) {
+		try {
+			if (photo.file) {
+				return { index, file: photo.file };
+			} else {
+				const proxyUrl = getProxyUrl(photo.previewUrl);
+				const file = await getImageFromPresignedUrl(proxyUrl);
+				return { index, file };
+			}
+		} catch (error) {
+			console.error(`Error processing photo ${index}:`, error);
+			throw error;
+		}
+	}
+
 	const handleSaveDiaryButtonClick = async () => {
 		if (!diary.rating) return;
 
@@ -57,15 +72,15 @@ const EditDiaryPage: ActivityComponentType<EditDiaryPageParams> = ({
 			formData.append('detailedEmotions', emotion);
 		});
 		formData.append('isPublic', diary.isPublic.toString());
-		diary.photos.forEach(async (photo) => {
-			if (photo.file) {
-				formData.append('imageBox', photo.file);
-			} else {
-				const proxyUrl = getProxyUrl(photo.previewUrl);
-				const file = await getImageFromPresignedUrl(proxyUrl);
+
+		const processedPhotos = await Promise.all(
+			diary.photos.map((photo, index) => processPhotoInOrder(photo, index)),
+		);
+		processedPhotos
+			.sort((a, b) => a.index - b.index)
+			.forEach(({ file }) => {
 				formData.append('imageBox', file);
-			}
-		});
+			});
 		updateDiaryMutation.mutate({
 			params: { diaryId },
 			payload: formData,
