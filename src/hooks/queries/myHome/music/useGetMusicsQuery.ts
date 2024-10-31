@@ -11,16 +11,15 @@ export const useGetMusicsQuery = ({ value }: { value: string }) => {
 		pageParam: number;
 	}) => {
 		try {
-			const response = await axios.get(
-				'http://ws.audioscrobbler.com/2.0/?method=album.search&format=json',
-				{
-					params: {
-						album: value,
-						api_key: import.meta.env.VITE_LAST_FM_API_KEY,
-						page: pageParam,
-					},
+			const response = await axios.get('/api/lastfm', {
+				params: {
+					method: 'album.search',
+					format: 'json',
+					album: value,
+					api_key: import.meta.env.VITE_LAST_FM_API_KEY,
+					page: pageParam,
 				},
-			);
+			});
 
 			return response.data;
 		} catch (error) {
