@@ -13,6 +13,7 @@ import {
 import { DiaryForm } from '../_components/DiaryForm';
 import { DiaryCancelConfirmDialog } from '../write/_components/DiaryCancelConfirmDialog';
 import { useDiaryMutations } from '@/hooks';
+import { getImageFromPresignedUrl } from '@/utils/getImageFromPresignedUrl';
 
 type EditDiaryPageParams = {
 	diaryId: string;
@@ -36,6 +37,14 @@ const EditDiaryPage: ActivityComponentType<EditDiaryPageParams> = ({
 	const isUnusualApproach =
 		diary.emotions.length === 0 || diary.rating === null || !diary.date;
 
+	const getProxyUrl = (originalUrl: string) => {
+		const path = originalUrl.replace(
+			'https://contest82-image.kr.object.ncloudstorage.com/',
+			'',
+		);
+		return `/proxy-storage/${path}`;
+	};
+
 	const handleSaveDiaryButtonClick = async () => {
 		if (!diary.rating) return;
 
@@ -48,9 +57,13 @@ const EditDiaryPage: ActivityComponentType<EditDiaryPageParams> = ({
 			formData.append('detailedEmotions', emotion);
 		});
 		formData.append('isPublic', diary.isPublic.toString());
-		diary.photos.forEach((photo) => {
+		diary.photos.forEach(async (photo) => {
 			if (photo.file) {
 				formData.append('imageBox', photo.file);
+			} else {
+				const proxyUrl = getProxyUrl(photo.previewUrl);
+				const file = await getImageFromPresignedUrl(proxyUrl);
+				formData.append('imageBox', file);
 			}
 		});
 		updateDiaryMutation.mutate({

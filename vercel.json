@@ -3,6 +3,10 @@
 		{
 			"source": "/api/lastfm/:path*",
 			"destination": "http://ws.audioscrobbler.com/2.0/:path*"
+		},
+		{
+			"source": "/proxy-storage/:file*",
+			"destination": "https://contest82-image.kr.object.ncloudstorage.com/:file*"
 		}
 	]
 }
