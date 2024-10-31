@@ -34,7 +34,6 @@ export const userMutations = ({ onSuccess }: { onSuccess: () => void }) => {
 		'POST',
 		{
 			onSuccess: () => {
-				replace('LoginPage', {});
 				toast({
 					title: '로그아웃 되었어요',
 				});
@@ -47,7 +46,6 @@ export const userMutations = ({ onSuccess }: { onSuccess: () => void }) => {
 		'DELETE',
 		{
 			onSuccess: () => {
-				replace('LoginPage', {});
 				toast({
 					title: '회원 탈퇴가 완료되었어요',
 				});
