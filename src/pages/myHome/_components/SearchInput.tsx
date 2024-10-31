@@ -35,7 +35,7 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 	};
 
 	return (
-		<div className="flex gap-[13px] items-center sticky py-[20px] top-0 bg-white">
+		<div className="flex gap-[13px] min-w-0 w-full items-center sticky py-[20px] top-0 bg-white">
 			<Input
 				variant="box"
 				leftSlot={<img src={SearchIcon} alt="search" width={24} height={24} />}

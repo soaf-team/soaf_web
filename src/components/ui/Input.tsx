@@ -49,14 +49,14 @@ const Input = (props: InputProps, ref: React.Ref<HTMLInputElement>) => {
 	const isValue = !!value;
 
 	return (
-		<div className={cn(inputVariants({ variant, size, className }))}>
+		<div className={cn(inputVariants({ variant, size, className }), 'min-w-0')}>
 			{leftSlot != null ? leftSlot : null}
 			<input
 				ref={ref}
 				{...rest}
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
-				className="outline-none shadow-none border-none appearance-none bg-transparent flex-1 placeholder:text-gray300"
+				className="outline-none shadow-none border-none appearance-none bg-transparent flex-1 placeholder:text-gray300 min-w-0"
 			/>
 			{isResetButton && (
 				<ResetButton
