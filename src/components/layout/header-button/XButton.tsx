@@ -20,6 +20,7 @@ export const XButton = ({ className, onClick }: XButtonProps) => {
 
 	return (
 		<button
+			type="button"
 			onClick={handleClick}
 			className={cn(
 				'w-[24px] h-[24px] flex justify-end items-center',
