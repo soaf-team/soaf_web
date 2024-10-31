@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { DiaryType } from '@/types';
 import { EmotionSticker } from '@/components/emotion';
 import { Image } from '@/components/ui';
-import { Lock, Unlock } from '@/assets';
+import { LockGray, UnlockGray } from '@/assets';
 
 type DiaryContentProps = {
 	diary: DiaryType;
@@ -31,7 +31,7 @@ export const DiaryContent = ({
 						<span>{monthDay}</span>
 						<span className="text-gray300">{week}</span>
 						<img
-							src={diary.isPublic ? Unlock : Lock}
+							src={diary.isPublic ? UnlockGray : LockGray}
 							alt={diary.isPublic ? 'unlock' : 'lock'}
 							className="w-[16px] h-[16px]"
 						/>

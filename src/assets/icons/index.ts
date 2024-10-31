@@ -17,8 +17,8 @@ import PlayIcon from './my-home/play.svg';
 import ChevronRightIcon from './chevron-right-gray.svg';
 import WarningRedIcon from './warning-red.svg';
 import TrashWhiteIcon from './trash-white.svg';
-import Lock from './lock-gray.svg';
-import Unlock from './unlock-gray.svg';
+import LockGray from './lock-gray.svg';
+import UnlockGray from './unlock-gray.svg';
 
 export {
 	Plus,
@@ -40,8 +40,8 @@ export {
 	ChevronRightIcon,
 	WarningRedIcon,
 	TrashWhiteIcon,
-	Lock,
-	Unlock,
+	LockGray,
+	UnlockGray,
 };
 
 export * from './header';
