@@ -43,7 +43,7 @@ export const PageLayout = ({
 					paddingBottom,
 					containerClassName,
 				])}
-				vaul-drawer-wrapper="" // eslint-disable-line
+				// vaul-drawer-wrapper="" // eslint-disable-line
 				style={{
 					paddingTop,
 				}}
