@@ -57,10 +57,6 @@ export const ConfirmOverlay = ({
 						animate={{ y: 0 }}
 						exit={{ y: '100%' }}
 						transition={{ type: 'ease', damping: 25, stiffness: 500 }}
-						drag="y"
-						dragControls={controls}
-						dragConstraints={{ top: 0 }}
-						onDragEnd={() => handleReject()}
 					>
 						<div className="self-center mb-[14px] w-10 h-[3px] rounded-[12px] bg-gray200" />
 						{children}

@@ -31,7 +31,7 @@ export const PageLayout = ({
 	const isMyHome = window.location.pathname.includes('myHome');
 	const stack = useStack();
 	const { isBottomTabActivity } = useActiveActivity(stack);
-	const paddingBottom = isBottomTabActivity && !isMyHome ? 'pb-[93px]' : 'pb-0';
+	const paddingBottom = isBottomTabActivity && !isMyHome ? 'pb-[93px]' : 'pb-9';
 	const topSafeArea = localStorage.getItem('topSafeArea');
 	const paddingTop = topSafeArea ? `${topSafeArea}px` : undefined;
 
