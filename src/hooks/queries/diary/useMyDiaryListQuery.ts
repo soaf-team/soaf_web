@@ -48,5 +48,9 @@ export const useMyDiaryListQuery = (
 		transformDiaryKey(diary),
 	);
 
-	return { currentUserDiaryList: transformedDiaryList, isLoading, isError };
+	return {
+		currentUserDiaryList: transformedDiaryList.reverse(),
+		isLoading,
+		isError,
+	};
 };
