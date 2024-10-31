@@ -52,6 +52,15 @@ export const AboveKeyboardBar = ({
 			handleKeepKeyboard();
 		}
 		handleTogglePublic();
+		if (diary.isPublic) {
+			toast({
+				title: '일기가 비공개 설정되었어요',
+			});
+		} else {
+			toast({
+				title: '일기가 공개 설정되었어요',
+			});
+		}
 	};
 
 	useEffect(() => {
