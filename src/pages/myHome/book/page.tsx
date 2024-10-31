@@ -73,13 +73,19 @@ const MyBookPage: ActivityComponentType<Props> = ({ params }) => {
 						</p>
 
 						<div className="grid w-full grid-cols-3 gap-2">
-							{myBookList?.data.map((book) => (
-								<MyItem
-									key={book._id}
-									item={book}
-									onClick={() => handleClickBookItem(book._id)}
-								/>
-							))}
+							{myBookList?.data
+								.sort(
+									(a, b) =>
+										new Date(b.createdAt).getTime() -
+										new Date(a.createdAt).getTime(),
+								)
+								.map((book) => (
+									<MyItem
+										key={book._id}
+										item={book}
+										onClick={() => handleClickBookItem(book._id)}
+									/>
+								))}
 						</div>
 					</div>
 				)}
