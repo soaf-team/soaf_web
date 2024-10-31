@@ -9,8 +9,8 @@ export const Divider = ({ className = '', vertical = false }: Props) => {
 	return (
 		<div
 			className={cn(
-				'border-t border-border',
-				vertical ? 'w-0 h-full' : 'w-full h-px',
+				'border-t border-solid border-border',
+				vertical ? 'w-0 h-full' : 'w-full h-0',
 				className,
 			)}
 		/>
