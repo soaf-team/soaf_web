@@ -31,6 +31,7 @@ export function Toaster({ stack }: { stack: Stack }) {
 				style={{
 					bottom: isBottomTabActivity ? '93px' : '10px',
 					zIndex: 10000,
+					pointerEvents: 'none',
 				}}
 			/>
 		</ToastProvider>
