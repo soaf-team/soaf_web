@@ -26,7 +26,6 @@ const NewDiaryStep3: ActivityComponentType = () => {
 		togglePublic,
 		resetAllDiaryState,
 	} = useDiaryStore();
-	console.log(diary);
 	const isUnusualApproach =
 		diary.emotions.length === 0 || diary.rating === null || !diary.date;
 

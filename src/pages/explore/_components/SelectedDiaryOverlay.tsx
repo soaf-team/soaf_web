@@ -16,7 +16,6 @@ export const SelectedDiaryOverlay = ({
 	resolve,
 	reject,
 }: SelectedDiaryOverlayProps) => {
-	console.log(diary);
 	return (
 		<BasicOverlay
 			overlayKey={overlayKey}
