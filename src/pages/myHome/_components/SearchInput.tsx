@@ -25,14 +25,17 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 		setIsSearch(value.length > 0);
 	};
 
-	const handleSearchSubmit = (e?: React.FormEvent) => {
+	const handleSearchSubmit = (e?: React.FormEvent | React.MouseEvent) => {
 		e?.preventDefault();
+		e?.stopPropagation();
+
 		if (inputValue.trim()) {
 			setSearchQuery(inputValue);
 		}
 	};
 
-	const handleClose = () => {
+	const handleClose = (e: React.MouseEvent) => {
+		e.preventDefault();
 		overlay.close();
 	};
 
@@ -63,7 +66,7 @@ export const SearchInput = ({ type, setSearchQuery }: Props) => {
 					취소
 				</button>
 			) : (
-				<button type="submit" className="label2">
+				<button type="button" className="label2" onClick={handleSearchSubmit}>
 					검색
 				</button>
 			)}
