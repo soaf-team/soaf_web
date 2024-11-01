@@ -12,7 +12,7 @@ export const MusicItem = ({ type, onClick, music }: Props) => {
 	const coverClass = cn({
 		'min-w-[56px] w-[56px] h-[56px] rounded-[4px]': type === 'search',
 		'min-w-[88px] w-[88px] h-[88px] rounded-[8px]': type === 'list',
-		'w-[96px] h-[96px] rounded-[8px]': type === 'detail',
+		'min-w-[96px] w-[96px] h-[96px] rounded-[8px]': type === 'detail',
 	});
 
 	const titleClass = cn(

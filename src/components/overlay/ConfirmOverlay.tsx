@@ -56,7 +56,7 @@ export const ConfirmOverlay = ({
 						initial={{ y: '100%' }}
 						animate={{ y: 0 }}
 						exit={{ y: '100%' }}
-						transition={{ type: 'ease', damping: 25, stiffness: 500 }}
+						transition={{ type: 'spring', damping: 50, stiffness: 700 }}
 					>
 						<div className="self-center mb-[14px] w-10 h-[3px] rounded-[12px] bg-gray200" />
 						{children}

@@ -40,7 +40,7 @@ export const ChatList = () => {
 							<div className={LIST_CON_STYLE}>
 								<p>{friend?.friend.name ?? '알수없음'}</p>
 								<p className="text-sm text-gray300 font-medium">
-									{content(chat.lastMessage?.content[0])}
+									{content(chat.lastMessage?.content[0]) || '\u00A0'}
 								</p>
 							</div>
 							<div className={cn(LIST_CON_STYLE, 'items-end')}>
