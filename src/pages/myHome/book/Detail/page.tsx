@@ -48,7 +48,7 @@ const MyBookDetailPage: ActivityComponentType<MyBookDetailPageProps> = ({
 		rating: myBookDetail?.data.content.rating || 0,
 	});
 
-	const readOnly = !!(userId && !isEditing);
+	const readOnly = !isEditing;
 
 	const handleDataChange = (key: string, value: string | RatingType) => {
 		setDetailData((prev) => ({ ...prev, [key]: value }));

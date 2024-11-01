@@ -39,7 +39,7 @@ const MyYoutubeDetailPage: ActivityComponentType<MyYoutubeDetailPageProps> = ({
 	const [review, setReview] = useState(myYoutubeDetail?.data.review || '');
 	const [isEditing, setIsEditing] = useState(false);
 
-	const readOnly = !!(userId && !isEditing);
+	const readOnly = !isEditing;
 
 	const handleUpdateSubmit = () => {
 		updateMyHomeMutation.mutate({

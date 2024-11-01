@@ -40,7 +40,7 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 	const [isEditing, setIsEditing] = useState(false);
 	const [review, setReview] = useState(myMusicDetail?.data.review || '');
 
-	const readOnly = !!(userId && !isEditing);
+	const readOnly = !isEditing;
 
 	const handleReviewChange = (value: string) => {
 		setReview(value);
@@ -116,11 +116,11 @@ const MyMusicDetailPage: ActivityComponentType<MyMusicDetailPageProps> = ({
 								>
 									저장
 								</button>
-							) : (
+							) : !userId ? (
 								<PopoverTrigger ref={triggerRef}>
 									<DotVerticalButton />
 								</PopoverTrigger>
-							),
+							) : null,
 						},
 					}}
 				>
