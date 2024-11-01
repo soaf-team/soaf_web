@@ -62,13 +62,13 @@ export const MessageInput = ({ roomId }: { roomId: string }) => {
 						'flex justify-between gap-2 items-center flex-1',
 						'px-4 py-[10px]',
 						'rounded-[24px] bg-gray50 text-gray200 caret-primary',
-						'min-w-0', // 추가
+						'min-w-0',
 					)}
 				>
 					<input
-						className="flex-1 h-6 bg-transparent outline-none min-w-0" // min-w-0 추가
+						className="flex-1 h-6 bg-transparent outline-none min-w-0"
 						type="text"
-						placeholder="메시지를 입력주세요"
+						placeholder="메시지를 입력해주세요"
 						value={message}
 						onFocus={() => setIsFocused(true)}
 						onBlur={() => setIsFocused(false)}
