@@ -11,11 +11,11 @@ const gridClass = (length: number) => {
 		case 2:
 			return 'grid-cols-2 gap-[2px] max-h-[128px]';
 		case 3:
-			return 'grid-cols-2 grid-rows-2 gap-[2px] max-h-[85px]';
+			return 'grid-cols-3 gap-[2px] max-h-[85px]';
 		case 4:
 			return 'grid-cols-2 grid-rows-2 gap-[2px] max-h-[258px]';
 		default:
-			return 'grid-cols-3';
+			return 'grid-cols-1 max-h-[194px]';
 	}
 };
 
